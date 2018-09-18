@@ -1,33 +1,52 @@
 ' Copyright (C) 2017-2018, Friends in Global Health, LLC
 ' All rights reserved.
 
-' This code allows a user DATIM to automatically fill out the
+' This code allows a DATIM end user to automatically fill out the
 ' MER Results: Facility Based form for a specific quarterly period and
-' Organizational Units. The code works in a specific MS Excel file
-' that allows automatic data-entry of Quarterly, Semi-annually and/or
-' Annually data.
+' Organizational Units. This code works in a specific MS Excel file
 
 '--------------------------------------------------------------------
 '                             INSTRUCTIONS
 '--------------------------------------------------------------------
 
-' Before you run Macro login in DATIM with Data Entry
-' previlege using Internet Explorer
+' Before run this Macro make sure to login in DATIM with Data Entry
+' previleges, this approach only works with the Internet Explorer browser
 
 Public IE As Object
+Public ouList As String
 
-'Main method used that should be called by the button on Excel file
+'Main function that should be called by the button on Excel file
 Sub MainMacro()
 
-'Protection for macros execution
+'Protection of macros execution
     Dim Ans As Boolean
     Const Pword As Variant = "fghdatim"
     Ans = False
         If Not InputBox("Por favor, introduza o password, e certifique que ja fez Login na plataforma DATIM utilizando o internet explorer, deve ser um utilizador com previlegio de Entrada de Dados.", "Entrar Password") = Pword Then
             Ans = True
-        If MsgBox("Sem a password não irá proceder com o envio de dados. Por favor! Para mais informações contacte o FGH-SIS(his@fgh.org.mz).", vbOKOnly, "Informação") = vbOK Then Exit Sub
+        If MsgBox("Sem a password não pode efectuar esta operação. Por favor! Para mais informações contacte o Departamento de Informação Estratégica da FGH.", vbOKOnly, "Informação") = vbOK Then Exit Sub
         End If
 'End of Protection for macros execution
+
+'------------------------------------------
+'       PROGRESS BAR INITIALIZATION
+'------------------------------------------
+Dim lastRow As Long
+Dim toComplete As Single
+Dim startTime As Date
+Dim endTime As Date
+Dim fillDuration As Date
+'FormProgressBar is Mandatory to use this code
+FormProgressBar.LabelProgress.Width = 0
+FormProgressBar.CheckBox1.Caption = "Hora inicial: " & Now
+startTime = Now
+FormProgressBar.LabelCaption = "Preparando para digitar dados..."
+FormProgressBar.LabelUserInfo = "Utilizador do Sistema Operacional: " & Environ("Username")
+FormProgressBar.LabelUserAgentInfo = "Agente do Utilizador: " & Environ("COMPUTERNAME") & ", " & Environ("OS") & ", " & Environ("PROCESSOR_ARCHITECTURE") & ", " & Environ("NUMBER_OF_PROCESSORS") & " CPU"
+FormProgressBar.Show
+'COUNT total OUs
+Set myRange = Worksheets("sheet1").Range("A10:A300")
+lastRow = Application.WorksheetFunction.CountA(myRange)
 
 Set IE = CreateObject("InternetExplorer.Application")
 
@@ -39,35 +58,44 @@ While IE.busy
 DoEvents 'wait until IE is done loading page
 Wend
 
-'15 seconds to ensure that the page loads all components
+'15 seconds to ensure that the page loads all HTML/CSS/JS components
 Application.Wait Now + TimeValue("00:00:15")
 
-'Element that allows organizational unit selection
+'Element that allows Org Unit selection
 IE.Document.all.Item
 
 Dim i As Integer
 i = 1
 
-'Possible to run over 10000 Health Facilities, change here if overcome
-Do While i < 10000
+'Possible to run over 1000 Health Facilities, change if overflow
+Do While i < 1000
 
 If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("A10")) Then
 'End process if find line with blank Org Unit
-i = i + 10000
+i = i + 1000
 
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("OD10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("OD10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("ZK10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ZK10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
 Else
 
-    'Execute DHIS2 javascript to select Org unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("OD10") & "' )", "JavaScript")
+    'ProgressBar lifetime update
+    ouList = ouList & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")" & "<br>"
+    toComplete = i / lastRow
+    With FormProgressBar
+        .LabelCaption.Caption = "Digitando Unidade Organizacional nº " & i & " de " & lastRow
+        .LabelOUInfo.Caption = "A digitar: " & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")"
+        .LabelProgress.Width = toComplete * (.FrameProgress.Width)
+    End With
+
+    'Call DHIS2 javascript function to select Org Unit on tree
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("ZK10") & "' )", "JavaScript")
     Application.Wait Now + TimeValue("00:00:05")
     
-    'Select Dataset and Period only at 1st time
+    'Select the Dataset and Period only at 1st time
     If i = 1 Then
     Set evt = IE.Document.createEvent("HTMLEvents")
     evt.initEvent "change", True, False
@@ -75,16 +103,20 @@ Else
     IE.Document.GetElementByID("selectedDataSetId").Value = "tz1bQ3ZwUKJ"
     IE.Document.GetElementByID("selectedDataSetId").dispatchEvent evt
     Application.Wait Now + TimeValue("00:00:07")
-    'Select and select the Period
+    'Select the Period
     IE.Document.GetElementByID("selectedPeriodId").Value = "2018Q3"
     IE.Document.GetElementByID("selectedPeriodId").dispatchEvent evt
-    Application.Wait Now + TimeValue("00:00:12")
+    Application.Wait Now + TimeValue("00:00:10")
     End If
-    
+
+    'Show TAB to End User DSD or TA-SDI
+    Call TAB_selection
+    Application.Wait Now + TimeValue("00:00:02")
+
     '--------------------------------------------------------------------
-    '                             WRITE
+    '                        CALL WRITE FUNCTIONS
     '--------------------------------------------------------------------
-    'Control here the Data that have to be sended to DATIM
+    'Control here the Data that have to writed on DATIM Form
     'Quarterly
     Call PrEP_write
     Call HTS_TST_Numerator_write
@@ -108,11 +140,19 @@ Else
     Call TX_TB_write
     
     'Annually
-    
-    
+    Call GEND_GBV_write
+    Call FPINT_SITE_write
+    Call TX_RET_write
+    Call TX_PVLS_write
+    Call HRH_write
+    Call LAB_PTCQI_write
+
     '--------------------------------------------------------------------
-    '                             PERSIST
+    '                       CALL PERSIST FUNCTIONS
     '--------------------------------------------------------------------
+    'Control here the Data that have to persisted on DATIM Form
+    Application.Wait Now + TimeValue("00:00:05") 
+    'Quarterly
     Call PrEP_persist
     Call HTS_TST_Numerator_persist
     Call PICT_Inpatient_persist
@@ -135,10 +175,16 @@ Else
     Call TX_TB_persist
     
     'Annually
-    
-      
-ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
-Application.Wait Now + TimeValue("00:00:15")
+    Call GEND_GBV_persist
+    Call FPINT_SITE_persist
+    Call TX_RET_persist
+    Call TX_PVLS_persist
+    Call HRH_persist
+    Call LAB_PTCQI_persist
+
+    Application.Wait Now + TimeValue("00:00:15")  
+    ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
+    Application.Wait Now + TimeValue("00:00:05") 
 
 End If
     
@@ -147,27 +193,31 @@ i = i + 1
 End If
 Loop
 
+'Calculate the total duration time
+endTime = Now
+fillDuration = endTime - startTime
+FormProgressBar.CheckBox2.Value = True
+FormProgressBar.CheckBox2.Caption = "Hora final: " & Now & ", Duração: " & Format(fillDuration, "hh") & ":" & Format(fillDuration, "nn:ss")
 
-
-MsgBox "Dados enviados para o DATIM com sucesso!", vbInformation, "FGH-SIS"
+'Send E-mail notification
+Call SendEmailNotification
 
 End Sub
 
-'--------------------------------------------------------------------
-'                             WRITE
-'--------------------------------------------------------------------
-
-'PrEP_NEW
-Sub PrEP_write()
-'Selectin TAB to indicate if is DSD or TA-SDI
-'Prevention
-IE.Document.GetElementByID("ui-id-2").Click
-Application.Wait Now + TimeValue("00:00:03")
+'Function to show the TAB selection DSD or TA-SDI
+Sub TAB_selection
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("ui-id-7").Click
 Else
 IE.Document.GetElementByID("ui-id-8").Click
 End If
+End Sub
+
+'--------------------------------------------------------------------
+'                        WRITE FUNCTIONS
+'--------------------------------------------------------------------
+'PrEP_NEW
+Sub PrEP_write()
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("C10")) Then
 'Numerator
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -1525,28 +1575,22 @@ Else
 IE.Document.GetElementByID("JqSiilvpE7v-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("IX10")
 End If
 'Pregnant
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("IY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("QI0LrOAmBCG-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("IY10")
 Else
 IE.Document.GetElementByID("JiEYm4EWwtR-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("IY10")
 End If
-End If
 'Breastfeeding
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("IZ10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("QI0LrOAmBCG-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("IZ10")
 Else
 IE.Document.GetElementByID("JiEYm4EWwtR-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("IZ10")
 End If
-End If
 'TB
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JA10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("VGykA1pjgZz-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("JA10")
 Else
 IE.Document.GetElementByID("eTkiWqrqxkG-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("JA10")
-End If
 End If
 '<1
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
@@ -1555,137 +1599,103 @@ IE.Document.GetElementByID("yXZtvoYQXcD-fYknd2lPzAm-val").Value = ThisWorkbook.S
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("JB10")
 End If
-End If
 '1-9
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("JC10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("JC10")
 End If
-End If
 'Female,10-14
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("JD10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("JD10")
 End If
-End If
 'Female,15-19
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("JE10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("JE10")
 End If
-End If
 'Female,20-24
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("JF10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("JF10")
 End If
-End If
 'Female,25-29
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("JG10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("JG10")
 End If
-End If
 'Female,30-34
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("JH10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("JH10")
 End If
-End If
 'Female,35-39
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("JI10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("JI10")
 End If
-End If
 'Female,40-49
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("JJ10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("JJ10")
 End If
-End If
 'Female,50+
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("JK10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("JK10")
 End If
-End If
 'Male,10-14
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("JL10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("JL10")
 End If
-End If
 'Male,15-19
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("JM10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("JM10")
 End If
-End If
 'Male,20-24
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("JN10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("JN10")
 End If
-End If
 'Male,25-29
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("JO10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("JO10")
 End If
-End If
 'Male,30-34
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("JP10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("JP10")
 End If
-End If
 'Male,35-39
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("JQ10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("JQ10")
 End If
-End If
 'Male,40-49
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("JR10")
 Else
 IE.Document.GetElementByID("FjLaCnuoQWR-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("JR10")
 End If
-End If
 'Male,50+
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("yXZtvoYQXcD-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("JS10")
 Else
@@ -1699,25 +1709,19 @@ IE.Document.GetElementByID("NBLKn7nRBfo-wIv7t5fSIlK-val").Value = ThisWorkbook.S
 Else
 IE.Document.GetElementByID("a2BO57JIf4z-wIv7t5fSIlK-val").Value = ThisWorkbook.Sheets("sheet1").Range("JT10")
 End If
-End If
 'Female,15+
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("NBLKn7nRBfo-R6XPf8j0tYt-val").Value = ThisWorkbook.Sheets("sheet1").Range("JU10")
 Else
 IE.Document.GetElementByID("a2BO57JIf4z-R6XPf8j0tYt-val").Value = ThisWorkbook.Sheets("sheet1").Range("JU10")
 End If
-End If
 'Male,<15
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("NBLKn7nRBfo-GhywTqKHQNM-val").Value = ThisWorkbook.Sheets("sheet1").Range("JV10")
 Else
 IE.Document.GetElementByID("a2BO57JIf4z-GhywTqKHQNM-val").Value = ThisWorkbook.Sheets("sheet1").Range("JV10")
 End If
-End If
 'Male,15+
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JB10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("NBLKn7nRBfo-ZnMtvRMKMWh-val").Value = ThisWorkbook.Sheets("sheet1").Range("JW10")
 Else
@@ -1741,137 +1745,103 @@ IE.Document.GetElementByID("Hyvw9VnZ2ch-fYknd2lPzAm-val").Value = ThisWorkbook.S
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("JY10")
 End If
-End If
 '1-9
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("JZ10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("JZ10")
 End If
-End If
 'Female,10-14
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("KA10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("KA10")
 End If
-End If
 'Female,15-19
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("KB10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("KB10")
 End If
-End If
 'Female,20-24
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("KC10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("KC10")
 End If
-End If
 'Female,25-29
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("KD10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("KD10")
 End If
-End If
 'Female,30-34
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("KE10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("KE10")
 End If
-End If
 'Female,35-39
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("KF10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("KF10")
 End If
-End If
 'Female,40-49
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("KG10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("KG10")
 End If
-End If
 'Female,50+
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("KH10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("KH10")
 End If
-End If
 'Male,10-14
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("KI10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("KI10")
 End If
-End If
 'Male,15-19
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("KJ10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("KJ10")
 End If
-End If
 'Male,20-24
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("KK10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("KK10")
 End If
-End If
 'Male,25-29
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("KL10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("KL10")
 End If
-End If
 'Male,30-34
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("KM10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("KM10")
 End If
-End If
 'Male,35-39
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("KN10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("KN10")
 End If
-End If
 'Male,40-49
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("KO10")
 Else
 IE.Document.GetElementByID("ebCEt4u78PX-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("KO10")
 End If
-End If
 'Male,50+
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("Hyvw9VnZ2ch-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("KP10")
 Else
@@ -1885,25 +1855,19 @@ IE.Document.GetElementByID("c03urRVExYe-wIv7t5fSIlK-val").Value = ThisWorkbook.S
 Else
 IE.Document.GetElementByID("qkjYvdfOakY-wIv7t5fSIlK-val").Value = ThisWorkbook.Sheets("sheet1").Range("KQ10")
 End If
-End If
 'Female,15+
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("c03urRVExYe-R6XPf8j0tYt-val").Value = ThisWorkbook.Sheets("sheet1").Range("KR10")
 Else
 IE.Document.GetElementByID("qkjYvdfOakY-R6XPf8j0tYt-val").Value = ThisWorkbook.Sheets("sheet1").Range("KR10")
 End If
-End If
 'Male,<15
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("c03urRVExYe-GhywTqKHQNM-val").Value = ThisWorkbook.Sheets("sheet1").Range("KS10")
 Else
 IE.Document.GetElementByID("qkjYvdfOakY-GhywTqKHQNM-val").Value = ThisWorkbook.Sheets("sheet1").Range("KS10")
 End If
-End If
 'Male,15+
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("JY10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("c03urRVExYe-ZnMtvRMKMWh-val").Value = ThisWorkbook.Sheets("sheet1").Range("KT10")
 Else
@@ -2373,8 +2337,998 @@ End If
 End If
 End Sub
 
+'GEND_GBV
+Sub GEND_GBV_write()
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("OD10")) Then
+'Numerator
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("pWTXzF2L8lG-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("OD10")
+Else
+IE.Document.GetElementByID("sIagQEZjSyy-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("OD10")
+End If
+'Sexual Violence
+'Female,<10
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-QdyvOZhmwfP-val").Value = ThisWorkbook.Sheets("sheet1").Range("OE10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-QdyvOZhmwfP-val").Value = ThisWorkbook.Sheets("sheet1").Range("OE10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-O8VSbT4lhbG-val").Value = ThisWorkbook.Sheets("sheet1").Range("OF10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-O8VSbT4lhbG-val").Value = ThisWorkbook.Sheets("sheet1").Range("OF10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-lQfjasPsxs3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OG10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-lQfjasPsxs3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OG10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-Oz9mfDvGh0n-val").Value = ThisWorkbook.Sheets("sheet1").Range("OH10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-Oz9mfDvGh0n-val").Value = ThisWorkbook.Sheets("sheet1").Range("OH10")
+End If
+'Female,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-GmlEpQlBZJN-val").Value = ThisWorkbook.Sheets("sheet1").Range("OI10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-GmlEpQlBZJN-val").Value = ThisWorkbook.Sheets("sheet1").Range("OI10")
+End If
+'Female,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-O6L8gP01Z7E-val").Value = ThisWorkbook.Sheets("sheet1").Range("OJ10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-O6L8gP01Z7E-val").Value = ThisWorkbook.Sheets("sheet1").Range("OJ10")
+End If
+'Female,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-RRU8Xbcw6m2-val").Value = ThisWorkbook.Sheets("sheet1").Range("OK10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-RRU8Xbcw6m2-val").Value = ThisWorkbook.Sheets("sheet1").Range("OK10")
+End If
+'Female,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-nW1xLOwJNQ3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OL10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-nW1xLOwJNQ3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OL10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-EMPdzS9xUZs-val").Value = ThisWorkbook.Sheets("sheet1").Range("OM10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-EMPdzS9xUZs-val").Value = ThisWorkbook.Sheets("sheet1").Range("OM10")
+End If
+'Male,<10
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-qRPbwt7xN8N-val").Value = ThisWorkbook.Sheets("sheet1").Range("ON10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-qRPbwt7xN8N-val").Value = ThisWorkbook.Sheets("sheet1").Range("ON10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-dWU2Qc1DBTx-val").Value = ThisWorkbook.Sheets("sheet1").Range("OO10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-dWU2Qc1DBTx-val").Value = ThisWorkbook.Sheets("sheet1").Range("OO10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-zh1RfnjU3nw-val").Value = ThisWorkbook.Sheets("sheet1").Range("OP10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-zh1RfnjU3nw-val").Value = ThisWorkbook.Sheets("sheet1").Range("OP10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-EaFoYeVKtl1-val").Value = ThisWorkbook.Sheets("sheet1").Range("OQ10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-EaFoYeVKtl1-val").Value = ThisWorkbook.Sheets("sheet1").Range("OQ10")
+End If
+'Male,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-eph8upo4KnI-val").Value = ThisWorkbook.Sheets("sheet1").Range("OR10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-eph8upo4KnI-val").Value = ThisWorkbook.Sheets("sheet1").Range("OR10")
+End If
+'Male,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-kTLb3E6uG8m-val").Value = ThisWorkbook.Sheets("sheet1").Range("OS10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-kTLb3E6uG8m-val").Value = ThisWorkbook.Sheets("sheet1").Range("OS10")
+End If
+'Male,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-njzg2pswvAa-val").Value = ThisWorkbook.Sheets("sheet1").Range("OT10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-njzg2pswvAa-val").Value = ThisWorkbook.Sheets("sheet1").Range("OT10")
+End If
+'Male,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-l0fUVaWXRTe-val").Value = ThisWorkbook.Sheets("sheet1").Range("OU10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-l0fUVaWXRTe-val").Value = ThisWorkbook.Sheets("sheet1").Range("OU10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-sIES2ww1feR-val").Value = ThisWorkbook.Sheets("sheet1").Range("OV10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-sIES2ww1feR-val").Value = ThisWorkbook.Sheets("sheet1").Range("OV10")
+End If
+'Physical and / or Emotional Violence
+'Female,<10
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-wt4A4IVhK44-val").Value = ThisWorkbook.Sheets("sheet1").Range("OW10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-wt4A4IVhK44-val").Value = ThisWorkbook.Sheets("sheet1").Range("OW10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-GGtPtwWGpuU-val").Value = ThisWorkbook.Sheets("sheet1").Range("OX10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-GGtPtwWGpuU-val").Value = ThisWorkbook.Sheets("sheet1").Range("OX10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-Cec3GHF5VQZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("OY10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-Cec3GHF5VQZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("OY10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-UwV8YVOEVl3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OZ10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-UwV8YVOEVl3-val").Value = ThisWorkbook.Sheets("sheet1").Range("OZ10")
+End If
+'Female,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-NwrTfkWdED1-val").Value = ThisWorkbook.Sheets("sheet1").Range("PA10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-NwrTfkWdED1-val").Value = ThisWorkbook.Sheets("sheet1").Range("PA10")
+End If
+'Female,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-AH6J0MDYMZ0-val").Value = ThisWorkbook.Sheets("sheet1").Range("PB10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-AH6J0MDYMZ0-val").Value = ThisWorkbook.Sheets("sheet1").Range("PB10")
+End If
+'Female,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-wVVtzmD5xsT-val").Value = ThisWorkbook.Sheets("sheet1").Range("PC10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-wVVtzmD5xsT-val").Value = ThisWorkbook.Sheets("sheet1").Range("PC10")
+End If
+'Female,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-HUNtR6x2i93-val").Value = ThisWorkbook.Sheets("sheet1").Range("PD10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-HUNtR6x2i93-val").Value = ThisWorkbook.Sheets("sheet1").Range("PD10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-AGV475enDdO-val").Value = ThisWorkbook.Sheets("sheet1").Range("PE10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-AGV475enDdO-val").Value = ThisWorkbook.Sheets("sheet1").Range("PE10")
+End If
+'Male,<10
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-ClVqXFbwu7z-val").Value = ThisWorkbook.Sheets("sheet1").Range("PF10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-ClVqXFbwu7z-val").Value = ThisWorkbook.Sheets("sheet1").Range("PF10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-YsGSdOrSGvO-val").Value = ThisWorkbook.Sheets("sheet1").Range("PG10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-YsGSdOrSGvO-val").Value = ThisWorkbook.Sheets("sheet1").Range("PG10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-qS6AUbNJKE8-val").Value = ThisWorkbook.Sheets("sheet1").Range("PH10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-qS6AUbNJKE8-val").Value = ThisWorkbook.Sheets("sheet1").Range("PH10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-pA604NbnktK-val").Value = ThisWorkbook.Sheets("sheet1").Range("PI10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-pA604NbnktK-val").Value = ThisWorkbook.Sheets("sheet1").Range("PI10")
+End If
+'Male,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-EUViVSqSaSx-val").Value = ThisWorkbook.Sheets("sheet1").Range("PJ10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-EUViVSqSaSx-val").Value = ThisWorkbook.Sheets("sheet1").Range("PJ10")
+End If
+'Male,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-KUP9oCrnXLm-val").Value = ThisWorkbook.Sheets("sheet1").Range("PK10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-KUP9oCrnXLm-val").Value = ThisWorkbook.Sheets("sheet1").Range("PK10")
+End If
+'Male,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-VPXUnkqLbb4-val").Value = ThisWorkbook.Sheets("sheet1").Range("PL10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-VPXUnkqLbb4-val").Value = ThisWorkbook.Sheets("sheet1").Range("PL10")
+End If
+'Male,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-iam0H1wLzgw-val").Value = ThisWorkbook.Sheets("sheet1").Range("PM10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-iam0H1wLzgw-val").Value = ThisWorkbook.Sheets("sheet1").Range("PM10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("GT81rJIJrrd-v5rsJlwfzWD-val").Value = ThisWorkbook.Sheets("sheet1").Range("PN10")
+Else
+IE.Document.GetElementByID("pKH3YTAShEe-v5rsJlwfzWD-val").Value = ThisWorkbook.Sheets("sheet1").Range("PN10")
+End If
+'PEP
+'Female,<10
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-m0cv4FpuKcT-val").Value = ThisWorkbook.Sheets("sheet1").Range("PO10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-m0cv4FpuKcT-val").Value = ThisWorkbook.Sheets("sheet1").Range("PO10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-WZA61w3X97V-val").Value = ThisWorkbook.Sheets("sheet1").Range("PP10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-WZA61w3X97V-val").Value = ThisWorkbook.Sheets("sheet1").Range("PP10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-n3LvtfmkEfp-val").Value = ThisWorkbook.Sheets("sheet1").Range("PQ10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-n3LvtfmkEfp-val").Value = ThisWorkbook.Sheets("sheet1").Range("PQ10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-mfOtkXnJkEw-val").Value = ThisWorkbook.Sheets("sheet1").Range("PR10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-mfOtkXnJkEw-val").Value = ThisWorkbook.Sheets("sheet1").Range("PR10")
+End If
+'Female,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-Tvu2J5Nr7JF-val").Value = ThisWorkbook.Sheets("sheet1").Range("PS10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-Tvu2J5Nr7JF-val").Value = ThisWorkbook.Sheets("sheet1").Range("PS10")
+End If
+'Female,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-WJKtglKn0DE-val").Value = ThisWorkbook.Sheets("sheet1").Range("PT10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-WJKtglKn0DE-val").Value = ThisWorkbook.Sheets("sheet1").Range("PT10")
+End If
+'Female,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-YjCsCWpQVob-val").Value = ThisWorkbook.Sheets("sheet1").Range("PU10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-YjCsCWpQVob-val").Value = ThisWorkbook.Sheets("sheet1").Range("PU10")
+End If
+'Female,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-MytUkuWfSju-val").Value = ThisWorkbook.Sheets("sheet1").Range("PV10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-MytUkuWfSju-val").Value = ThisWorkbook.Sheets("sheet1").Range("PV10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("owIr2CJUbwq-hiHSrG29erB-val").Value = ThisWorkbook.Sheets("sheet1").Range("PW10")
+Else
+IE.Document.GetElementByID("OZ9CHCMYJMS-hiHSrG29erB-val").Value = ThisWorkbook.Sheets("sheet1").Range("PW10")
+End If
+End If
+End Sub
+
+'FPINT_SITE
+Sub FPINT_SITE_write()
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("QG10")) Then
+IE.Document.GetElementByID("Duf3Ks5vfNL-BbOgaCiB7BE-val").Value = ThisWorkbook.Sheets("sheet1").Range("QG10")
+IE.Document.GetElementByID("Duf3Ks5vfNL-wboZw8GvF3V-val").Value = ThisWorkbook.Sheets("sheet1").Range("QH10")
+IE.Document.GetElementByID("Duf3Ks5vfNL-SthWYE5e0FG-val").Value = ThisWorkbook.Sheets("sheet1").Range("QI10")
+IE.Document.GetElementByID("Duf3Ks5vfNL-CPooeOVlJA4-val").Value = ThisWorkbook.Sheets("sheet1").Range("QJ10")
+IE.Document.GetElementByID("Duf3Ks5vfNL-lsOHpBFk3Nn-val").Value = ThisWorkbook.Sheets("sheet1").Range("QK10")
+End If
+End Sub
+
+'TX_RET
+Sub TX_RET_write()
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("QL10")) Then
+'Numerator
+'12 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("KLHpJzK1SLy-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QL10")
+Else
+IE.Document.GetElementByID("ZOU9pal2R3w-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QL10")
+End If
+'24 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("Pxf0TEEIZFl-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QM10")
+Else
+IE.Document.GetElementByID("KWmsoOySlvp-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QM10")
+End If
+'36 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("BnlDGvdjpYH-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QN10")
+Else
+IE.Document.GetElementByID("bOnCafw9zhe-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("QN10")
+End If
+'Pregnant
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("I9MO0VAFjar-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("QO10")
+Else
+IE.Document.GetElementByID("HdRYfCJUfsc-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("QO10")
+End If
+'Breastfeeding
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("I9MO0VAFjar-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("QP10")
+Else
+IE.Document.GetElementByID("HdRYfCJUfsc-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("QP10")
+End If
+'<1
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("QQ10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("QQ10")
+End If
+'1-9
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("QR10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("QR10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("QS10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("QS10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("QT10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("QT10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("QU10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("QU10")
+End If
+'Female,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("QV10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("QV10")
+End If
+'Female,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("QW10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("QW10")
+End If
+'Female,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("QX10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("QX10")
+End If
+'Female,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("QY10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("QY10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("QZ10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("QZ10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("RA10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("RA10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RB10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RB10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("RC10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("RC10")
+End If
+'Male,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("RD10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("RD10")
+End If
+'Male,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("RE10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("RE10")
+End If
+'Male,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RF10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RF10")
+End If
+'Male,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("RG10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("RG10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("MOtGVQLwYmA-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("RH10")
+Else
+IE.Document.GetElementByID("gmR0FxXhLyl-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("RH10")
+End If
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("RI10")) Then
+'Denominator
+'12 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("VX3vV0hBeLy-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RI10")
+Else
+IE.Document.GetElementByID("SmaMR3maQMj-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RI10")
+End If
+'24 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("LRovH4RfPxL-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RJ10")
+Else
+IE.Document.GetElementByID("BWkdrGCoKhQ-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RJ10")
+End If
+'36 months
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("pnXn5yTXLvG-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RK10")
+Else
+IE.Document.GetElementByID("X2m1PXxPAQe-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("RK10")
+End If
+'Pregnant
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("aal61UVcc5M-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("RL10")
+Else
+IE.Document.GetElementByID("UGj6ot4NTm7-vxBSF1mguas-val").Value = ThisWorkbook.Sheets("sheet1").Range("RL10")
+End If
+'Breastfeeding
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("aal61UVcc5M-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("RM10")
+Else
+IE.Document.GetElementByID("UGj6ot4NTm7-jaxEUorPKgv-val").Value = ThisWorkbook.Sheets("sheet1").Range("RM10")
+End If
+'<1
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("RN10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-fYknd2lPzAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("RN10")
+End If
+'1-9
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("RO10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-CtnbWoya5d5-val").Value = ThisWorkbook.Sheets("sheet1").Range("RO10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("RP10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-J7mbG9jKSpr-val").Value = ThisWorkbook.Sheets("sheet1").Range("RP10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("RQ10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-Ek2cTSEcl3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("RQ10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("RR10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-zpiyTuKQQ2e-val").Value = ThisWorkbook.Sheets("sheet1").Range("RR10")
+End If
+'Female,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("RS10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-RED4BPdFO11-val").Value = ThisWorkbook.Sheets("sheet1").Range("RS10")
+End If
+'Female,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("RT10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-LljzDYxQ1Ga-val").Value = ThisWorkbook.Sheets("sheet1").Range("RT10")
+End If
+'Female,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("RU10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-TEgIyIVs5JA-val").Value = ThisWorkbook.Sheets("sheet1").Range("RU10")
+End If
+'Female,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("RV10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-F0cTl1AAJxz-val").Value = ThisWorkbook.Sheets("sheet1").Range("RV10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("RW10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-lA60kBSujWH-val").Value = ThisWorkbook.Sheets("sheet1").Range("RW10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("RX10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-S4urVfq4oVX-val").Value = ThisWorkbook.Sheets("sheet1").Range("RX10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RY10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-h5FQFklI9Vn-val").Value = ThisWorkbook.Sheets("sheet1").Range("RY10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("RZ10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-QNulEjcSLQT-val").Value = ThisWorkbook.Sheets("sheet1").Range("RZ10")
+End If
+'Male,25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("SA10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-iIZEtL6l6Hb-val").Value = ThisWorkbook.Sheets("sheet1").Range("SA10")
+End If
+'Male,30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("SB10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-aQHB69TmOWe-val").Value = ThisWorkbook.Sheets("sheet1").Range("SB10")
+End If
+'Male,35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("SC10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-T9kxtfDL0pn-val").Value = ThisWorkbook.Sheets("sheet1").Range("SC10")
+End If
+'Male,40-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("SD10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-cci2MH041nc-val").Value = ThisWorkbook.Sheets("sheet1").Range("SD10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("g6VQiVnU01o-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("SE10")
+Else
+IE.Document.GetElementByID("ASBT43khvwp-rPO0WWEbKzL-val").Value = ThisWorkbook.Sheets("sheet1").Range("SE10")
+End If
+End If
+End Sub
+
+'TX_PVLS
+Sub TX_PVLS_write()
+'Numerator
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("SF10")) Then
+'Indication
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YQEFlW4vClz-lrJpKytkH7X-val").Value = ThisWorkbook.Sheets("sheet1").Range("SF10")
+Else
+IE.Document.GetElementByID("ptcrUFB3k5M-lrJpKytkH7X-val").Value = ThisWorkbook.Sheets("sheet1").Range("SF10")
+End If
+'Pregnant
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("JTmqyoIWNsj-poFe6w8ZgCs-val").Value = ThisWorkbook.Sheets("sheet1").Range("SG10")
+Else
+IE.Document.GetElementByID("pICN9lMKMAl-poFe6w8ZgCs-val").Value = ThisWorkbook.Sheets("sheet1").Range("SG10")
+End If
+'Breastfeeding
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("JTmqyoIWNsj-k78k8hp9kxN-val").Value = ThisWorkbook.Sheets("sheet1").Range("SH10")
+Else
+IE.Document.GetElementByID("pICN9lMKMAl-k78k8hp9kxN-val").Value = ThisWorkbook.Sheets("sheet1").Range("SH10")
+End If
+'<1
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-rkwWK8ELyYU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SI10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-rkwWK8ELyYU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SI10")
+End If
+'1-9
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-hHxtViWO56T-val").Value = ThisWorkbook.Sheets("sheet1").Range("SJ10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-hHxtViWO56T-val").Value = ThisWorkbook.Sheets("sheet1").Range("SJ10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-UGGi61VnaqU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SK10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-UGGi61VnaqU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SK10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-iXIVm6C4tQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("SL10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-iXIVm6C4tQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("SL10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-zuJWcV2btWA-val").Value = ThisWorkbook.Sheets("sheet1").Range("SM10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-zuJWcV2btWA-val").Value = ThisWorkbook.Sheets("sheet1").Range("SM10")
+End If
+'Female,25-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-t6R7R9nTSKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("SN10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-t6R7R9nTSKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("SN10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-zl1GE91eGuB-val").Value = ThisWorkbook.Sheets("sheet1").Range("SO10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-zl1GE91eGuB-val").Value = ThisWorkbook.Sheets("sheet1").Range("SO10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-M0IcDbmPyYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("SP10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-M0IcDbmPyYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("SP10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-oFMd0CIZhzb-val").Value = ThisWorkbook.Sheets("sheet1").Range("SQ10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-oFMd0CIZhzb-val").Value = ThisWorkbook.Sheets("sheet1").Range("SQ10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-pjlv85PehPp-val").Value = ThisWorkbook.Sheets("sheet1").Range("SR10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-pjlv85PehPp-val").Value = ThisWorkbook.Sheets("sheet1").Range("SR10")
+End If
+'Male,25-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-WoCAr4g8sj6-val").Value = ThisWorkbook.Sheets("sheet1").Range("SS10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-WoCAr4g8sj6-val").Value = ThisWorkbook.Sheets("sheet1").Range("SS10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YvPOllVtINQ-oyrsEQWocsY-val").Value = ThisWorkbook.Sheets("sheet1").Range("ST10")
+Else
+IE.Document.GetElementByID("MylJht530Cc-oyrsEQWocsY-val").Value = ThisWorkbook.Sheets("sheet1").Range("ST10")
+End If
+End If
+
+'Denominator
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("SU10")) Then
+'Denominator
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("baOWBUVWsx0-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("SU10")
+Else
+IE.Document.GetElementByID("MMWrCwgC4yq-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("SU10")
+End If
+'Indication
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("NtwSTwGUYzt-lrJpKytkH7X-val").Value = ThisWorkbook.Sheets("sheet1").Range("SV10")
+Else
+IE.Document.GetElementByID("YCJoGPP9akp-lrJpKytkH7X-val").Value = ThisWorkbook.Sheets("sheet1").Range("SV10")
+End If
+'Pregnant
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("eQdclZl2AoR-poFe6w8ZgCs-val").Value = ThisWorkbook.Sheets("sheet1").Range("SW10")
+Else
+IE.Document.GetElementByID("PsGw5Fibj3P-poFe6w8ZgCs-val").Value = ThisWorkbook.Sheets("sheet1").Range("SW10")
+End If
+'Breastfeeding
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("eQdclZl2AoR-k78k8hp9kxN-val").Value = ThisWorkbook.Sheets("sheet1").Range("SX10")
+Else
+IE.Document.GetElementByID("PsGw5Fibj3P-k78k8hp9kxN-val").Value = ThisWorkbook.Sheets("sheet1").Range("SX10")
+End If
+'<1
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-rkwWK8ELyYU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SY10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-rkwWK8ELyYU-val").Value = ThisWorkbook.Sheets("sheet1").Range("SY10")
+End If
+'1-9
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-hHxtViWO56T-val").Value = ThisWorkbook.Sheets("sheet1").Range("SZ10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-hHxtViWO56T-val").Value = ThisWorkbook.Sheets("sheet1").Range("SZ10")
+End If
+'Female,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-UGGi61VnaqU-val").Value = ThisWorkbook.Sheets("sheet1").Range("TA10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-UGGi61VnaqU-val").Value = ThisWorkbook.Sheets("sheet1").Range("TA10")
+End If
+'Female,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-iXIVm6C4tQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("TB10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-iXIVm6C4tQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("TB10")
+End If
+'Female,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-zuJWcV2btWA-val").Value = ThisWorkbook.Sheets("sheet1").Range("TC10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-zuJWcV2btWA-val").Value = ThisWorkbook.Sheets("sheet1").Range("TC10")
+End If
+'Female,25-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-t6R7R9nTSKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("TD10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-t6R7R9nTSKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("TD10")
+End If
+'Female,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-zl1GE91eGuB-val").Value = ThisWorkbook.Sheets("sheet1").Range("TE10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-zl1GE91eGuB-val").Value = ThisWorkbook.Sheets("sheet1").Range("TE10")
+End If
+'Male,10-14
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-M0IcDbmPyYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("TF10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-M0IcDbmPyYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("TF10")
+End If
+'Male,15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-oFMd0CIZhzb-val").Value = ThisWorkbook.Sheets("sheet1").Range("TG10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-oFMd0CIZhzb-val").Value = ThisWorkbook.Sheets("sheet1").Range("TG10")
+End If
+'Male,20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-pjlv85PehPp-val").Value = ThisWorkbook.Sheets("sheet1").Range("TH10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-pjlv85PehPp-val").Value = ThisWorkbook.Sheets("sheet1").Range("TH10")
+End If
+'Male,25-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-WoCAr4g8sj6-val").Value = ThisWorkbook.Sheets("sheet1").Range("TI10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-WoCAr4g8sj6-val").Value = ThisWorkbook.Sheets("sheet1").Range("TI10")
+End If
+'Male,50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("kznQBykTtJt-oyrsEQWocsY-val").Value = ThisWorkbook.Sheets("sheet1").Range("TJ10")
+Else
+IE.Document.GetElementByID("alP4jHSfacs-oyrsEQWocsY-val").Value = ThisWorkbook.Sheets("sheet1").Range("TJ10")
+End If
+End If
+End Sub
+
+'HRH
+Sub HRH_write()
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("TK10")) Then
+'HRH_CURR
+'Clinical
+IE.Document.GetElementByID("XL1jnbmgXje-lcEoncRc5Yt-val").Value = ThisWorkbook.Sheets("sheet1").Range("TK10")
+IE.Document.GetElementByID("XL1jnbmgXje-j53J4R7GFQV-val").Value = ThisWorkbook.Sheets("sheet1").Range("TL10")
+IE.Document.GetElementByID("XL1jnbmgXje-amcMmQaGHZ0-val").Value = ThisWorkbook.Sheets("sheet1").Range("TM10")
+'Clinical Support
+IE.Document.GetElementByID("XL1jnbmgXje-DOwfGvVn9ck-val").Value = ThisWorkbook.Sheets("sheet1").Range("TN10")
+IE.Document.GetElementByID("XL1jnbmgXje-ua5IEJcXKSZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("TO10")
+IE.Document.GetElementByID("XL1jnbmgXje-gM511Ccfn0j-val").Value = ThisWorkbook.Sheets("sheet1").Range("TP10")
+'Management
+IE.Document.GetElementByID("XL1jnbmgXje-Ktp5As6zWxl-val").Value = ThisWorkbook.Sheets("sheet1").Range("TQ10")
+IE.Document.GetElementByID("XL1jnbmgXje-rMgmbJPMxw2-val").Value = ThisWorkbook.Sheets("sheet1").Range("TR10")
+IE.Document.GetElementByID("XL1jnbmgXje-cskUzbj4asc-val").Value = ThisWorkbook.Sheets("sheet1").Range("TS10")
+'Social Service
+IE.Document.GetElementByID("XL1jnbmgXje-iAQmGQJLuJi-val").Value = ThisWorkbook.Sheets("sheet1").Range("TT10")
+IE.Document.GetElementByID("XL1jnbmgXje-Os4enuLPVkA-val").Value = ThisWorkbook.Sheets("sheet1").Range("TU10")
+IE.Document.GetElementByID("XL1jnbmgXje-nt6Mv9rOBFP-val").Value = ThisWorkbook.Sheets("sheet1").Range("TV10")
+'Lay
+IE.Document.GetElementByID("XL1jnbmgXje-xh2pAMw81mS-val").Value = ThisWorkbook.Sheets("sheet1").Range("TW10")
+IE.Document.GetElementByID("XL1jnbmgXje-z8uoJOcMd8n-val").Value = ThisWorkbook.Sheets("sheet1").Range("TX10")
+IE.Document.GetElementByID("XL1jnbmgXje-CXYUkjSk3gC-val").Value = ThisWorkbook.Sheets("sheet1").Range("TY10")
+'Other
+IE.Document.GetElementByID("XL1jnbmgXje-PDCEdxrmbWc-val").Value = ThisWorkbook.Sheets("sheet1").Range("TZ10")
+IE.Document.GetElementByID("XL1jnbmgXje-r8CF58PRLMk-val").Value = ThisWorkbook.Sheets("sheet1").Range("UA10")
+IE.Document.GetElementByID("XL1jnbmgXje-YAofbwYDMFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("UB10")
+End If
+'HRH_STAFF
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("UC10")) Then
+IE.Document.GetElementByID("Kk4CdspETNQ-mkOfrTuz7tS-val").Value = ThisWorkbook.Sheets("sheet1").Range("UC10")
+IE.Document.GetElementByID("Kk4CdspETNQ-j2gebSicoa8-val").Value = ThisWorkbook.Sheets("sheet1").Range("UD10")
+IE.Document.GetElementByID("Kk4CdspETNQ-oaRfTQD4RLG-val").Value = ThisWorkbook.Sheets("sheet1").Range("UE10")
+IE.Document.GetElementByID("Kk4CdspETNQ-itxIkeWqiE9-val").Value = ThisWorkbook.Sheets("sheet1").Range("UF10")
+IE.Document.GetElementByID("Kk4CdspETNQ-a9N5X73zhET-val").Value = ThisWorkbook.Sheets("sheet1").Range("UG10")
+IE.Document.GetElementByID("Kk4CdspETNQ-wKH5X6oHquw-val").Value = ThisWorkbook.Sheets("sheet1").Range("UH10")
+End If
+End Sub
+
+'LAB_PTCQI
+Sub LAB_PTCQI_write()
+'LAB_Based
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("UN10")) Then
+'HIV Serology/Diagnostic Testing
+IE.Document.GetElementByID("mJONpM4NS83-wjvrjctVIFl-val").Value = ThisWorkbook.Sheets("sheet1").Range("UN10")
+IE.Document.GetElementByID("mJONpM4NS83-dvzWOOwlCTL-val").Value = ThisWorkbook.Sheets("sheet1").Range("UO10")
+IE.Document.GetElementByID("mJONpM4NS83-bBYFupWkFv5-val").Value = ThisWorkbook.Sheets("sheet1").Range("UP10")
+IE.Document.GetElementByID("mJONpM4NS83-kvmsInuJ6Rm-val").Value = ThisWorkbook.Sheets("sheet1").Range("UQ10")
+'HIV IVT/EID
+IE.Document.GetElementByID("mJONpM4NS83-fgc78xUuXYN-val").Value = ThisWorkbook.Sheets("sheet1").Range("UR10")
+IE.Document.GetElementByID("mJONpM4NS83-Jf9Wcow932c-val").Value = ThisWorkbook.Sheets("sheet1").Range("US10")
+IE.Document.GetElementByID("mJONpM4NS83-gCzhExxbNYd-val").Value = ThisWorkbook.Sheets("sheet1").Range("UT10")
+IE.Document.GetElementByID("mJONpM4NS83-bKFJOpx3RRG-val").Value = ThisWorkbook.Sheets("sheet1").Range("UU10")
+'HIV Viral Load
+IE.Document.GetElementByID("mJONpM4NS83-agGmRAeaZiV-val").Value = ThisWorkbook.Sheets("sheet1").Range("UV10")
+IE.Document.GetElementByID("mJONpM4NS83-Z0qfOiODpLT-val").Value = ThisWorkbook.Sheets("sheet1").Range("UW10")
+IE.Document.GetElementByID("mJONpM4NS83-ss1UjocOpi8-val").Value = ThisWorkbook.Sheets("sheet1").Range("UX10")
+IE.Document.GetElementByID("mJONpM4NS83-g2onz7XRaAN-val").Value = ThisWorkbook.Sheets("sheet1").Range("UY10")
+'TB Xpert
+IE.Document.GetElementByID("mJONpM4NS83-ZahS9NJoKXW-val").Value = ThisWorkbook.Sheets("sheet1").Range("UZ10")
+IE.Document.GetElementByID("mJONpM4NS83-aU6B7ARLC5D-val").Value = ThisWorkbook.Sheets("sheet1").Range("VA10")
+IE.Document.GetElementByID("mJONpM4NS83-Pq31JMqCwCh-val").Value = ThisWorkbook.Sheets("sheet1").Range("VB10")
+IE.Document.GetElementByID("mJONpM4NS83-HN71aSgygm2-val").Value = ThisWorkbook.Sheets("sheet1").Range("VC10")
+'TB AFB
+IE.Document.GetElementByID("mJONpM4NS83-WBmklDDpMK9-val").Value = ThisWorkbook.Sheets("sheet1").Range("VD10")
+IE.Document.GetElementByID("mJONpM4NS83-PwYC0dYJTi0-val").Value = ThisWorkbook.Sheets("sheet1").Range("VE10")
+IE.Document.GetElementByID("mJONpM4NS83-NW9C5LxQSaw-val").Value = ThisWorkbook.Sheets("sheet1").Range("VF10")
+IE.Document.GetElementByID("mJONpM4NS83-BC8M2tzZuzK-val").Value = ThisWorkbook.Sheets("sheet1").Range("VG10")
+'TB Culture
+IE.Document.GetElementByID("mJONpM4NS83-mBqCymU7iDH-val").Value = ThisWorkbook.Sheets("sheet1").Range("VH10")
+IE.Document.GetElementByID("mJONpM4NS83-HbburZGhdc6-val").Value = ThisWorkbook.Sheets("sheet1").Range("VI10")
+IE.Document.GetElementByID("mJONpM4NS83-PEmcDc3l3Ma-val").Value = ThisWorkbook.Sheets("sheet1").Range("VJ10")
+IE.Document.GetElementByID("mJONpM4NS83-hro5eQVT06z-val").Value = ThisWorkbook.Sheets("sheet1").Range("VK10")
+'CD4
+IE.Document.GetElementByID("mJONpM4NS83-w97PFBrriFb-val").Value = ThisWorkbook.Sheets("sheet1").Range("VL10")
+IE.Document.GetElementByID("mJONpM4NS83-EUngOIhkk2K-val").Value = ThisWorkbook.Sheets("sheet1").Range("VM10")
+IE.Document.GetElementByID("mJONpM4NS83-Xgy1dZs6LpY-val").Value = ThisWorkbook.Sheets("sheet1").Range("VN10")
+IE.Document.GetElementByID("mJONpM4NS83-BHOcyZmY4KV-val").Value = ThisWorkbook.Sheets("sheet1").Range("VO10")
+'Other
+IE.Document.GetElementByID("mJONpM4NS83-on7sWkx3GcK-val").Value = ThisWorkbook.Sheets("sheet1").Range("VO10")
+IE.Document.GetElementByID("mJONpM4NS83-tWUeCanlxoS-val").Value = ThisWorkbook.Sheets("sheet1").Range("VP10")
+IE.Document.GetElementByID("mJONpM4NS83-xk7MyebpXBb-val").Value = ThisWorkbook.Sheets("sheet1").Range("VQ10")
+IE.Document.GetElementByID("mJONpM4NS83-PeDDjUaHEJS-val").Value = ThisWorkbook.Sheets("sheet1").Range("VR10")
+'2
+'HIV Serology/Diagnostic Testing
+IE.Document.GetElementByID("ifqUg8hufqa-M5ETn6L06TX-val").Value = ThisWorkbook.Sheets("sheet1").Range("VS10")
+IE.Document.GetElementByID("ifqUg8hufqa-yqP8sdEslHe-val").Value = ThisWorkbook.Sheets("sheet1").Range("VT10")
+IE.Document.GetElementByID("ifqUg8hufqa-SwijqDKg39a-val").Value = ThisWorkbook.Sheets("sheet1").Range("VU10")
+'HIV IVT/EID
+IE.Document.GetElementByID("ifqUg8hufqa-fPsjgJS4Y1b-val").Value = ThisWorkbook.Sheets("sheet1").Range("VV10")
+IE.Document.GetElementByID("ifqUg8hufqa-yARDsUl7jL2-val").Value = ThisWorkbook.Sheets("sheet1").Range("VW10")
+IE.Document.GetElementByID("ifqUg8hufqa-kPseq1szL7a-val").Value = ThisWorkbook.Sheets("sheet1").Range("VX10")
+'HIV Viral Load
+IE.Document.GetElementByID("ifqUg8hufqa-lx8MrZoeqbu-val").Value = ThisWorkbook.Sheets("sheet1").Range("VY10")
+IE.Document.GetElementByID("ifqUg8hufqa-pgOsuoYuuqI-val").Value = ThisWorkbook.Sheets("sheet1").Range("VZ10")
+IE.Document.GetElementByID("ifqUg8hufqa-Md2wJHpfZLS-val").Value = ThisWorkbook.Sheets("sheet1").Range("WA10")
+'TB Xpert
+IE.Document.GetElementByID("ifqUg8hufqa-ateI9jWePpi-val").Value = ThisWorkbook.Sheets("sheet1").Range("WB10")
+IE.Document.GetElementByID("ifqUg8hufqa-MO0XrsKbX5s-val").Value = ThisWorkbook.Sheets("sheet1").Range("WC10")
+IE.Document.GetElementByID("ifqUg8hufqa-ZlaikKV6Fjb-val").Value = ThisWorkbook.Sheets("sheet1").Range("WD10")
+'TB AFB
+IE.Document.GetElementByID("ifqUg8hufqa-OZ7ZpzpRDOG-val").Value = ThisWorkbook.Sheets("sheet1").Range("WE10")
+IE.Document.GetElementByID("ifqUg8hufqa-bME9lhrNZw2-val").Value = ThisWorkbook.Sheets("sheet1").Range("WF10")
+IE.Document.GetElementByID("ifqUg8hufqa-ro8CgNFng17-val").Value = ThisWorkbook.Sheets("sheet1").Range("WG10")
+'TB Culture
+IE.Document.GetElementByID("ifqUg8hufqa-XdD5EAst7OH-val").Value = ThisWorkbook.Sheets("sheet1").Range("WH10")
+IE.Document.GetElementByID("ifqUg8hufqa-tp3PpSM67pw-val").Value = ThisWorkbook.Sheets("sheet1").Range("WI10")
+IE.Document.GetElementByID("ifqUg8hufqa-m7YxHE5TgAv-val").Value = ThisWorkbook.Sheets("sheet1").Range("WJ10")
+'CD4
+IE.Document.GetElementByID("ifqUg8hufqa-LxXClsdXZgg-val").Value = ThisWorkbook.Sheets("sheet1").Range("WK10")
+IE.Document.GetElementByID("ifqUg8hufqa-kU09A3lqJDR-val").Value = ThisWorkbook.Sheets("sheet1").Range("WL10")
+IE.Document.GetElementByID("ifqUg8hufqa-oXNvAdTPZXb-val").Value = ThisWorkbook.Sheets("sheet1").Range("WM10")
+'Other
+IE.Document.GetElementByID("ifqUg8hufqa-og3bd0Ph8nj-val").Value = ThisWorkbook.Sheets("sheet1").Range("WN10")
+IE.Document.GetElementByID("ifqUg8hufqa-hjobBGwqCQp-val").Value = ThisWorkbook.Sheets("sheet1").Range("WO10")
+IE.Document.GetElementByID("ifqUg8hufqa-PMUw1K3ybr5-val").Value = ThisWorkbook.Sheets("sheet1").Range("WP10")
+'Specimens received
+IE.Document.GetElementByID("iCBrw4jfZpW-oCr3aOvULR9-val").Value = ThisWorkbook.Sheets("sheet1").Range("WQ10")
+IE.Document.GetElementByID("iCBrw4jfZpW-lyLlOQn9Fp2-val").Value = ThisWorkbook.Sheets("sheet1").Range("WR10")
+IE.Document.GetElementByID("iCBrw4jfZpW-wROfCcdTvss-val").Value = ThisWorkbook.Sheets("sheet1").Range("WS10")
+IE.Document.GetElementByID("iCBrw4jfZpW-hL4XtxFcUly-val").Value = ThisWorkbook.Sheets("sheet1").Range("WT10")
+IE.Document.GetElementByID("iCBrw4jfZpW-YMEVFWa9k4c-val").Value = ThisWorkbook.Sheets("sheet1").Range("WU10")
+IE.Document.GetElementByID("iCBrw4jfZpW-ErICyBbbakd-val").Value = ThisWorkbook.Sheets("sheet1").Range("WV10")
+IE.Document.GetElementByID("iCBrw4jfZpW-SowytNTBD0k-val").Value = ThisWorkbook.Sheets("sheet1").Range("WX10")
+IE.Document.GetElementByID("iCBrw4jfZpW-oKmaZM3W8u4-val").Value = ThisWorkbook.Sheets("sheet1").Range("WY10")
+End If
+'POCT_Based
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("WZ10")) Then
+'HIV Serology/Diagnostic Testing
+IE.Document.GetElementByID("kIec9Ct3rmW-hInFtmuzHDf-val").Value = ThisWorkbook.Sheets("sheet1").Range("WZ10")
+IE.Document.GetElementByID("kIec9Ct3rmW-nfUIRf3FMoC-val").Value = ThisWorkbook.Sheets("sheet1").Range("XA10")
+IE.Document.GetElementByID("kIec9Ct3rmW-OMV9exs4Jwh-val").Value = ThisWorkbook.Sheets("sheet1").Range("XB10")
+IE.Document.GetElementByID("kIec9Ct3rmW-zSBp3PaZbyV-val").Value = ThisWorkbook.Sheets("sheet1").Range("XC10")
+IE.Document.GetElementByID("kIec9Ct3rmW-GTYD2Jz4jy9-val").Value = ThisWorkbook.Sheets("sheet1").Range("XD10")
+'HIV IVT/EID
+IE.Document.GetElementByID("kIec9Ct3rmW-HEE8IQsRKSH-val").Value = ThisWorkbook.Sheets("sheet1").Range("XE10")
+IE.Document.GetElementByID("kIec9Ct3rmW-WZjzgiQNVQG-val").Value = ThisWorkbook.Sheets("sheet1").Range("XF10")
+IE.Document.GetElementByID("kIec9Ct3rmW-f3Fp4ZcpgUE-val").Value = ThisWorkbook.Sheets("sheet1").Range("XG10")
+IE.Document.GetElementByID("kIec9Ct3rmW-RLhCaY19QGX-val").Value = ThisWorkbook.Sheets("sheet1").Range("XH10")
+IE.Document.GetElementByID("kIec9Ct3rmW-ldFSGD0yoXI-val").Value = ThisWorkbook.Sheets("sheet1").Range("XI10")
+'HIV Viral Load
+IE.Document.GetElementByID("kIec9Ct3rmW-VVws7Bnkxj2-val").Value = ThisWorkbook.Sheets("sheet1").Range("XJ10")
+IE.Document.GetElementByID("kIec9Ct3rmW-Ee6RJqyoaND-val").Value = ThisWorkbook.Sheets("sheet1").Range("XK10")
+IE.Document.GetElementByID("kIec9Ct3rmW-vk0up5uA22L-val").Value = ThisWorkbook.Sheets("sheet1").Range("XL10")
+IE.Document.GetElementByID("kIec9Ct3rmW-t0X7kuP5ITu-val").Value = ThisWorkbook.Sheets("sheet1").Range("XM10")
+IE.Document.GetElementByID("kIec9Ct3rmW-gBHiHjh867b-val").Value = ThisWorkbook.Sheets("sheet1").Range("XN10")
+'TB Xpert
+IE.Document.GetElementByID("kIec9Ct3rmW-JYRrkeyoS5K-val").Value = ThisWorkbook.Sheets("sheet1").Range("XO10")
+IE.Document.GetElementByID("kIec9Ct3rmW-LVKpFMHDCVS-val").Value = ThisWorkbook.Sheets("sheet1").Range("XP10")
+IE.Document.GetElementByID("kIec9Ct3rmW-uZxKzmy1gT9-val").Value = ThisWorkbook.Sheets("sheet1").Range("XQ10")
+IE.Document.GetElementByID("kIec9Ct3rmW-W3BCOcida7x-val").Value = ThisWorkbook.Sheets("sheet1").Range("XR10")
+IE.Document.GetElementByID("kIec9Ct3rmW-jGeWA56aMyU-val").Value = ThisWorkbook.Sheets("sheet1").Range("XS10")
+'TB AFB
+IE.Document.GetElementByID("kIec9Ct3rmW-cywAcu4UVW0-val").Value = ThisWorkbook.Sheets("sheet1").Range("XT10")
+IE.Document.GetElementByID("kIec9Ct3rmW-fLz6DbRk6Mw-val").Value = ThisWorkbook.Sheets("sheet1").Range("XU10")
+IE.Document.GetElementByID("kIec9Ct3rmW-lrhlvZHtWX9-val").Value = ThisWorkbook.Sheets("sheet1").Range("XV10")
+IE.Document.GetElementByID("kIec9Ct3rmW-BNw9GNp6tV5-val").Value = ThisWorkbook.Sheets("sheet1").Range("XW10")
+IE.Document.GetElementByID("kIec9Ct3rmW-ZUVlmJ1164I-val").Value = ThisWorkbook.Sheets("sheet1").Range("XX10")
+'CD4
+IE.Document.GetElementByID("kIec9Ct3rmW-gwHKAKHznIt-val").Value = ThisWorkbook.Sheets("sheet1").Range("XY10")
+IE.Document.GetElementByID("kIec9Ct3rmW-KyAYHU2FTyY-val").Value = ThisWorkbook.Sheets("sheet1").Range("XZ10")
+IE.Document.GetElementByID("kIec9Ct3rmW-cITP8LkNcAj-val").Value = ThisWorkbook.Sheets("sheet1").Range("YA10")
+IE.Document.GetElementByID("kIec9Ct3rmW-Y6uJrlohWwk-val").Value = ThisWorkbook.Sheets("sheet1").Range("YB10")
+IE.Document.GetElementByID("kIec9Ct3rmW-YrJMntMq0oI-val").Value = ThisWorkbook.Sheets("sheet1").Range("YC10")
+'Other
+IE.Document.GetElementByID("kIec9Ct3rmW-ZnmN6tgY0NQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("YD10")
+IE.Document.GetElementByID("kIec9Ct3rmW-AYmLMcikVrX-val").Value = ThisWorkbook.Sheets("sheet1").Range("YE10")
+IE.Document.GetElementByID("kIec9Ct3rmW-lehXF1LRHqA-val").Value = ThisWorkbook.Sheets("sheet1").Range("YF10")
+IE.Document.GetElementByID("kIec9Ct3rmW-r0xdQ7Kp8Eq-val").Value = ThisWorkbook.Sheets("sheet1").Range("YG10")
+IE.Document.GetElementByID("kIec9Ct3rmW-I8X0GYqzTeR-val").Value = ThisWorkbook.Sheets("sheet1").Range("YH10")
+'2
+'HIV Serology/Diagnostic Testing
+IE.Document.GetElementByID("bHk1JDK2258-WTwRddezAcN-val").Value = ThisWorkbook.Sheets("sheet1").Range("YI10")
+IE.Document.GetElementByID("bHk1JDK2258-OiQAT4scJab-val").Value = ThisWorkbook.Sheets("sheet1").Range("YJ10")
+IE.Document.GetElementByID("bHk1JDK2258-FmtEs0FhrI3-val").Value = ThisWorkbook.Sheets("sheet1").Range("YK10")
+'HIV IVT/EID
+IE.Document.GetElementByID("bHk1JDK2258-x1ZhynBLOIi-val").Value = ThisWorkbook.Sheets("sheet1").Range("YL10")
+IE.Document.GetElementByID("bHk1JDK2258-cPzQeUyMQZc-val").Value = ThisWorkbook.Sheets("sheet1").Range("YM10")
+IE.Document.GetElementByID("bHk1JDK2258-oX3ldNgOeUH-val").Value = ThisWorkbook.Sheets("sheet1").Range("YN10")
+'HIV Viral Load
+IE.Document.GetElementByID("bHk1JDK2258-ODKM7OHCRjz-val").Value = ThisWorkbook.Sheets("sheet1").Range("YO10")
+IE.Document.GetElementByID("bHk1JDK2258-PFkP1b4ANZq-val").Value = ThisWorkbook.Sheets("sheet1").Range("YP10")
+IE.Document.GetElementByID("bHk1JDK2258-xhmIGOSW30y-val").Value = ThisWorkbook.Sheets("sheet1").Range("YQ10")
+'TB Xpert
+IE.Document.GetElementByID("bHk1JDK2258-vR29RErQpWn-val").Value = ThisWorkbook.Sheets("sheet1").Range("YR10")
+IE.Document.GetElementByID("bHk1JDK2258-yY9Dl2GZnP7-val").Value = ThisWorkbook.Sheets("sheet1").Range("YS10")
+IE.Document.GetElementByID("bHk1JDK2258-hFUic9x0Ouq-val").Value = ThisWorkbook.Sheets("sheet1").Range("YT10")
+'TB AFB
+IE.Document.GetElementByID("bHk1JDK2258-aaGH9ISti24-val").Value = ThisWorkbook.Sheets("sheet1").Range("YU10")
+IE.Document.GetElementByID("bHk1JDK2258-YHLx3VeYEcV-val").Value = ThisWorkbook.Sheets("sheet1").Range("YV10")
+IE.Document.GetElementByID("bHk1JDK2258-smN1gR96NfR-val").Value = ThisWorkbook.Sheets("sheet1").Range("YW10")
+'CD4
+IE.Document.GetElementByID("bHk1JDK2258-xj65GAubNL7-val").Value = ThisWorkbook.Sheets("sheet1").Range("YX10")
+IE.Document.GetElementByID("bHk1JDK2258-onZfonByj2s-val").Value = ThisWorkbook.Sheets("sheet1").Range("YY10")
+IE.Document.GetElementByID("bHk1JDK2258-RpONrp3gGku-val").Value = ThisWorkbook.Sheets("sheet1").Range("YZ10")
+'Other
+IE.Document.GetElementByID("bHk1JDK2258-d3BHuxTH1cp-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZA10")
+IE.Document.GetElementByID("bHk1JDK2258-jT7bpHN3WlM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZB10")
+IE.Document.GetElementByID("bHk1JDK2258-CKlcawPMejd-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZC10")
+'Specimens received
+IE.Document.GetElementByID("KMtAtCRNZl8-oCr3aOvULR9-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZD10")
+IE.Document.GetElementByID("KMtAtCRNZl8-lyLlOQn9Fp2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZE10")
+IE.Document.GetElementByID("KMtAtCRNZl8-wROfCcdTvss-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZF10")
+IE.Document.GetElementByID("KMtAtCRNZl8-hL4XtxFcUly-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZG10")
+IE.Document.GetElementByID("KMtAtCRNZl8-YMEVFWa9k4c-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZH10")
+IE.Document.GetElementByID("KMtAtCRNZl8-SowytNTBD0k-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZI10")
+IE.Document.GetElementByID("KMtAtCRNZl8-oKmaZM3W8u4-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZJ10") 
+End If
+End Sub
+
 '--------------------------------------------------------------------
-'                             PERSIST
+'                        PERSIST FUNCTIONS
 '--------------------------------------------------------------------
 'PrEP
 Sub PrEP_persist()
@@ -3199,4 +4153,528 @@ IE.Document.GetElementByID("QBCFhUL0DsI-M5tkYhf3wH0-val").dispatchEvent evt
 IE.Document.GetElementByID("QBCFhUL0DsI-EinRX4vGJHS-val").dispatchEvent evt
 IE.Document.GetElementByID("QBCFhUL0DsI-rtt53W8KwRV-val").dispatchEvent evt
 End If
+End Sub
+
+'GEND_GBV
+Sub GEND_GBV_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("pWTXzF2L8lG-HllvX50cXC0-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-QdyvOZhmwfP-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-O8VSbT4lhbG-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-lQfjasPsxs3-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-Oz9mfDvGh0n-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-GmlEpQlBZJN-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-O6L8gP01Z7E-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-RRU8Xbcw6m2-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-nW1xLOwJNQ3-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-EMPdzS9xUZs-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-qRPbwt7xN8N-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-dWU2Qc1DBTx-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-zh1RfnjU3nw-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-EaFoYeVKtl1-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-eph8upo4KnI-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-kTLb3E6uG8m-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-njzg2pswvAa-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-l0fUVaWXRTe-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-sIES2ww1feR-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-wt4A4IVhK44-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-GGtPtwWGpuU-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-Cec3GHF5VQZ-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-UwV8YVOEVl3-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-NwrTfkWdED1-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-AH6J0MDYMZ0-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-wVVtzmD5xsT-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-HUNtR6x2i93-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-AGV475enDdO-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-ClVqXFbwu7z-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-YsGSdOrSGvO-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-qS6AUbNJKE8-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-pA604NbnktK-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-EUViVSqSaSx-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-KUP9oCrnXLm-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-VPXUnkqLbb4-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-iam0H1wLzgw-val").dispatchEvent evt
+IE.Document.GetElementByID("GT81rJIJrrd-v5rsJlwfzWD-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-m0cv4FpuKcT-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-WZA61w3X97V-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-n3LvtfmkEfp-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-mfOtkXnJkEw-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-Tvu2J5Nr7JF-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-WJKtglKn0DE-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-YjCsCWpQVob-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-MytUkuWfSju-val").dispatchEvent evt
+IE.Document.GetElementByID("owIr2CJUbwq-hiHSrG29erB-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("sIagQEZjSyy-HllvX50cXC0-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-QdyvOZhmwfP-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-O8VSbT4lhbG-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-lQfjasPsxs3-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-Oz9mfDvGh0n-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-GmlEpQlBZJN-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-O6L8gP01Z7E-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-RRU8Xbcw6m2-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-nW1xLOwJNQ3-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-EMPdzS9xUZs-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-qRPbwt7xN8N-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-dWU2Qc1DBTx-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-zh1RfnjU3nw-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-EaFoYeVKtl1-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-eph8upo4KnI-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-kTLb3E6uG8m-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-njzg2pswvAa-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-l0fUVaWXRTe-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-sIES2ww1feR-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-wt4A4IVhK44-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-GGtPtwWGpuU-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-Cec3GHF5VQZ-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-UwV8YVOEVl3-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-NwrTfkWdED1-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-AH6J0MDYMZ0-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-wVVtzmD5xsT-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-HUNtR6x2i93-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-AGV475enDdO-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-ClVqXFbwu7z-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-YsGSdOrSGvO-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-qS6AUbNJKE8-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-pA604NbnktK-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-EUViVSqSaSx-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-KUP9oCrnXLm-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-VPXUnkqLbb4-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-iam0H1wLzgw-val").dispatchEvent evt
+IE.Document.GetElementByID("pKH3YTAShEe-v5rsJlwfzWD-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-m0cv4FpuKcT-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-WZA61w3X97V-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-n3LvtfmkEfp-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-mfOtkXnJkEw-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-Tvu2J5Nr7JF-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-WJKtglKn0DE-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-YjCsCWpQVob-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-MytUkuWfSju-val").dispatchEvent evt
+IE.Document.GetElementByID("OZ9CHCMYJMS-hiHSrG29erB-val").dispatchEvent evt
+End If
+End Sub
+
+'FPINT_SITE
+Sub FPINT_SITE_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+IE.Document.GetElementByID("Duf3Ks5vfNL-BbOgaCiB7BE-val").dispatchEvent evt
+IE.Document.GetElementByID("Duf3Ks5vfNL-wboZw8GvF3V-val").dispatchEvent evt
+IE.Document.GetElementByID("Duf3Ks5vfNL-SthWYE5e0FG-val").dispatchEvent evt
+IE.Document.GetElementByID("Duf3Ks5vfNL-CPooeOVlJA4-val").dispatchEvent evt
+IE.Document.GetElementByID("Duf3Ks5vfNL-lsOHpBFk3Nn-val").dispatchEvent evt
+End Sub
+
+'TX_RET
+Sub TX_RET_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("KLHpJzK1SLy-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("Pxf0TEEIZFl-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("BnlDGvdjpYH-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("I9MO0VAFjar-vxBSF1mguas-val").dispatchEvent evt
+IE.Document.GetElementByID("I9MO0VAFjar-jaxEUorPKgv-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-fYknd2lPzAm-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-CtnbWoya5d5-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-J7mbG9jKSpr-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-Ek2cTSEcl3p-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-zpiyTuKQQ2e-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-RED4BPdFO11-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-LljzDYxQ1Ga-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-TEgIyIVs5JA-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-F0cTl1AAJxz-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-lA60kBSujWH-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-S4urVfq4oVX-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-h5FQFklI9Vn-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-QNulEjcSLQT-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-iIZEtL6l6Hb-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-aQHB69TmOWe-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-T9kxtfDL0pn-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-cci2MH041nc-val").dispatchEvent evt
+IE.Document.GetElementByID("MOtGVQLwYmA-rPO0WWEbKzL-val").dispatchEvent evt
+IE.Document.GetElementByID("VX3vV0hBeLy-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("LRovH4RfPxL-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("pnXn5yTXLvG-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("aal61UVcc5M-vxBSF1mguas-val").dispatchEvent evt
+IE.Document.GetElementByID("aal61UVcc5M-jaxEUorPKgv-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-fYknd2lPzAm-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-CtnbWoya5d5-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-J7mbG9jKSpr-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-Ek2cTSEcl3p-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-zpiyTuKQQ2e-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-RED4BPdFO11-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-LljzDYxQ1Ga-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-TEgIyIVs5JA-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-F0cTl1AAJxz-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-lA60kBSujWH-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-S4urVfq4oVX-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-h5FQFklI9Vn-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-QNulEjcSLQT-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-iIZEtL6l6Hb-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-aQHB69TmOWe-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-T9kxtfDL0pn-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-cci2MH041nc-val").dispatchEvent evt
+IE.Document.GetElementByID("g6VQiVnU01o-rPO0WWEbKzL-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("ZOU9pal2R3w-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("KWmsoOySlvp-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("bOnCafw9zhe-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("HdRYfCJUfsc-vxBSF1mguas-val").dispatchEvent evt
+IE.Document.GetElementByID("HdRYfCJUfsc-jaxEUorPKgv-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-fYknd2lPzAm-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-CtnbWoya5d5-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-J7mbG9jKSpr-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-Ek2cTSEcl3p-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-zpiyTuKQQ2e-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-RED4BPdFO11-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-LljzDYxQ1Ga-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-TEgIyIVs5JA-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-F0cTl1AAJxz-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-lA60kBSujWH-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-S4urVfq4oVX-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-h5FQFklI9Vn-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-QNulEjcSLQT-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-iIZEtL6l6Hb-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-aQHB69TmOWe-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-T9kxtfDL0pn-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-cci2MH041nc-val").dispatchEvent evt
+IE.Document.GetElementByID("gmR0FxXhLyl-rPO0WWEbKzL-val").dispatchEvent evt
+IE.Document.GetElementByID("SmaMR3maQMj-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("BWkdrGCoKhQ-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("X2m1PXxPAQe-LVcCRCAVjwj-val").dispatchEvent evt
+IE.Document.GetElementByID("UGj6ot4NTm7-vxBSF1mguas-val").dispatchEvent evt
+IE.Document.GetElementByID("UGj6ot4NTm7-jaxEUorPKgv-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-fYknd2lPzAm-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-CtnbWoya5d5-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-J7mbG9jKSpr-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-Ek2cTSEcl3p-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-zpiyTuKQQ2e-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-RED4BPdFO11-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-LljzDYxQ1Ga-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-TEgIyIVs5JA-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-F0cTl1AAJxz-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-lA60kBSujWH-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-S4urVfq4oVX-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-h5FQFklI9Vn-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-QNulEjcSLQT-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-iIZEtL6l6Hb-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-aQHB69TmOWe-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-T9kxtfDL0pn-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-cci2MH041nc-val").dispatchEvent evt
+IE.Document.GetElementByID("ASBT43khvwp-rPO0WWEbKzL-val").dispatchEvent evt
+End if
+End Sub
+
+'TX_PVLS
+Sub TX_PVLS_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("YQEFlW4vClz-lrJpKytkH7X-val").dispatchEvent evt
+IE.Document.GetElementByID("JTmqyoIWNsj-poFe6w8ZgCs-val").dispatchEvent evt
+IE.Document.GetElementByID("JTmqyoIWNsj-k78k8hp9kxN-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-rkwWK8ELyYU-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-hHxtViWO56T-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-UGGi61VnaqU-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-iXIVm6C4tQq-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-zuJWcV2btWA-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-t6R7R9nTSKv-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-zl1GE91eGuB-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-M0IcDbmPyYm-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-oFMd0CIZhzb-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-pjlv85PehPp-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-WoCAr4g8sj6-val").dispatchEvent evt
+IE.Document.GetElementByID("YvPOllVtINQ-oyrsEQWocsY-val").dispatchEvent evt
+IE.Document.GetElementByID("baOWBUVWsx0-HllvX50cXC0-val").dispatchEvent evt
+IE.Document.GetElementByID("NtwSTwGUYzt-lrJpKytkH7X-val").dispatchEvent evt
+IE.Document.GetElementByID("eQdclZl2AoR-poFe6w8ZgCs-val").dispatchEvent evt
+IE.Document.GetElementByID("eQdclZl2AoR-k78k8hp9kxN-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-rkwWK8ELyYU-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-hHxtViWO56T-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-UGGi61VnaqU-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-iXIVm6C4tQq-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-zuJWcV2btWA-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-t6R7R9nTSKv-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-zl1GE91eGuB-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-M0IcDbmPyYm-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-oFMd0CIZhzb-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-pjlv85PehPp-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-WoCAr4g8sj6-val").dispatchEvent evt
+IE.Document.GetElementByID("kznQBykTtJt-oyrsEQWocsY-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("ptcrUFB3k5M-lrJpKytkH7X-val").dispatchEvent evt
+IE.Document.GetElementByID("pICN9lMKMAl-poFe6w8ZgCs-val").dispatchEvent evt
+IE.Document.GetElementByID("pICN9lMKMAl-k78k8hp9kxN-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-rkwWK8ELyYU-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-hHxtViWO56T-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-UGGi61VnaqU-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-iXIVm6C4tQq-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-zuJWcV2btWA-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-t6R7R9nTSKv-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-zl1GE91eGuB-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-M0IcDbmPyYm-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-oFMd0CIZhzb-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-pjlv85PehPp-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-WoCAr4g8sj6-val").dispatchEvent evt
+IE.Document.GetElementByID("MylJht530Cc-oyrsEQWocsY-val").dispatchEvent evt
+IE.Document.GetElementByID("MMWrCwgC4yq-HllvX50cXC0-val").dispatchEvent evt
+IE.Document.GetElementByID("YCJoGPP9akp-lrJpKytkH7X-val").dispatchEvent evt
+IE.Document.GetElementByID("PsGw5Fibj3P-poFe6w8ZgCs-val").dispatchEvent evt
+IE.Document.GetElementByID("PsGw5Fibj3P-k78k8hp9kxN-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-rkwWK8ELyYU-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-hHxtViWO56T-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-UGGi61VnaqU-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-iXIVm6C4tQq-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-zuJWcV2btWA-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-t6R7R9nTSKv-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-zl1GE91eGuB-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-M0IcDbmPyYm-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-oFMd0CIZhzb-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-pjlv85PehPp-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-WoCAr4g8sj6-val").dispatchEvent evt
+IE.Document.GetElementByID("alP4jHSfacs-oyrsEQWocsY-val").dispatchEvent evt
+End if
+End Sub
+
+'HRH
+Sub HRH_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+IE.Document.GetElementByID("XL1jnbmgXje-lcEoncRc5Yt-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-j53J4R7GFQV-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-amcMmQaGHZ0-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-DOwfGvVn9ck-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-ua5IEJcXKSZ-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-gM511Ccfn0j-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-Ktp5As6zWxl-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-rMgmbJPMxw2-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-cskUzbj4asc-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-iAQmGQJLuJi-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-Os4enuLPVkA-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-nt6Mv9rOBFP-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-xh2pAMw81mS-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-z8uoJOcMd8n-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-CXYUkjSk3gC-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-PDCEdxrmbWc-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-r8CF58PRLMk-val").dispatchEvent evt
+IE.Document.GetElementByID("XL1jnbmgXje-YAofbwYDMFf-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-mkOfrTuz7tS-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-j2gebSicoa8-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-oaRfTQD4RLG-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-itxIkeWqiE9-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-a9N5X73zhET-val").dispatchEvent evt
+IE.Document.GetElementByID("Kk4CdspETNQ-wKH5X6oHquw-val").dispatchEvent evt
+End Sub
+
+'LAB_PTCQI
+Sub LAB_PTCQI_persist()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+IE.Document.GetElementByID("mJONpM4NS83-wjvrjctVIFl-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-dvzWOOwlCTL-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-bBYFupWkFv5-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-kvmsInuJ6Rm-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-fgc78xUuXYN-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-Jf9Wcow932c-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-gCzhExxbNYd-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-bKFJOpx3RRG-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-agGmRAeaZiV-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-Z0qfOiODpLT-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-ss1UjocOpi8-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-g2onz7XRaAN-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-ZahS9NJoKXW-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-aU6B7ARLC5D-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-Pq31JMqCwCh-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-HN71aSgygm2-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-WBmklDDpMK9-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-PwYC0dYJTi0-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-NW9C5LxQSaw-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-BC8M2tzZuzK-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-mBqCymU7iDH-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-HbburZGhdc6-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-PEmcDc3l3Ma-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-hro5eQVT06z-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-w97PFBrriFb-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-EUngOIhkk2K-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-Xgy1dZs6LpY-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-BHOcyZmY4KV-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-on7sWkx3GcK-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-tWUeCanlxoS-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-xk7MyebpXBb-val").dispatchEvent evt
+IE.Document.GetElementByID("mJONpM4NS83-PeDDjUaHEJS-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-M5ETn6L06TX-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-yqP8sdEslHe-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-SwijqDKg39a-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-fPsjgJS4Y1b-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-yARDsUl7jL2-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-kPseq1szL7a-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-lx8MrZoeqbu-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-pgOsuoYuuqI-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-Md2wJHpfZLS-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-ateI9jWePpi-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-MO0XrsKbX5s-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-ZlaikKV6Fjb-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-OZ7ZpzpRDOG-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-bME9lhrNZw2-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-ro8CgNFng17-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-XdD5EAst7OH-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-tp3PpSM67pw-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-m7YxHE5TgAv-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-LxXClsdXZgg-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-kU09A3lqJDR-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-oXNvAdTPZXb-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-og3bd0Ph8nj-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-hjobBGwqCQp-val").dispatchEvent evt
+IE.Document.GetElementByID("ifqUg8hufqa-PMUw1K3ybr5-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-oCr3aOvULR9-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-lyLlOQn9Fp2-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-wROfCcdTvss-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-hL4XtxFcUly-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-YMEVFWa9k4c-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-ErICyBbbakd-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-SowytNTBD0k-val").dispatchEvent evt
+IE.Document.GetElementByID("iCBrw4jfZpW-oKmaZM3W8u4-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-hInFtmuzHDf-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-nfUIRf3FMoC-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-OMV9exs4Jwh-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-zSBp3PaZbyV-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-GTYD2Jz4jy9-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-HEE8IQsRKSH-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-WZjzgiQNVQG-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-f3Fp4ZcpgUE-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-RLhCaY19QGX-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-ldFSGD0yoXI-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-VVws7Bnkxj2-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-Ee6RJqyoaND-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-vk0up5uA22L-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-t0X7kuP5ITu-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-gBHiHjh867b-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-JYRrkeyoS5K-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-LVKpFMHDCVS-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-uZxKzmy1gT9-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-W3BCOcida7x-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-jGeWA56aMyU-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-cywAcu4UVW0-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-fLz6DbRk6Mw-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-lrhlvZHtWX9-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-BNw9GNp6tV5-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-ZUVlmJ1164I-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-gwHKAKHznIt-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-KyAYHU2FTyY-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-cITP8LkNcAj-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-Y6uJrlohWwk-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-YrJMntMq0oI-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-ZnmN6tgY0NQ-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-AYmLMcikVrX-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-lehXF1LRHqA-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-r0xdQ7Kp8Eq-val").dispatchEvent evt
+IE.Document.GetElementByID("kIec9Ct3rmW-I8X0GYqzTeR-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-WTwRddezAcN-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-OiQAT4scJab-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-FmtEs0FhrI3-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-x1ZhynBLOIi-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-cPzQeUyMQZc-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-oX3ldNgOeUH-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-ODKM7OHCRjz-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-PFkP1b4ANZq-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-xhmIGOSW30y-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-vR29RErQpWn-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-yY9Dl2GZnP7-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-hFUic9x0Ouq-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-aaGH9ISti24-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-YHLx3VeYEcV-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-smN1gR96NfR-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-xj65GAubNL7-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-onZfonByj2s-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-RpONrp3gGku-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-d3BHuxTH1cp-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-jT7bpHN3WlM-val").dispatchEvent evt
+IE.Document.GetElementByID("bHk1JDK2258-CKlcawPMejd-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-oCr3aOvULR9-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-lyLlOQn9Fp2-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-wROfCcdTvss-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-hL4XtxFcUly-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-YMEVFWa9k4c-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-SowytNTBD0k-val").dispatchEvent evt
+IE.Document.GetElementByID("KMtAtCRNZl8-oKmaZM3W8u4-val").dispatchEvent evt 
+End Sub
+
+Sub SendEmailNotification()
+
+    On Error GoTo Err
+
+    Dim NewMail As Object
+    Dim mailConfig As Object
+    Dim fields As Variant
+    Dim msConfigURL As String
+
+    Set NewMail = CreateObject("CDO.Message")
+    Set mailConfig = CreateObject("CDO.Configuration")
+
+    ' load all default configurations
+    mailConfig.Load -1
+
+    Set fields = mailConfig.fields
+
+    'Set All Email Properties
+    With NewMail
+        .Subject = "[DHIS-FGH/DATIM] Notificação de digitação automática completa (Facility)"
+        .From = "dhis.fgh@gmail.com"
+        .To = ""
+        .CC = ""
+        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz"
+        .HTMLBody = "<table width=420><tr><td colspan='2' style='background-color:#D3D3D3;'>Notificação de digitação automática completa no DATIM</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelCaption & "</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelUserInfo & "</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelUserAgentInfo & "</td></tr><tr><td colspan='2'>" & FormProgressBar.CheckBox1.Caption & "</td></tr><tr><td colspan='2'>" & FormProgressBar.CheckBox2.Caption & "</td></tr><tr><td colspan='2'>" & ThisWorkbook.Sheets("sheet1").Range("A4") & "</td></tr><tr><td>Unidades Organizacionais<br>digitadas:</td><td>" & ouList & "</td></tr><tr><td colspan='2'>" & Year(Now()) & " &copy; <a href='mailto:sis@fgh.org.mz'>sis@fgh.org.mz</a><br><i>Gerado automaticamente por VBA em " & Now & ".</i></td></tr></table>"
+    End With
+
+    msConfigURL = "http://schemas.microsoft.com/cdo/configuration"
+
+    With fields
+        'Enable SSL Authentication
+        .Item(msConfigURL & "/smtpusessl") = True
+
+        'Make SMTP authentication Enabled=true (1)
+        .Item(msConfigURL & "/smtpauthenticate") = 1
+
+        'Set the SMTP server and port Details
+        'To get these details you can get on Settings Page of your Gmail Account
+        .Item(msConfigURL & "/smtpserver") = "smtp.gmail.com"
+        .Item(msConfigURL & "/smtpserverport") = 465
+        .Item(msConfigURL & "/sendusing") = 2
+
+        'Set your credentials of your Gmail Account
+        .Item(msConfigURL & "/sendusername") = "dhis.fgh@gmail.com"
+        .Item(msConfigURL & "/sendpassword") = "Pepfar2014"
+
+        'Update the configuration fields
+        .Update
+
+    End With
+    NewMail.Configuration = mailConfig
+    NewMail.Send
+    MsgBox "Dados enviados para o DATIM com sucesso!", vbInformation, "FGH-SIS"
+
+Exit_Err:
+
+    Set NewMail = Nothing
+    Set mailConfig = Nothing
+    End
+
+Err:
+    Select Case Err.Number
+
+    Case -2147220973  'Could be because of Internet Connection
+        MsgBox " Could be no Internet Connection !!  -- " & Err.Description
+
+    Case -2147220975  'Incorrect credentials User ID or password
+        MsgBox "Incorrect Credentials !!  -- " & Err.Description
+
+    Case Else   'Rest other errors
+        MsgBox "Error occured while sending the email !!  -- " & Err.Description
+    End Select
+
+    Resume Exit_Err
+
 End Sub
