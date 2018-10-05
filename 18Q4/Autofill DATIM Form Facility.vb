@@ -76,7 +76,7 @@ i = i + 1000
 
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("ZP10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ZP10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AAV10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AAV10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
@@ -92,7 +92,7 @@ Else
     End With
 
     'Call DHIS2 javascript function to select Org Unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("ZP10") & "' )", "JavaScript")
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AAV10") & "' )", "JavaScript")
     Application.Wait Now + TimeValue("00:00:04")
     
     'Select the Dataset and Period only at 1st time
@@ -134,6 +134,8 @@ Else
     Call TB_STAT
     Call TB_ART
     Call TX_TB
+    Call CXCA_SCRN
+    Call CXCA_TX
     
     'Annually
     Call GEND_GBV
@@ -185,7 +187,6 @@ Sub PrEP()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Prevention
 IE.Document.GetElementByID("ui-id-2").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -194,7 +195,6 @@ Else
 IE.Document.GetElementByID("ui-id-8").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'PrEP_NEW
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("C10")) Then
 'Numerator
@@ -383,7 +383,6 @@ Sub HTS_TST_Numerator()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Knowing HIV Status
 IE.Document.GetElementByID("ui-id-3").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -392,7 +391,6 @@ Else
 IE.Document.GetElementByID("ui-id-11").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'HTS_TST (Facility)
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("R10")) Then
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -429,7 +427,6 @@ End Sub
 Sub PICT_Inpatient()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: Inpatient Services
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("W10")) Then
 '<1,Positive
@@ -716,7 +713,6 @@ End Sub
 Sub PICT_Pediatric()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: Pediatric Services
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AU10")) Then
 'Positive,<5
@@ -761,7 +757,6 @@ End Sub
 Sub PICT_TB_Clinic()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: TB Clinics
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("BA10")) Then
 '<1,Positive
@@ -1180,7 +1175,6 @@ End Sub
 Sub PICT_PMTCT_ANC()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: PMTCT (ANC Only) Clinics
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("CQ10")) Then
 '10-14,Posetive
@@ -1295,7 +1289,6 @@ End Sub
 Sub PICT_Emergency()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: Emergency Ward
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("DE10")) Then
 '<1,Positive
@@ -1582,7 +1575,6 @@ End Sub
 Sub PICT_Other()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PITC Modality: Other PICT
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("EE10")) Then
 'Unknown,M,Positive
@@ -1891,7 +1883,6 @@ End Sub
 Sub VCT()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'VCT
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("FI10")) Then
 '<1,Positive
@@ -2182,7 +2173,6 @@ End Sub
 Sub Index_Testing()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'Index Testing
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("GK10")) Then
 '<1,Positive
@@ -2469,7 +2459,6 @@ End Sub
 Sub PMTCT_STAT()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PMTCT_STAT
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("HI10")) Then
 'Numerator
@@ -2728,7 +2717,6 @@ End Sub
 Sub PMTCT_EID_HEI_POS()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PMTCT_EID
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("IR10")) Then
 '0-2
@@ -2822,7 +2810,6 @@ Sub TX_NEW_TX_CURR()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'On ART
 IE.Document.GetElementByID("ui-id-4").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -2831,7 +2818,6 @@ Else
 IE.Document.GetElementByID("ui-id-13").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'TX_NEW
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("IX10")) Then
 'Numerator
@@ -3504,7 +3490,6 @@ End Sub
 Sub PMTCT_ART()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'PMTCT_ART
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("KU10")) Then
 'Newly
@@ -3550,7 +3535,6 @@ Sub TB_PREV()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Prevention
 IE.Document.GetElementByID("ui-id-2").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -3559,7 +3543,6 @@ Else
 IE.Document.GetElementByID("ui-id-8").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'TB_PREV
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("KW10")) Then
 'Numerator
@@ -3737,7 +3720,6 @@ Sub TB_STAT()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Knowing HIV Status
 IE.Document.GetElementByID("ui-id-3").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -3746,7 +3728,6 @@ Else
 IE.Document.GetElementByID("ui-id-11").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'TB_STAT
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("LO10")) Then
 'Numerator
@@ -3971,7 +3952,6 @@ Sub TB_ART()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'On ART
 IE.Document.GetElementByID("ui-id-4").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -3980,7 +3960,6 @@ Else
 IE.Document.GetElementByID("ui-id-13").Click
 End If
 Application.Wait Now + TimeValue("00:00:03")
-'Populating Data
 'TB_ART
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("MO10")) Then
 'Numerator
@@ -4234,7 +4213,6 @@ End Sub
 Sub TX_TB()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Populating Data
 'TX_TB
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("NJ10")) Then
 'Numerator
@@ -4436,7 +4414,6 @@ Sub GEND_GBV()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Prevention
 IE.Document.GetElementByID("ui-id-2").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -4976,7 +4953,6 @@ Sub FPINT_SITE()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Other
 IE.Document.GetElementByID("ui-id-9").Click
 Application.Wait Now + TimeValue("00:00:03")
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("QG10")) Then
@@ -5021,7 +4997,6 @@ Sub TX_RET()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'TX_RET
 IE.Document.GetElementByID("ui-id-5").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -5930,7 +5905,6 @@ Sub HRH()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'HRH
 IE.Document.GetElementByID("ui-id-6").Click
 Application.Wait Now + TimeValue("00:00:03")
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("TK10")) Then
@@ -6629,7 +6603,6 @@ Sub PMTCT_FO()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 'Select TAB
-'Knowing HIV Status
 IE.Document.GetElementByID("ui-id-3").Click
 Application.Wait Now + TimeValue("00:00:03")
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
@@ -6644,63 +6617,475 @@ If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("jskukqOhI5M-HllvX50cXC0-val").Focus
 IE.Document.GetElementByID("jskukqOhI5M-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZK10")
 IE.Document.GetElementByID("jskukqOhI5M-HllvX50cXC0-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 Else
 IE.Document.GetElementByID("hhPP8o3Ey3P-HllvX50cXC0-val").Focus
 IE.Document.GetElementByID("hhPP8o3Ey3P-HllvX50cXC0-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZK10")
 IE.Document.GetElementByID("hhPP8o3Ey3P-HllvX50cXC0-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
+Application.Wait Now + TimeValue("00:00:01")
 'HIV-infected
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("KYjkpApPVjU-XXVM3fPoj9N-val").Focus
 IE.Document.GetElementByID("KYjkpApPVjU-XXVM3fPoj9N-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZL10")
 IE.Document.GetElementByID("KYjkpApPVjU-XXVM3fPoj9N-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 Else
 IE.Document.GetElementByID("lImd8FuLzSU-XXVM3fPoj9N-val").Focus
 IE.Document.GetElementByID("lImd8FuLzSU-XXVM3fPoj9N-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZL10")
 IE.Document.GetElementByID("lImd8FuLzSU-XXVM3fPoj9N-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
+Application.Wait Now + TimeValue("00:00:01")
 'HIV-uninfected
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("KYjkpApPVjU-Jz2ibrOD00K-val").Focus
 IE.Document.GetElementByID("KYjkpApPVjU-Jz2ibrOD00K-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZM10")
 IE.Document.GetElementByID("KYjkpApPVjU-Jz2ibrOD00K-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 Else
 IE.Document.GetElementByID("lImd8FuLzSU-Jz2ibrOD00K-val").Focus
 IE.Document.GetElementByID("lImd8FuLzSU-Jz2ibrOD00K-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZM10")
 IE.Document.GetElementByID("lImd8FuLzSU-Jz2ibrOD00K-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
+Application.Wait Now + TimeValue("00:00:01")
 'HIV-final status unknown
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("KYjkpApPVjU-CWMkQRQI2Rj-val").Focus
 IE.Document.GetElementByID("KYjkpApPVjU-CWMkQRQI2Rj-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZN10")
 IE.Document.GetElementByID("KYjkpApPVjU-CWMkQRQI2Rj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 Else
 IE.Document.GetElementByID("lImd8FuLzSU-CWMkQRQI2Rj-val").Focus
 IE.Document.GetElementByID("lImd8FuLzSU-CWMkQRQI2Rj-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZN10")
 IE.Document.GetElementByID("lImd8FuLzSU-CWMkQRQI2Rj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
+Application.Wait Now + TimeValue("00:00:01")
 'Died without status known
 If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
 IE.Document.GetElementByID("KYjkpApPVjU-n2lC5CRLwnR-val").Focus
 IE.Document.GetElementByID("KYjkpApPVjU-n2lC5CRLwnR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZO10")
 IE.Document.GetElementByID("KYjkpApPVjU-n2lC5CRLwnR-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 Else
 IE.Document.GetElementByID("lImd8FuLzSU-n2lC5CRLwnR-val").Focus
 IE.Document.GetElementByID("lImd8FuLzSU-n2lC5CRLwnR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZO10")
 IE.Document.GetElementByID("lImd8FuLzSU-n2lC5CRLwnR-val").dispatchEvent evt
+End If
 Application.Wait Now + TimeValue("00:00:01")
 End If
+End Sub
+
+'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA           SSSSSSS      CCCCCCC    RRRRRRRRRR   NNNN   NNNN  
+'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          SSSSSSSSS    CCCCCCCCC   RRRRRRRRRRR  NNNNN  NNNN  
+'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          SSSSSSSSSS  CCCCCCCCCCC  RRRRRRRRRRR  NNNNN  NNNN  
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA         SSSS  SSSS  CCCC   CCCCC RRRR   RRRRR NNNNNN NNNN  
+' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA         SSSS       SCCC     CCC  RRRR   RRRRR NNNNNN NNNN  
+' CCCC            XXXXXX   XCCC           AAAAAAAA         SSSSSSS    SCCC          RRRRRRRRRRR  NNNNNNNNNNN  
+' CCCC            XXXXX    XCCC           AAAA AAAA         SSSSSSSSS SCCC          RRRRRRRRRRR  NNNNNNNNNNN  
+' CCCC            XXXXXX   XCCC          AAAAAAAAAA           SSSSSSS SCCC          RRRRRRRR     NNNNNNNNNNN  
+' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA             SSSSSSCCC     CCC  RRRR RRRR    NNNNNNNNNNN  
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA       SSS    SSSS CCCC   CCCCC RRRR  RRRR   NNNN NNNNNN  
+'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA       SSSSSSSSSSS CCCCCCCCCCC  RRRR  RRRRR  NNNN  NNNNN  
+'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA      SSSSSSSSSS   CCCCCCCCCC  RRRR   RRRRR NNNN  NNNNN  
+'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA       SSSSSSSS     CCCCCCC    RRRR    RRRR NNNN   NNNN  
+'CXCA_SCRN
+Sub CXCA_SCRN()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+'Select TAB
+IE.Document.GetElementByID("ui-id-3").Click
+Application.Wait Now + TimeValue("00:00:03")
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("ui-id-10").Click
+Else
+IE.Document.GetElementByID("ui-id-11").Click
+End If
+Application.Wait Now + TimeValue("00:00:03")
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ZP10")) Then
+'Cervical Cancer screen: Positive
+'15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZP10")
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-dh4TQ68p2SC-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-dh4TQ68p2SC-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZP10")
+IE.Document.GetElementByID("XWK6yAwhol8-dh4TQ68p2SC-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZQ10")
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-pdCeAB4EYYM-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-pdCeAB4EYYM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZQ10")
+IE.Document.GetElementByID("XWK6yAwhol8-pdCeAB4EYYM-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-qgGxi9db8sQ-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-qgGxi9db8sQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
+IE.Document.GetElementByID("XWK6yAwhol8-qgGxi9db8sQ-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-ZLqwxAM0rDn-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-ZLqwxAM0rDn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
+IE.Document.GetElementByID("XWK6yAwhol8-ZLqwxAM0rDn-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-k6PpW7YsDek-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-k6PpW7YsDek-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
+IE.Document.GetElementByID("XWK6yAwhol8-k6PpW7YsDek-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-Rs8GH9wo2Iq-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-Rs8GH9wo2Iq-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
+IE.Document.GetElementByID("XWK6yAwhol8-Rs8GH9wo2Iq-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-dyxvzwmNPGZ-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-dyxvzwmNPGZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
+IE.Document.GetElementByID("XWK6yAwhol8-dyxvzwmNPGZ-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-dr2VUvtgDGn-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-dr2VUvtgDGn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
+IE.Document.GetElementByID("XWK6yAwhol8-dr2VUvtgDGn-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'Cervical Cancer screen: Positive
+'15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-fJ4uotAMsvK-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-fJ4uotAMsvK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
+IE.Document.GetElementByID("XWK6yAwhol8-fJ4uotAMsvK-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-HMzo64LcweA-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-HMzo64LcweA-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
+IE.Document.GetElementByID("XWK6yAwhol8-HMzo64LcweA-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-vW2cAkyRE1o-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-vW2cAkyRE1o-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
+IE.Document.GetElementByID("XWK6yAwhol8-vW2cAkyRE1o-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAA10")
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-O7xahbUykIN-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-O7xahbUykIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAA10")
+IE.Document.GetElementByID("XWK6yAwhol8-O7xahbUykIN-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAB10")
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-t30vaBv4cPu-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-t30vaBv4cPu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAB10")
+IE.Document.GetElementByID("XWK6yAwhol8-t30vaBv4cPu-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAC10")
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-lGLhiwNxWOk-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-lGLhiwNxWOk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAC10")
+IE.Document.GetElementByID("XWK6yAwhol8-lGLhiwNxWOk-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAD10")
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-TSVq2SiVSqr-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-TSVq2SiVSqr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAD10")
+IE.Document.GetElementByID("XWK6yAwhol8-TSVq2SiVSqr-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAE10")
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-SXr2dJIXau2-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-SXr2dJIXau2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAE10")
+IE.Document.GetElementByID("XWK6yAwhol8-SXr2dJIXau2-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'Cervical Cancer screen: Suspected
+'15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAF10")
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-nI9rG3vPWQz-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-nI9rG3vPWQz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAF10")
+IE.Document.GetElementByID("XWK6yAwhol8-nI9rG3vPWQz-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAG10")
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-bUHsLsQL80m-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-bUHsLsQL80m-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAG10")
+IE.Document.GetElementByID("XWK6yAwhol8-bUHsLsQL80m-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAH10")
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-sngMFN7RcpA-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-sngMFN7RcpA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAH10")
+IE.Document.GetElementByID("XWK6yAwhol8-sngMFN7RcpA-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAI10")
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-nFHijHYOiFf-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-nFHijHYOiFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAI10")
+IE.Document.GetElementByID("XWK6yAwhol8-nFHijHYOiFf-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAJ10")
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-E37hIruafwo-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-E37hIruafwo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAJ10")
+IE.Document.GetElementByID("XWK6yAwhol8-E37hIruafwo-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAK10")
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-bbH8Y4ejXSr-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-bbH8Y4ejXSr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAK10")
+IE.Document.GetElementByID("XWK6yAwhol8-bbH8Y4ejXSr-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAL10")
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-B5fJ4gs57Jz-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-B5fJ4gs57Jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAL10")
+IE.Document.GetElementByID("XWK6yAwhol8-B5fJ4gs57Jz-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAM10")
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("XWK6yAwhol8-GGSHmwiOMQX-val").Focus
+IE.Document.GetElementByID("XWK6yAwhol8-GGSHmwiOMQX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAM10")
+IE.Document.GetElementByID("XWK6yAwhol8-GGSHmwiOMQX-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
 End If
 End Sub
+
+'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA          TTTTTTTTTTXXXXX  XXXXX  
+'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          TTTTTTTTTTXXXXX  XXXX   
+'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          TTTTTTTTTTXXXXXXXXXXX   
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA            TTTT     XXXXXXXX    
+' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA            TTTT      XXXXXX     
+' CCCC            XXXXXX   XCCC           AAAAAAAA            TTTT      XXXXXX     
+' CCCC            XXXXX    XCCC           AAAA AAAA           TTTT      XXXXX      
+' CCCC            XXXXXX   XCCC          AAAAAAAAAA           TTTT      XXXXXX     
+' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA          TTTT     XXXXXXXX    
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA          TTTT     XXXXXXXX    
+'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA          TTTT    XXXX XXXXX   
+'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA         TTTT   XXXXX  XXXXX  
+'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA         TTTT   XXXX    XXXX  
+'CXCA_TX
+Sub CXCA_TX()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+'Select TAB
+IE.Document.GetElementByID("ui-id-4").Click
+Application.Wait Now + TimeValue("00:00:03")
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("ui-id-12").Click
+Else
+IE.Document.GetElementByID("ui-id-13").Click
+End If
+Application.Wait Now + TimeValue("00:00:03")
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AAN10")) Then
+'Cervical Cancer screen: Cryotherapy
+'15-19
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAN10")
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-Njt3hvrCNIO-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-Njt3hvrCNIO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAN10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-Njt3hvrCNIO-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAO10")
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-ycC6TYD1fK8-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-ycC6TYD1fK8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAO10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-ycC6TYD1fK8-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAP10")
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-esEoT2zyIAD-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-esEoT2zyIAD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAP10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-esEoT2zyIAD-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAQ10")
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-RMeYVgQI1xD-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-RMeYVgQI1xD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAQ10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-RMeYVgQI1xD-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAR10")
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-yUZniFjLR4K-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-yUZniFjLR4K-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAR10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-yUZniFjLR4K-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAS10")
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-ca7gG3WIozw-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAS10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-ca7gG3WIozw-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAT10")
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-wk3ttV4GTnT-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-wk3ttV4GTnT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAT10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-wk3ttV4GTnT-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+If ThisWorkbook.Sheets("sheet1").Range("B10") = "DSD" Then
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAU10")
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").dispatchEvent evt
+Else
+IE.Document.GetElementByID("Z6qsl1ezjTS-iV3JZe1JRsk-val").Focus
+IE.Document.GetElementByID("Z6qsl1ezjTS-iV3JZe1JRsk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAU10")
+IE.Document.GetElementByID("Z6qsl1ezjTS-iV3JZe1JRsk-val").dispatchEvent evt
+End If
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
+
 
 Sub SendEmailNotification()
 
@@ -6725,7 +7110,7 @@ Sub SendEmailNotification()
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
-        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz"
+        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz"
         .HTMLBody = "<table width=420><tr><td colspan='2' style='background-color:#D3D3D3;'>Notificação de digitação automática completa no DATIM</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelCaption & "</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelUserInfo & "</td></tr><tr><td colspan='2'>" & FormProgressBar.LabelUserAgentInfo & "</td></tr><tr><td colspan='2'>" & FormProgressBar.CheckBox1.Caption & "</td></tr><tr><td colspan='2'>" & FormProgressBar.CheckBox2.Caption & "</td></tr><tr><td colspan='2'>" & ThisWorkbook.Sheets("sheet1").Range("A4") & "</td></tr><tr><td>Unidades Organizacionais<br>digitadas:</td><td>" & ouList & "</td></tr><tr><td colspan='2'>" & Year(Now()) & " &copy; <a href='mailto:sis@fgh.org.mz'>sis@fgh.org.mz</a><br><i>Gerado automaticamente por VBA em " & Now & ".</i></td></tr></table>"
     End With
 

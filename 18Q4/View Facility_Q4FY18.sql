@@ -929,7 +929,41 @@ COALESCE(PMTCT_FO_den.value,0) as PMTCT_FO_den,
 COALESCE(PMTCT_FO_hivinfected.value,0) as PMTCT_FO_hivinfected,
 COALESCE(PMTCT_FO_hivuninfected.value,0) as PMTCT_FO_hivuninfected,
 COALESCE(PMTCT_FO_hivfsu.value,0) as PMTCT_FO_hivfsu,
-COALESCE(PMTCT_FO_died.value,0) as PMTCT_FO_died
+COALESCE(PMTCT_FO_died.value,0) as PMTCT_FO_died,
+/*CXCA_SCRN*/
+COALESCE(CXCA_SCRN_neg_15_19.value,0) as CXCA_SCRN_neg_15_19,
+COALESCE(CXCA_SCRN_neg_20_24.value,0) as CXCA_SCRN_neg_20_24,
+COALESCE(CXCA_SCRN_neg_25_29.value,0) as CXCA_SCRN_neg_25_29,
+COALESCE(CXCA_SCRN_neg_30_34.value,0) as CXCA_SCRN_neg_30_34,
+COALESCE(CXCA_SCRN_neg_35_39.value,0) as CXCA_SCRN_neg_35_39,
+COALESCE(CXCA_SCRN_neg_40_44.value,0) as CXCA_SCRN_neg_40_44,
+COALESCE(CXCA_SCRN_neg_45_49.value,0) as CXCA_SCRN_neg_45_49,
+COALESCE(CXCA_SCRN_neg_50.value,0) as CXCA_SCRN_neg_50,
+COALESCE(CXCA_SCRN_pos_15_19.value,0) as CXCA_SCRN_pos_15_19,
+COALESCE(CXCA_SCRN_pos_20_24.value,0) as CXCA_SCRN_pos_20_24,
+COALESCE(CXCA_SCRN_pos_25_29.value,0) as CXCA_SCRN_pos_25_29,
+COALESCE(CXCA_SCRN_pos_30_34.value,0) as CXCA_SCRN_pos_30_34,
+COALESCE(CXCA_SCRN_pos_35_39.value,0) as CXCA_SCRN_pos_35_39,
+COALESCE(CXCA_SCRN_pos_40_44.value,0) as CXCA_SCRN_pos_40_44,
+COALESCE(CXCA_SCRN_pos_45_49.value,0) as CXCA_SCRN_pos_45_49,
+COALESCE(CXCA_SCRN_pos_50.value,0) as CXCA_SCRN_pos_50,
+COALESCE(CXCA_SCRN_sus_15_19.value,0) as CXCA_SCRN_sus_15_19,
+COALESCE(CXCA_SCRN_sus_20_24.value,0) as CXCA_SCRN_sus_20_24,
+COALESCE(CXCA_SCRN_sus_25_29.value,0) as CXCA_SCRN_sus_25_29,
+COALESCE(CXCA_SCRN_sus_30_34.value,0) as CXCA_SCRN_sus_30_34,
+COALESCE(CXCA_SCRN_sus_35_39.value,0) as CXCA_SCRN_sus_35_39,
+COALESCE(CXCA_SCRN_sus_40_44.value,0) as CXCA_SCRN_sus_40_44,
+COALESCE(CXCA_SCRN_sus_45_49.value,0) as CXCA_SCRN_sus_45_49,
+COALESCE(CXCA_SCRN_sus_50.value,0) as CXCA_SCRN_sus_50,
+/*CXCA_TX*/
+COALESCE(CXCA_TX_cryo_15_19.value,0) as CXCA_TX_cryo_15_19,
+COALESCE(CXCA_TX_cryo_20_24.value,0) as CXCA_TX_cryo_20_24,
+COALESCE(CXCA_TX_cryo_25_29.value,0) as CXCA_TX_cryo_25_29,
+COALESCE(CXCA_TX_cryo_30_34.value,0) as CXCA_TX_cryo_30_34,
+COALESCE(CXCA_TX_cryo_35_39.value,0) as CXCA_TX_cryo_35_39,
+COALESCE(CXCA_TX_cryo_40_44.value,0) as CXCA_TX_cryo_40_44,
+COALESCE(CXCA_TX_cryo_45_49.value,0) as CXCA_TX_cryo_45_49,
+COALESCE(CXCA_TX_cryo_50.value,0) as CXCA_TX_cryo_50
 
 from organisationunit ou
 left outer join _orgunitstructure ous
@@ -7905,6 +7939,300 @@ left outer join (
   and categoryoptioncomboid IN (1203665,1203666,1203667)
   and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
   group by sourceid) as PMTCT_FO_died on PMTCT_FO_died.sourceid=ou.organisationunitid  
+  
+  /*CXCA_SCRN*/
+  /*Negative*/
+  /*15-19*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1244133
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_15_19 on CXCA_SCRN_neg_15_19.sourceid=ou.organisationunitid  
+  
+/*20-24*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1244134
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_20_24 on CXCA_SCRN_neg_20_24.sourceid=ou.organisationunitid  
+  
+  /*25-29*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1204803
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_25_29 on CXCA_SCRN_neg_25_29.sourceid=ou.organisationunitid  
+  
+  /*30-34*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1204804
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_30_34 on CXCA_SCRN_neg_30_34.sourceid=ou.organisationunitid  
+  
+  /*35-39*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1204805
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_35_39 on CXCA_SCRN_neg_35_39.sourceid=ou.organisationunitid  
+  
+  /*40-44*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1244136
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_40_44 on CXCA_SCRN_neg_40_44.sourceid=ou.organisationunitid  
+  
+  /*45-49*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1244138
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_45_49 on CXCA_SCRN_neg_45_49.sourceid=ou.organisationunitid  
+  
+  /*50+*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204823
+  and categoryoptioncomboid = 1204807
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_neg_50 on CXCA_SCRN_neg_50.sourceid=ou.organisationunitid  
+  
+  /*Positive*/
+  /*15-19*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1244133
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_15_19 on CXCA_SCRN_pos_15_19.sourceid=ou.organisationunitid  
+  
+/*20-24*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1244134
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_20_24 on CXCA_SCRN_pos_20_24.sourceid=ou.organisationunitid  
+  
+  /*25-29*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1204803
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_25_29 on CXCA_SCRN_pos_25_29.sourceid=ou.organisationunitid  
+  
+  /*30-34*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1204804
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_30_34 on CXCA_SCRN_pos_30_34.sourceid=ou.organisationunitid  
+  
+  /*35-39*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1204805
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_35_39 on CXCA_SCRN_pos_35_39.sourceid=ou.organisationunitid  
+  
+  /*40-44*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1244136
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_40_44 on CXCA_SCRN_pos_40_44.sourceid=ou.organisationunitid  
+  
+  /*45-49*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1244138
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_45_49 on CXCA_SCRN_pos_45_49.sourceid=ou.organisationunitid  
+  
+  /*50+*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204824
+  and categoryoptioncomboid = 1204807
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_pos_50 on CXCA_SCRN_pos_50.sourceid=ou.organisationunitid
+  
+  /*Suspected*/
+  /*15-19*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1244133
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_15_19 on CXCA_SCRN_sus_15_19.sourceid=ou.organisationunitid  
+  
+/*20-24*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1244134
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_20_24 on CXCA_SCRN_sus_20_24.sourceid=ou.organisationunitid  
+  
+  /*25-29*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1204803
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_25_29 on CXCA_SCRN_sus_25_29.sourceid=ou.organisationunitid  
+  
+  /*30-34*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1204804
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_30_34 on CXCA_SCRN_sus_30_34.sourceid=ou.organisationunitid  
+  
+  /*35-39*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1204805
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_35_39 on CXCA_SCRN_sus_35_39.sourceid=ou.organisationunitid  
+  
+  /*40-44*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1244136
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_40_44 on CXCA_SCRN_sus_40_44.sourceid=ou.organisationunitid  
+  
+  /*45-49*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1244138
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_45_49 on CXCA_SCRN_sus_45_49.sourceid=ou.organisationunitid  
+  
+  /*50+*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204829
+  and categoryoptioncomboid = 1204807
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_SCRN_sus_50 on CXCA_SCRN_sus_50.sourceid=ou.organisationunitid
+  
+  /*CXCA_TX*/
+  /*Cryotherapy*/
+  /*15-19*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1244133
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_15_19 on CXCA_TX_cryo_15_19.sourceid=ou.organisationunitid  
+  
+/*20-24*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1244134
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_20_24 on CXCA_TX_cryo_20_24.sourceid=ou.organisationunitid  
+  
+  /*25-29*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1204803
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_25_29 on CXCA_TX_cryo_25_29.sourceid=ou.organisationunitid  
+  
+  /*30-34*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1204804
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_30_34 on CXCA_TX_cryo_30_34.sourceid=ou.organisationunitid  
+  
+  /*35-39*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1204805
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_35_39 on CXCA_TX_cryo_35_39.sourceid=ou.organisationunitid  
+  
+  /*40-44*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1244136
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_40_44 on CXCA_TX_cryo_40_44.sourceid=ou.organisationunitid  
+  
+  /*45-49*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1244138
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_45_49 on CXCA_TX_cryo_45_49.sourceid=ou.organisationunitid  
+  
+  /*50+*/
+   left outer join (
+  select sourceid, sum(cast(value as double precision)) as value
+  from datavalue
+  where dataelementid=1204825
+  and categoryoptioncomboid = 1204807
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  group by sourceid) as CXCA_TX_cryo_50 on CXCA_TX_cryo_50.sourceid=ou.organisationunitid
   
   
 where ous.level=4 and ous.idlevel2=110 order by district.name || ' / ' || ou.name ASC;
