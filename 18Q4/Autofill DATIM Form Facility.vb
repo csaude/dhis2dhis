@@ -144,7 +144,7 @@ Else
     Call TX_PVLS
     Call HRH
     Call LAB_PTCQI
-    Call PMTCT_FO
+    'Call PMTCT_FO
 
     ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
     Application.Wait Now + TimeValue("00:00:04") 

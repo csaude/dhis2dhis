@@ -7901,7 +7901,7 @@ left outer join (
   from datavalue
   where dataelementid=1203573
   and categoryoptioncomboid IN (1203650,1203651,1203652)
-  and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
+  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where financialoct=(SELECT financialoct from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as PMTCT_FO_den on PMTCT_FO_den.sourceid=ou.organisationunitid
   
   /*HIV-Infected*/
@@ -7910,7 +7910,7 @@ left outer join (
   from datavalue
   where dataelementid=1203594
   and categoryoptioncomboid IN (1203656,1203657,1203658)
-  and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
+  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where financialoct=(SELECT financialoct from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as PMTCT_FO_hivinfected on PMTCT_FO_hivinfected.sourceid=ou.organisationunitid
   
   /*HIV-uninfected*/
@@ -7919,7 +7919,7 @@ left outer join (
   from datavalue
   where dataelementid=1203594
   and categoryoptioncomboid IN (1203653,1203654,1203655)
-  and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
+  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where financialoct=(SELECT financialoct from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as PMTCT_FO_hivuninfected on PMTCT_FO_hivuninfected.sourceid=ou.organisationunitid
   
     /*HIV-final status unknown*/
@@ -7928,7 +7928,7 @@ left outer join (
   from datavalue
   where dataelementid=1203594
   and categoryoptioncomboid IN (1203659,1203660,1203661,1203662,1203663,1203664)
-  and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
+  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where financialoct=(SELECT financialoct from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as PMTCT_FO_hivfsu on PMTCT_FO_hivfsu.sourceid=ou.organisationunitid  
   
     /*Died without status known*/
@@ -7937,7 +7937,7 @@ left outer join (
   from datavalue
   where dataelementid=1203594
   and categoryoptioncomboid IN (1203665,1203666,1203667)
-  and periodid = (select ps.periodid from _periodstructure ps where iso=(SELECT financialoct from _periodstructure where periodid=599888))
+  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where financialoct=(SELECT financialoct from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as PMTCT_FO_died on PMTCT_FO_died.sourceid=ou.organisationunitid  
   
   /*CXCA_SCRN*/
@@ -7948,7 +7948,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1244133
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_15_19 on CXCA_SCRN_neg_15_19.sourceid=ou.organisationunitid  
   
 /*20-24*/
@@ -7957,7 +7957,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1244134
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_20_24 on CXCA_SCRN_neg_20_24.sourceid=ou.organisationunitid  
   
   /*25-29*/
@@ -7966,7 +7966,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1204803
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_25_29 on CXCA_SCRN_neg_25_29.sourceid=ou.organisationunitid  
   
   /*30-34*/
@@ -7975,7 +7975,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1204804
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_30_34 on CXCA_SCRN_neg_30_34.sourceid=ou.organisationunitid  
   
   /*35-39*/
@@ -7984,7 +7984,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1204805
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_35_39 on CXCA_SCRN_neg_35_39.sourceid=ou.organisationunitid  
   
   /*40-44*/
@@ -7993,7 +7993,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1244136
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_40_44 on CXCA_SCRN_neg_40_44.sourceid=ou.organisationunitid  
   
   /*45-49*/
@@ -8002,7 +8002,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1244138
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_45_49 on CXCA_SCRN_neg_45_49.sourceid=ou.organisationunitid  
   
   /*50+*/
@@ -8011,7 +8011,7 @@ left outer join (
   from datavalue
   where dataelementid=1204823
   and categoryoptioncomboid = 1204807
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_neg_50 on CXCA_SCRN_neg_50.sourceid=ou.organisationunitid  
   
   /*Positive*/
@@ -8021,7 +8021,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1244133
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_15_19 on CXCA_SCRN_pos_15_19.sourceid=ou.organisationunitid  
   
 /*20-24*/
@@ -8030,7 +8030,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1244134
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_20_24 on CXCA_SCRN_pos_20_24.sourceid=ou.organisationunitid  
   
   /*25-29*/
@@ -8039,7 +8039,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1204803
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_25_29 on CXCA_SCRN_pos_25_29.sourceid=ou.organisationunitid  
   
   /*30-34*/
@@ -8048,7 +8048,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1204804
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_30_34 on CXCA_SCRN_pos_30_34.sourceid=ou.organisationunitid  
   
   /*35-39*/
@@ -8057,7 +8057,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1204805
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_35_39 on CXCA_SCRN_pos_35_39.sourceid=ou.organisationunitid  
   
   /*40-44*/
@@ -8066,7 +8066,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1244136
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_40_44 on CXCA_SCRN_pos_40_44.sourceid=ou.organisationunitid  
   
   /*45-49*/
@@ -8075,7 +8075,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1244138
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_45_49 on CXCA_SCRN_pos_45_49.sourceid=ou.organisationunitid  
   
   /*50+*/
@@ -8084,7 +8084,7 @@ left outer join (
   from datavalue
   where dataelementid=1204824
   and categoryoptioncomboid = 1204807
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_pos_50 on CXCA_SCRN_pos_50.sourceid=ou.organisationunitid
   
   /*Suspected*/
@@ -8094,7 +8094,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1244133
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_15_19 on CXCA_SCRN_sus_15_19.sourceid=ou.organisationunitid  
   
 /*20-24*/
@@ -8103,7 +8103,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1244134
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_20_24 on CXCA_SCRN_sus_20_24.sourceid=ou.organisationunitid  
   
   /*25-29*/
@@ -8112,7 +8112,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1204803
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_25_29 on CXCA_SCRN_sus_25_29.sourceid=ou.organisationunitid  
   
   /*30-34*/
@@ -8121,7 +8121,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1204804
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_30_34 on CXCA_SCRN_sus_30_34.sourceid=ou.organisationunitid  
   
   /*35-39*/
@@ -8130,7 +8130,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1204805
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_35_39 on CXCA_SCRN_sus_35_39.sourceid=ou.organisationunitid  
   
   /*40-44*/
@@ -8139,7 +8139,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1244136
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_40_44 on CXCA_SCRN_sus_40_44.sourceid=ou.organisationunitid  
   
   /*45-49*/
@@ -8148,7 +8148,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1244138
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_45_49 on CXCA_SCRN_sus_45_49.sourceid=ou.organisationunitid  
   
   /*50+*/
@@ -8157,7 +8157,7 @@ left outer join (
   from datavalue
   where dataelementid=1204829
   and categoryoptioncomboid = 1204807
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_SCRN_sus_50 on CXCA_SCRN_sus_50.sourceid=ou.organisationunitid
   
   /*CXCA_TX*/
@@ -8168,7 +8168,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1244133
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_15_19 on CXCA_TX_cryo_15_19.sourceid=ou.organisationunitid  
   
 /*20-24*/
@@ -8177,7 +8177,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1244134
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_20_24 on CXCA_TX_cryo_20_24.sourceid=ou.organisationunitid  
   
   /*25-29*/
@@ -8186,7 +8186,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1204803
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_25_29 on CXCA_TX_cryo_25_29.sourceid=ou.organisationunitid  
   
   /*30-34*/
@@ -8195,7 +8195,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1204804
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_30_34 on CXCA_TX_cryo_30_34.sourceid=ou.organisationunitid  
   
   /*35-39*/
@@ -8204,7 +8204,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1204805
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_35_39 on CXCA_TX_cryo_35_39.sourceid=ou.organisationunitid  
   
   /*40-44*/
@@ -8213,7 +8213,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1244136
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_40_44 on CXCA_TX_cryo_40_44.sourceid=ou.organisationunitid  
   
   /*45-49*/
@@ -8222,7 +8222,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1244138
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_45_49 on CXCA_TX_cryo_45_49.sourceid=ou.organisationunitid  
   
   /*50+*/
@@ -8231,7 +8231,7 @@ left outer join (
   from datavalue
   where dataelementid=1204825
   and categoryoptioncomboid = 1204807
-  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where sixmonthlyapril=(SELECT sixmonthlyapril from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
+  and periodid  IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=599888) and ps.periodid=p.periodid and p.periodtypeid=3)
   group by sourceid) as CXCA_TX_cryo_50 on CXCA_TX_cryo_50.sourceid=ou.organisationunitid
   
   
