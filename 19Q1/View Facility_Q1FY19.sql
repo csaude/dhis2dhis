@@ -1,6 +1,6 @@
 select district.name || ' / ' || ou.name as facility,
 '' AS placeholder1,
-/*Quarterly*/
+/*Auto-Calculate*/
 /*HTS_TST_num*/
 (
 /*HTS_TST (Facility) - PITC Inpatient Services*/
@@ -216,39 +216,214 @@ COALESCE(ats_50_f_neg.value,0)+
 COALESCE(ats_50_m_pos.value,0)+
 COALESCE(ats_50_m_neg.value,0)+
 /*Index Testing*/
-(COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0))+
-(COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0))+
-(COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0))+
-(COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0))+
-(COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0))+
-(COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0))+
-(COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0))+
-(COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0))+
-(COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0))+
-(COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0))+
-(COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0))+
-(COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0))+
-(COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0))+
-(COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0))+
-(COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0))+
-(COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0))+
-(COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0))+
-(COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0))+
-(COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0))+
-(COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0))+
-(COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0))+
-(COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0))+
-(COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0))+
-(COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0))+
-(COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0))+
-(COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0))+
-(COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0))+
-(COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0))+
-(COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0))+
-(COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0))+
-(COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0))+
-(COALESCE(atip_index_50_m_neg.value,0)+COALESCE(ats_index_50_m_neg.value,0))
+COALESCE(cpn_index_contact_pos.value,0) +
+COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0) +
+COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0) +
+COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0) +
+COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0) +
+COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0) +
+COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0) +
+COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0) +
+COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0) +
+COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0) +
+COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0) +
+COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0) +
+COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0) +
+COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0) +
+COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0) +
+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0) +
+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0) +
+COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0) +
+COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0) +
+COALESCE(cpn_index_contact_neg.value,0) +
+COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0) +
+COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0) +
+COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0) +
+COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0) +
+COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0) +
+COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0) +
+COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0) +
+COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0) +
+COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0) +
+COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0) +
+COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0) +
+COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0) +
+COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0) +
+COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0) +
+COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0) +
+COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0) +
+COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0) +
+COALESCE(atip_index_50_m_neg.value,0)+COALESCE(ats_index_50_m_neg.value,0) 
 ) AS HTS_TST_num,
+/*Auto-Calculate*/
+/*HTS_TST Positive*/
+(
+COALESCE(atip_enf_0_8_f_pos.value,0)+
+COALESCE(atip_enf_0_8_m_pos.value,0)+
+(COALESCE(atip_enf_9_18_f_pos.value,0)+COALESCE(atip_enf_19_4_f_pos.value,0))+
+(COALESCE(atip_enf_9_18_m_pos.value,0)+COALESCE(atip_enf_19_4_m_pos.value,0))+
+COALESCE(atip_enf_5_9_f_pos.value,0)+
+COALESCE(atip_enf_5_9_m_pos.value,0)+
+COALESCE(atip_enf_10_14_f_pos.value,0)+
+COALESCE(atip_enf_10_14_m_pos.value,0)+
+COALESCE(atip_enf_15_19_f_pos.value,0)+
+COALESCE(atip_enf_15_19_m_pos.value,0)+
+COALESCE(atip_enf_20_24_f_pos.value,0)+
+COALESCE(atip_enf_20_24_m_pos.value,0)+
+(COALESCE(atip_enf_25_29_f_pos.value,0)+COALESCE(atip_enf_30_49_f_pos.value,0))+
+(COALESCE(atip_enf_25_29_m_pos.value,0)+COALESCE(atip_enf_30_49_m_pos.value,0))+
+COALESCE(atip_enf_50_f_pos.value,0)+
+COALESCE(atip_enf_50_m_pos.value,0)+
+COALESCE(HTS_TST_Pediatric_pos.value,0)+
+COALESCE(HTS_TST_TB_men1_f_pos.value,0)+
+COALESCE(HTS_TST_TB_men1_m_pos.value,0)+
+COALESCE(HTS_TST_TB_1_4_f_pos.value,0)+
+COALESCE(HTS_TST_TB_1_4_m_pos.value,0)+
+COALESCE(HTS_TST_TB_5_9_f_pos.value,0)+
+COALESCE(HTS_TST_TB_5_9_m_pos.value,0)+
+COALESCE(HTS_TST_TB_10_14_f_pos.value,0)+
+COALESCE(HTS_TST_TB_10_14_m_pos.value,0)+
+COALESCE(HTS_TST_TB_15_19_f_pos.value,0)+
+COALESCE(HTS_TST_TB_15_19_m_pos.value,0)+
+COALESCE(HTS_TST_TB_20_24_f_pos.value,0)+
+COALESCE(HTS_TST_TB_20_24_m_pos.value,0)+
+COALESCE(HTS_TST_TB_25_29_f_pos.value,0)+
+COALESCE(HTS_TST_TB_25_29_m_pos.value,0)+
+COALESCE(HTS_TST_TB_30_34_f_pos.value,0)+
+COALESCE(HTS_TST_TB_30_34_m_pos.value,0)+
+COALESCE(HTS_TST_TB_35_39_f_pos.value,0)+
+COALESCE(HTS_TST_TB_35_39_m_pos.value,0)+
+COALESCE(HTS_TST_TB_40_44_f_pos.value,0)+
+COALESCE(HTS_TST_TB_40_44_m_pos.value,0)+
+COALESCE(HTS_TST_TB_45_49_f_pos.value,0)+
+COALESCE(HTS_TST_TB_45_49_m_pos.value,0)+
+COALESCE(HTS_TST_TB_50_f_pos.value,0)+
+COALESCE(HTS_TST_TB_50_m_pos.value,0)+
+COALESCE(HTS_TST_PMTCT_10_14_pos.value,0)+
+COALESCE(HTS_TST_PMTCT_15_19_pos.value,0)+
+COALESCE(HTS_TST_PMTCT_20_24_pos.value,0)+
+COALESCE(HTS_TST_PMTCT_25_pos.value,0)+
+(COALESCE(mat_men1_pos.value,0)+COALESCE(atip_cpp_0_8_f_pos.value,0))+
+(COALESCE(mat_1_4_pos.value,0)+COALESCE(atip_cpp_9_18_f_pos.value,0)+COALESCE(atip_cpp_19_4_f_pos.value,0))+
+(COALESCE(mat_5_9_pos.value,0)+COALESCE(atip_cpp_5_9_f_pos.value,0))+
+(COALESCE(mat_10_14_pos.value,0)+COALESCE(atip_cpp_10_14_f_pos.value,0))+
+(COALESCE(mat_15_19_pos.value,0)+COALESCE(atip_cpp_15_19_f_pos.value,0))+
+(COALESCE(mat_20_24_pos.value,0)+COALESCE(atip_cpp_20_24_f_pos.value,0))+
+(COALESCE(mat_25_29_pos.value,0)+COALESCE(mat_30_34_pos.value,0)+COALESCE(mat_35_39_pos.value,0)+COALESCE(mat_40_44_pos.value,0)+COALESCE(mat_45_49_pos.value,0)+COALESCE(atip_cpp_25_29_f_pos.value,0)+COALESCE(atip_cpp_30_49_f_pos.value,0))+
+(COALESCE(mat_50_pos.value,0)+COALESCE(atip_cpp_50_f_pos.value,0))+
+COALESCE(atip_bso_0_8_f_pos.value,0)+
+COALESCE(atip_bso_0_8_m_pos.value,0)+
+(COALESCE(atip_bso_9_18_f_pos.value,0)+COALESCE(atip_bso_19_4_f_pos.value,0))+
+(COALESCE(atip_bso_9_18_m_pos.value,0)+COALESCE(atip_bso_19_4_m_pos.value,0))+
+COALESCE(atip_bso_5_9_f_pos.value,0)+
+COALESCE(atip_bso_5_9_m_pos.value,0)+
+COALESCE(atip_bso_10_14_f_pos.value,0)+
+COALESCE(atip_bso_10_14_m_pos.value,0)+
+COALESCE(atip_bso_15_19_f_pos.value,0)+
+COALESCE(atip_bso_15_19_m_pos.value,0)+
+COALESCE(atip_bso_20_24_f_pos.value,0)+
+COALESCE(atip_bso_20_24_m_pos.value,0)+
+(COALESCE(atip_bso_25_29_f_pos.value,0)+COALESCE(atip_bso_30_49_f_pos.value,0))+
+(COALESCE(atip_bso_25_29_m_pos.value,0)+COALESCE(atip_bso_30_49_m_pos.value,0))+
+COALESCE(atip_bso_50_f_pos.value,0)+
+COALESCE(atip_bso_50_m_pos.value,0)+
+COALESCE(cpn_m_pos.value,0)+
+COALESCE(atip_0_8_f_pos.value,0)+
+COALESCE(atip_0_8_m_pos.value,0)+
+(COALESCE(atip_9_18_f_pos.value,0)+COALESCE(atip_19_4_f_pos.value,0))+
+(COALESCE(atip_9_18_m_pos.value,0)+COALESCE(atip_19_4_m_pos.value,0))+
+COALESCE(atip_5_9_f_pos.value,0)+
+COALESCE(atip_5_9_m_pos.value,0)+
+COALESCE(atip_10_14_f_pos.value,0)+
+COALESCE(atip_10_14_m_pos.value,0)+
+COALESCE(atip_15_19_f_pos.value,0)+
+COALESCE(atip_15_19_m_pos.value,0)+
+COALESCE(atip_20_24_f_pos.value,0)+
+COALESCE(atip_20_24_m_pos.value,0)+
+(COALESCE(atip_25_29_f_pos.value,0)+COALESCE(atip_30_49_f_pos.value,0))+
+(COALESCE(atip_25_29_m_pos.value,0)+COALESCE(atip_30_49_m_pos.value,0))+
+(COALESCE(atip_50_f_pos.value,0))+
+COALESCE(atip_50_m_pos.value,0)+
+COALESCE(ats_0_8_f_pos.value,0)+
+COALESCE(ats_0_8_m_pos.value,0)+
+(COALESCE(ats_9_18_f_pos.value,0)+COALESCE(ats_19_4_f_pos.value,0))+
+(COALESCE(ats_9_18_m_pos.value,0)+COALESCE(ats_19_4_m_pos.value,0))+
+COALESCE(ats_5_9_f_pos.value,0)+
+COALESCE(ats_5_9_m_pos.value,0)+
+COALESCE(ats_10_14_f_pos.value,0)+
+COALESCE(ats_10_14_m_pos.value,0)+
+COALESCE(ats_15_19_f_pos.value,0)+
+COALESCE(ats_15_19_m_pos.value,0)+
+COALESCE(ats_20_24_f_pos.value,0)+
+COALESCE(ats_20_24_m_pos.value,0)+
+(COALESCE(ats_25_29_f_pos.value,0)+COALESCE(ats_30_49_f_pos.value,0))+
+(COALESCE(ats_25_29_m_pos.value,0)+COALESCE(ats_30_49_m_pos.value,0))+
+COALESCE(ats_50_f_pos.value,0)+
+COALESCE(ats_50_m_pos.value,0)+
+COALESCE(cpn_index_contact_pos.value,0) +
+COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0) +
+COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0) +
+COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0) +
+COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0) +
+COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0) +
+COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0) +
+COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0) +
+COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0) +
+COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0) +
+COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0) +
+COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0) +
+COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0) +
+COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0) +
+COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0) +
+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0) +
+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0) +
+COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0) +
+COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0) 
+) AS HTS_TST_pos,
+/*Auto-Calculate*/
+/*HTS_TST Index Testing*/
+(
+COALESCE(cpn_index_contact_pos.value,0) +
+COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0) +
+COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0) +
+COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0) +
+COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0) +
+COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0) +
+COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0) +
+COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0) +
+COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0) +
+COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0) +
+COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0) +
+COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0) +
+COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0) +
+COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0) +
+COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0) +
+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0) +
+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0) +
+COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0) +
+COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0) 
+) AS Index_pos,
+(
+COALESCE(cpn_index_contact_neg.value,0) +
+COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0) +
+COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0) +
+COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0) +
+COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0) +
+COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0) +
+COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0) +
+COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0) +
+COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0) +
+COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0) +
+COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0) +
+COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0) +
+COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0) +
+COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0) +
+COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0) +
+COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0) +
+COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0) +
+COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0) +
+COALESCE(atip_index_50_m_neg.value,0)+COALESCE(ats_index_50_m_neg.value,0) 
+) AS Index_neg,
 /*HTS_TST (Facility)-PITC Inpatient Services*/
 COALESCE(atip_enf_0_8_f_pos.value,0) AS HTS_TST_Inpatient_men1_f_pos,
 COALESCE(atip_enf_0_8_f_neg.value,0) AS HTS_TST_Inpatient_men1_f_neg,
@@ -274,90 +449,112 @@ COALESCE(atip_enf_20_24_f_pos.value,0) AS HTS_TST_Inpatient_20_24_f_pos,
 COALESCE(atip_enf_20_24_f_neg.value,0) AS HTS_TST_Inpatient_20_24_f_neg,
 COALESCE(atip_enf_20_24_m_pos.value,0) AS HTS_TST_Inpatient_20_24_m_pos,
 COALESCE(atip_enf_20_24_m_neg.value,0) AS HTS_TST_Inpatient_20_24_m_neg,
-(COALESCE(atip_enf_25_29_f_pos.value,0)+COALESCE(atip_enf_30_49_f_pos.value,0)) AS HTS_TST_Inpatient_25_49_f_pos,
-(COALESCE(atip_enf_25_29_f_neg.value,0)+COALESCE(atip_enf_30_49_f_neg.value,0)) AS HTS_TST_Inpatient_25_49_f_neg,
-(COALESCE(atip_enf_25_29_m_pos.value,0)+COALESCE(atip_enf_30_49_m_pos.value,0)) AS HTS_TST_Inpatient_25_49_m_pos,
-(COALESCE(atip_enf_25_29_m_neg.value,0)+COALESCE(atip_enf_30_49_m_neg.value,0)) AS HTS_TST_Inpatient_25_49_m_neg,
+COALESCE(atip_enf_25_29_f_pos.value,0) AS HTS_TST_Inpatient_25_29_f_pos,
+COALESCE(atip_enf_25_29_f_neg.value,0) AS HTS_TST_Inpatient_25_29_f_neg,
+COALESCE(atip_enf_25_29_m_pos.value,0) AS HTS_TST_Inpatient_25_29_m_pos,
+COALESCE(atip_enf_25_29_m_neg.value,0) AS HTS_TST_Inpatient_25_29_m_neg,
+COALESCE(atip_enf_30_49_f_pos.value,0) AS HTS_TST_Inpatient_30_49_f_pos,
+COALESCE(atip_enf_30_49_f_neg.value,0) AS HTS_TST_Inpatient_30_49_f_neg,
+COALESCE(atip_enf_30_49_m_pos.value,0) AS HTS_TST_Inpatient_30_49_m_pos,
+COALESCE(atip_enf_30_49_m_neg.value,0) AS HTS_TST_Inpatient_30_49_m_neg,
 COALESCE(atip_enf_50_f_pos.value,0) AS HTS_TST_Inpatient_50_f_pos,
 COALESCE(atip_enf_50_f_neg.value,0) AS HTS_TST_Inpatient_50_f_neg,
 COALESCE(atip_enf_50_m_pos.value,0) AS HTS_TST_Inpatient_50_m_pos,
 COALESCE(atip_enf_50_m_neg.value,0) AS HTS_TST_Inpatient_50_m_neg,
 /*HTS_TST (Facility)-PITC Pediatric Services*/
+'' AS placeholder11,
+'' AS placeholder12,
+'' AS placeholder13,
+'' AS placeholder14,
 COALESCE(HTS_TST_Pediatric_pos.value,0) AS HTS_TST_Pediatric_pos,
 COALESCE(HTS_TST_Pediatric_neg.value,0) AS HTS_TST_Pediatric_neg,
+'' AS placeholder15,
+'' AS placeholder16,
+/*Auto-Calculate*/
 /*HTS_TST (Facility)-PITC-TB Clinics*/
-COALESCE(HTS_TST_TB_men1_f_pos.value,0) AS HTS_TST_TB_men1_f_pos,
-COALESCE(HTS_TST_TB_men1_f_neg.value,0) AS HTS_TST_TB_men1_f_neg,
-COALESCE(HTS_TST_TB_men1_m_pos.value,0) AS HTS_TST_TB_men1_m_pos,
-COALESCE(HTS_TST_TB_men1_m_neg.value,0) AS HTS_TST_TB_men1_m_neg,
-COALESCE(HTS_TST_TB_1_4_f_pos.value,0) AS HTS_TST_TB_1_4_f_pos,
-COALESCE(HTS_TST_TB_1_4_f_neg.value,0) AS HTS_TST_TB_1_4_f_neg,
-COALESCE(HTS_TST_TB_1_4_m_pos.value,0) AS HTS_TST_TB_1_4_m_pos,
-COALESCE(HTS_TST_TB_1_4_m_neg.value,0) AS HTS_TST_TB_1_4_m_neg,
-COALESCE(HTS_TST_TB_5_9_f_pos.value,0) AS HTS_TST_TB_5_9_f_pos,
-COALESCE(HTS_TST_TB_5_9_f_neg.value,0) AS HTS_TST_TB_5_9_f_neg,
-COALESCE(HTS_TST_TB_5_9_m_pos.value,0) AS HTS_TST_TB_5_9_m_pos,
-COALESCE(HTS_TST_TB_5_9_m_neg.value,0) AS HTS_TST_TB_5_9_m_neg,
-COALESCE(HTS_TST_TB_10_14_f_pos.value,0) AS HTS_TST_TB_10_14_f_pos,
-COALESCE(HTS_TST_TB_10_14_f_neg.value,0) AS HTS_TST_TB_10_14_f_neg,
-COALESCE(HTS_TST_TB_10_14_m_pos.value,0) AS HTS_TST_TB_10_14_m_pos,
-COALESCE(HTS_TST_TB_10_14_m_neg.value,0) AS HTS_TST_TB_10_14_m_neg,
-COALESCE(HTS_TST_TB_15_19_f_pos.value,0) AS HTS_TST_TB_15_19_f_pos,
-COALESCE(HTS_TST_TB_15_19_f_neg.value,0) AS HTS_TST_TB_15_19_f_neg,
-COALESCE(HTS_TST_TB_15_19_m_pos.value,0) AS HTS_TST_TB_15_19_m_pos,
-COALESCE(HTS_TST_TB_15_19_m_neg.value,0) AS HTS_TST_TB_15_19_m_neg,
-COALESCE(HTS_TST_TB_20_24_f_pos.value,0) AS HTS_TST_TB_20_24_f_pos,
-COALESCE(HTS_TST_TB_20_24_f_neg.value,0) AS HTS_TST_TB_20_24_f_neg,
-COALESCE(HTS_TST_TB_20_24_m_pos.value,0) AS HTS_TST_TB_20_24_m_pos,
-COALESCE(HTS_TST_TB_20_24_m_neg.value,0) AS HTS_TST_TB_20_24_m_neg,
-COALESCE(HTS_TST_TB_25_29_f_pos.value,0) AS HTS_TST_TB_25_29_f_pos,
-COALESCE(HTS_TST_TB_25_29_f_neg.value,0) AS HTS_TST_TB_25_29_f_neg,
-COALESCE(HTS_TST_TB_25_29_m_pos.value,0) AS HTS_TST_TB_25_29_m_pos,
-COALESCE(HTS_TST_TB_25_29_m_neg.value,0) AS HTS_TST_TB_25_29_m_neg,
-COALESCE(HTS_TST_TB_30_34_f_pos.value,0) AS HTS_TST_TB_30_34_f_pos,
-COALESCE(HTS_TST_TB_30_34_f_neg.value,0) AS HTS_TST_TB_30_34_f_neg,
-COALESCE(HTS_TST_TB_30_34_m_pos.value,0) AS HTS_TST_TB_30_34_m_pos,
-COALESCE(HTS_TST_TB_30_34_m_neg.value,0) AS HTS_TST_TB_30_34_m_neg,
-COALESCE(HTS_TST_TB_35_39_f_pos.value,0) AS HTS_TST_TB_35_39_f_pos,
-COALESCE(HTS_TST_TB_35_39_f_neg.value,0) AS HTS_TST_TB_35_39_f_neg,
-COALESCE(HTS_TST_TB_35_39_m_pos.value,0) AS HTS_TST_TB_35_39_m_pos,
-COALESCE(HTS_TST_TB_35_39_m_neg.value,0) AS HTS_TST_TB_35_39_m_neg,
-COALESCE(HTS_TST_TB_40_44_f_pos.value,0) AS HTS_TST_TB_40_44_f_pos,
-COALESCE(HTS_TST_TB_40_44_f_neg.value,0) AS HTS_TST_TB_40_44_f_neg,
-COALESCE(HTS_TST_TB_40_44_m_pos.value,0) AS HTS_TST_TB_40_44_m_pos,
-COALESCE(HTS_TST_TB_40_44_m_neg.value,0) AS HTS_TST_TB_40_44_m_neg,
-COALESCE(HTS_TST_TB_45_49_f_pos.value,0) AS HTS_TST_TB_45_49_f_pos,
-COALESCE(HTS_TST_TB_45_49_f_neg.value,0) AS HTS_TST_TB_45_49_f_neg,
-COALESCE(HTS_TST_TB_45_49_m_pos.value,0) AS HTS_TST_TB_45_49_m_pos,
-COALESCE(HTS_TST_TB_45_49_m_neg.value,0) AS HTS_TST_TB_45_49_m_neg,
-COALESCE(HTS_TST_TB_50_f_pos.value,0) AS HTS_TST_TB_50_f_pos,
-COALESCE(HTS_TST_TB_50_f_neg.value,0) AS HTS_TST_TB_50_f_neg,
-COALESCE(HTS_TST_TB_50_m_pos.value,0) AS HTS_TST_TB_50_m_pos,
-COALESCE(HTS_TST_TB_50_m_neg.value,0) AS HTS_TST_TB_50_m_neg,
-/*HTS_TST (Facility)-PITC PMTCT (ANC Only) Clinics*/
-COALESCE(HTS_TST_PMTCT_10_14_pos.value,0) AS HTS_TST_PMTCT_10_14_pos,
-COALESCE(HTS_TST_PMTCT_10_14_neg.value,0) AS HTS_TST_PMTCT_10_14_neg,
-COALESCE(HTS_TST_PMTCT_15_19_pos.value,0) AS HTS_TST_PMTCT_15_19_pos,
-COALESCE(HTS_TST_PMTCT_15_19_neg.value,0) AS HTS_TST_PMTCT_15_19_neg,
-COALESCE(HTS_TST_PMTCT_20_24_pos.value,0) AS HTS_TST_PMTCT_20_24_pos,
-COALESCE(HTS_TST_PMTCT_20_24_neg.value,0) AS HTS_TST_PMTCT_20_24_neg,
-COALESCE(HTS_TST_PMTCT_25_pos.value,0) AS HTS_TST_PMTCT_25_49_pos,
-COALESCE(HTS_TST_PMTCT_25_neg.value,0) AS HTS_TST_PMTCT_25_49_neg,
-/*HTS_TST (Facility)-PITC PMTCT Post ANC*/
-(COALESCE(mat_men1_pos.value,0)+COALESCE(atip_cpp_0_8_f_pos.value,0)) AS HTS_TST_PMTCT_POST_men1_pos,
-(COALESCE(mat_men1_neg.value,0)+COALESCE(atip_cpp_0_8_f_neg.value,0)) AS HTS_TST_PMTCT_POST_men1_neg,
-(COALESCE(mat_1_4_pos.value,0)+COALESCE(atip_cpp_9_18_f_pos.value,0)+COALESCE(atip_cpp_19_4_f_pos.value,0)) AS HTS_TST_PMTCT_POST_1_4_pos,
-(COALESCE(mat_1_4_neg.value,0)+COALESCE(atip_cpp_9_18_f_neg.value,0)+COALESCE(atip_cpp_19_4_f_neg.value,0)) AS HTS_TST_PMTCT_POST_1_4_neg,
-(COALESCE(mat_5_9_pos.value,0)+COALESCE(atip_cpp_5_9_f_pos.value,0)) AS HTS_TST_PMTCT_POST_5_9_pos,
-(COALESCE(mat_5_9_neg.value,0)+COALESCE(atip_cpp_5_9_f_neg.value,0)) AS HTS_TST_PMTCT_POST_5_9_neg,
+(
+COALESCE(HTS_TST_TB_men1_f_pos.value,0) +
+COALESCE(HTS_TST_TB_men1_m_pos.value,0) +
+COALESCE(HTS_TST_TB_1_4_f_pos.value,0)  +
+COALESCE(HTS_TST_TB_1_4_m_pos.value,0)  +
+COALESCE(HTS_TST_TB_5_9_f_pos.value,0)  +
+COALESCE(HTS_TST_TB_5_9_m_pos.value,0)  +
+COALESCE(HTS_TST_TB_10_14_f_pos.value,0)+
+COALESCE(HTS_TST_TB_10_14_m_pos.value,0)+
+COALESCE(HTS_TST_TB_15_19_f_pos.value,0)+
+COALESCE(HTS_TST_TB_15_19_m_pos.value,0)+
+COALESCE(HTS_TST_TB_20_24_f_pos.value,0)+
+COALESCE(HTS_TST_TB_20_24_m_pos.value,0)+
+COALESCE(HTS_TST_TB_25_29_f_pos.value,0)+
+COALESCE(HTS_TST_TB_25_29_m_pos.value,0)+
+COALESCE(HTS_TST_TB_30_34_f_pos.value,0)+
+COALESCE(HTS_TST_TB_30_34_m_pos.value,0)+
+COALESCE(HTS_TST_TB_35_39_f_pos.value,0)+
+COALESCE(HTS_TST_TB_35_39_m_pos.value,0)+
+COALESCE(HTS_TST_TB_40_44_f_pos.value,0)+
+COALESCE(HTS_TST_TB_40_44_m_pos.value,0)+
+COALESCE(HTS_TST_TB_45_49_f_pos.value,0)+
+COALESCE(HTS_TST_TB_45_49_m_pos.value,0)+
+COALESCE(HTS_TST_TB_50_f_pos.value,0)   +
+COALESCE(HTS_TST_TB_50_m_pos.value,0)   
+) AS HTS_TST_TB_pos,
+(
+COALESCE(HTS_TST_TB_men1_f_neg.value,0) +
+COALESCE(HTS_TST_TB_men1_m_neg.value,0) +
+COALESCE(HTS_TST_TB_1_4_f_neg.value,0)  +
+COALESCE(HTS_TST_TB_1_4_m_neg.value,0)  +
+COALESCE(HTS_TST_TB_5_9_f_neg.value,0)  +
+COALESCE(HTS_TST_TB_5_9_m_neg.value,0)  +
+COALESCE(HTS_TST_TB_10_14_f_neg.value,0)+
+COALESCE(HTS_TST_TB_10_14_m_neg.value,0)+
+COALESCE(HTS_TST_TB_15_19_f_neg.value,0)+
+COALESCE(HTS_TST_TB_15_19_m_neg.value,0)+
+COALESCE(HTS_TST_TB_20_24_f_neg.value,0)+
+COALESCE(HTS_TST_TB_20_24_m_neg.value,0)+
+COALESCE(HTS_TST_TB_25_29_f_neg.value,0)+
+COALESCE(HTS_TST_TB_25_29_m_neg.value,0)+
+COALESCE(HTS_TST_TB_30_34_f_neg.value,0)+
+COALESCE(HTS_TST_TB_30_34_m_neg.value,0)+
+COALESCE(HTS_TST_TB_35_39_f_neg.value,0)+
+COALESCE(HTS_TST_TB_35_39_m_neg.value,0)+
+COALESCE(HTS_TST_TB_40_44_f_neg.value,0)+
+COALESCE(HTS_TST_TB_40_44_m_neg.value,0)+
+COALESCE(HTS_TST_TB_45_49_f_neg.value,0)+
+COALESCE(HTS_TST_TB_45_49_m_neg.value,0)+
+COALESCE(HTS_TST_TB_50_f_neg.value,0)   +
+COALESCE(HTS_TST_TB_50_m_neg.value,0)   
+) AS HTS_TST_TB_neg,
+/*Auto-Calculate*/
+/*HTS_TST (Facility)-PITC PMTCT (ANC1 Only) Clinics*/
+(
+COALESCE(HTS_TST_PMTCT_10_14_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_15_19_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_20_24_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_25_pos.value,0) 
+) AS HTS_TST_PMTCT_pos,
+(
+COALESCE(HTS_TST_PMTCT_10_14_neg.value,0)  +
+COALESCE(HTS_TST_PMTCT_15_19_neg.value,0)  +
+COALESCE(HTS_TST_PMTCT_20_24_neg.value,0)  +
+COALESCE(HTS_TST_PMTCT_25_neg.value,0) 
+) AS HTS_TST_PMTCT_neg,
+/*HTS_TST (Facility)-PITC PMTCT (Post ANC1)*/
 (COALESCE(mat_10_14_pos.value,0)+COALESCE(atip_cpp_10_14_f_pos.value,0)) AS HTS_TST_PMTCT_POST_10_14_pos,
 (COALESCE(mat_10_14_neg.value,0)+COALESCE(atip_cpp_10_14_f_neg.value,0)) AS HTS_TST_PMTCT_POST_10_14_neg,
 (COALESCE(mat_15_19_pos.value,0)+COALESCE(atip_cpp_15_19_f_pos.value,0)) AS HTS_TST_PMTCT_POST_15_19_pos,
 (COALESCE(mat_15_19_neg.value,0)+COALESCE(atip_cpp_15_19_f_neg.value,0)) AS HTS_TST_PMTCT_POST_15_19_neg,
 (COALESCE(mat_20_24_pos.value,0)+COALESCE(atip_cpp_20_24_f_pos.value,0)) AS HTS_TST_PMTCT_POST_20_24_pos,
 (COALESCE(mat_20_24_neg.value,0)+COALESCE(atip_cpp_20_24_f_neg.value,0)) AS HTS_TST_PMTCT_POST_20_24_neg,
-(COALESCE(mat_25_29_pos.value,0)+COALESCE(mat_30_34_pos.value,0)+COALESCE(mat_35_39_pos.value,0)+COALESCE(mat_40_44_pos.value,0)+COALESCE(mat_45_49_pos.value,0)+COALESCE(atip_cpp_25_29_f_pos.value,0)+COALESCE(atip_cpp_30_49_f_pos.value,0)) AS HTS_TST_PMTCT_POST_25_49_pos,
-(COALESCE(mat_25_29_neg.value,0)+COALESCE(mat_30_34_neg.value,0)+COALESCE(mat_35_39_neg.value,0)+COALESCE(mat_40_44_neg.value,0)+COALESCE(mat_45_49_neg.value,0)+COALESCE(atip_cpp_25_29_f_neg.value,0)+COALESCE(atip_cpp_30_49_f_neg.value,0)) AS HTS_TST_PMTCT_POST_25_49_neg,
+(COALESCE(mat_25_29_pos.value,0)+COALESCE(atip_cpp_25_29_f_pos.value,0)) AS HTS_TST_PMTCT_POST_25_29_pos,
+(COALESCE(mat_25_29_neg.value,0)+COALESCE(atip_cpp_25_29_f_neg.value,0)) AS HTS_TST_PMTCT_POST_25_29_neg,
+(COALESCE(mat_30_34_pos.value,0)+COALESCE(atip_cpp_30_49_f_pos.value,0)) AS HTS_TST_PMTCT_POST_30_34_pos,
+(COALESCE(mat_30_34_neg.value,0)+COALESCE(atip_cpp_30_49_f_neg.value,0)) AS HTS_TST_PMTCT_POST_30_34_neg,
+COALESCE(mat_35_39_pos.value,0) AS HTS_TST_PMTCT_POST_35_39_pos,
+COALESCE(mat_35_39_neg.value,0) AS HTS_TST_PMTCT_POST_35_39_neg,
+COALESCE(mat_40_44_pos.value,0) AS HTS_TST_PMTCT_POST_40_44_pos,
+COALESCE(mat_40_44_neg.value,0) AS HTS_TST_PMTCT_POST_40_44_neg,
+COALESCE(mat_45_49_pos.value,0) AS HTS_TST_PMTCT_POST_45_49_pos,
+COALESCE(mat_45_49_neg.value,0) AS HTS_TST_PMTCT_POST_45_49_neg,
 (COALESCE(mat_50_pos.value,0)+COALESCE(atip_cpp_50_f_pos.value,0)) AS HTS_TST_PMTCT_POST_50_pos,
 (COALESCE(mat_50_neg.value,0)+COALESCE(atip_cpp_50_f_neg.value,0)) AS HTS_TST_PMTCT_POST_50_neg,
 /*HTS_TST (Facility)-PITC Emergency Ward*/
@@ -385,27 +582,33 @@ COALESCE(atip_bso_20_24_f_pos.value,0) AS HTS_TST_Emergency_20_24_f_pos,
 COALESCE(atip_bso_20_24_f_neg.value,0) AS HTS_TST_Emergency_20_24_f_neg,
 COALESCE(atip_bso_20_24_m_pos.value,0) AS HTS_TST_Emergency_20_24_m_pos,
 COALESCE(atip_bso_20_24_m_neg.value,0) AS HTS_TST_Emergency_20_24_m_neg,
-(COALESCE(atip_bso_25_29_f_pos.value,0)+COALESCE(atip_bso_30_49_f_pos.value,0)) AS HTS_TST_Emergency_25_49_f_pos,
-(COALESCE(atip_bso_25_29_f_neg.value,0)+COALESCE(atip_bso_30_49_f_neg.value,0)) AS HTS_TST_Emergency_25_49_f_neg,
-(COALESCE(atip_bso_25_29_m_pos.value,0)+COALESCE(atip_bso_30_49_m_pos.value,0)) AS HTS_TST_Emergency_25_49_m_pos,
-(COALESCE(atip_bso_25_29_m_neg.value,0)+COALESCE(atip_bso_30_49_m_neg.value,0)) AS HTS_TST_Emergency_25_49_m_neg,
+COALESCE(atip_bso_25_29_f_pos.value,0) AS HTS_TST_Emergency_25_29_f_pos,
+COALESCE(atip_bso_25_29_f_neg.value,0) AS HTS_TST_Emergency_25_29_f_neg,
+COALESCE(atip_bso_25_29_m_pos.value,0) AS HTS_TST_Emergency_25_29_m_pos,
+COALESCE(atip_bso_25_29_m_neg.value,0) AS HTS_TST_Emergency_25_29_m_neg,
+COALESCE(atip_bso_30_49_f_pos.value,0) AS HTS_TST_Emergency_30_49_f_pos,
+COALESCE(atip_bso_30_49_f_neg.value,0) AS HTS_TST_Emergency_30_49_f_neg,
+COALESCE(atip_bso_30_49_m_pos.value,0) AS HTS_TST_Emergency_30_49_m_pos,
+COALESCE(atip_bso_30_49_m_neg.value,0) AS HTS_TST_Emergency_30_49_m_neg,
 COALESCE(atip_bso_50_f_pos.value,0) AS HTS_TST_Emergency_50_f_pos,
 COALESCE(atip_bso_50_f_neg.value,0) AS HTS_TST_Emergency_50_f_neg,
 COALESCE(atip_bso_50_m_pos.value,0) AS HTS_TST_Emergency_50_m_pos,
 COALESCE(atip_bso_50_m_neg.value,0) AS HTS_TST_Emergency_50_m_neg,
 /*HTS_TST (Facility)-Other PITC*/
+'' AS placeholder17,
+'' AS placeholder18,
 COALESCE(cpn_m_pos.value,0) AS HTS_TST_Other_u_m_pos,
 COALESCE(cpn_m_neg.value,0) AS HTS_TST_Other_u_m_neg,
-COALESCE(atip_0_8_f_pos.value,0) AS HTS_TST_Other_men1_f_pos,
-COALESCE(atip_0_8_f_neg.value,0) AS HTS_TST_Other_men1_f_neg,
+(COALESCE(atip_0_8_f_pos.value,0)+COALESCE(mat_men1_pos.value,0)+COALESCE(atip_cpp_0_8_f_pos.value,0)) AS HTS_TST_Other_men1_f_pos,
+(COALESCE(atip_0_8_f_neg.value,0)+COALESCE(mat_men1_neg.value,0)+COALESCE(atip_cpp_0_8_f_neg.value,0)) AS HTS_TST_Other_men1_f_neg,
 COALESCE(atip_0_8_m_pos.value,0) AS HTS_TST_Other_men1_m_pos,
 COALESCE(atip_0_8_m_neg.value,0) AS HTS_TST_Other_men1_m_neg,
-(COALESCE(atip_9_18_f_pos.value,0)+COALESCE(atip_19_4_f_pos.value,0)) AS HTS_TST_Other_1_4_f_pos,
-(COALESCE(atip_9_18_f_neg.value,0)+COALESCE(atip_19_4_f_neg.value,0)) AS HTS_TST_Other_1_4_f_neg,
+(COALESCE(atip_9_18_f_pos.value,0)+COALESCE(atip_19_4_f_pos.value,0)+COALESCE(mat_1_4_pos.value,0)+COALESCE(atip_cpp_9_18_f_pos.value,0)+COALESCE(atip_cpp_19_4_f_pos.value,0)) AS HTS_TST_Other_1_4_f_pos,
+(COALESCE(atip_9_18_f_neg.value,0)+COALESCE(atip_19_4_f_neg.value,0)+COALESCE(mat_1_4_neg.value,0)+COALESCE(atip_cpp_9_18_f_neg.value,0)+COALESCE(atip_cpp_19_4_f_neg.value,0)) AS HTS_TST_Other_1_4_f_neg,
 (COALESCE(atip_9_18_m_pos.value,0)+COALESCE(atip_19_4_m_pos.value,0)) AS HTS_TST_Other_1_4_m_pos,
 (COALESCE(atip_9_18_m_neg.value,0)+COALESCE(atip_19_4_m_neg.value,0)) AS HTS_TST_Other_1_4_m_neg,
-COALESCE(atip_5_9_f_pos.value,0) AS HTS_TST_Other_5_9_f_pos,
-COALESCE(atip_5_9_f_neg.value,0) AS HTS_TST_Other_5_9_f_neg,
+(COALESCE(atip_5_9_f_pos.value,0)+COALESCE(mat_5_9_pos.value,0)+COALESCE(atip_cpp_5_9_f_pos.value,0)) AS HTS_TST_Other_5_9_f_pos,
+(COALESCE(atip_5_9_f_neg.value,0)+COALESCE(mat_5_9_neg.value,0)+COALESCE(atip_cpp_5_9_f_neg.value,0)) AS HTS_TST_Other_5_9_f_neg,
 COALESCE(atip_5_9_m_pos.value,0) AS HTS_TST_Other_5_9_m_pos,
 COALESCE(atip_5_9_m_neg.value,0) AS HTS_TST_Other_5_9_m_neg,
 COALESCE(atip_10_14_f_pos.value,0) AS HTS_TST_Other_10_14_f_pos,
@@ -420,12 +623,16 @@ COALESCE(atip_20_24_f_pos.value,0) AS HTS_TST_Other_20_24_f_pos,
 COALESCE(atip_20_24_f_neg.value,0) AS HTS_TST_Other_20_24_f_neg,
 COALESCE(atip_20_24_m_pos.value,0) AS HTS_TST_Other_20_24_m_pos,
 COALESCE(atip_20_24_m_neg.value,0) AS HTS_TST_Other_20_24_m_neg,
-(COALESCE(atip_25_29_f_pos.value,0)+COALESCE(atip_30_49_f_pos.value,0)) AS HTS_TST_Other_25_49_f_pos,
-(COALESCE(atip_25_29_f_neg.value,0)+COALESCE(atip_30_49_f_neg.value,0)) AS HTS_TST_Other_25_49_f_neg,
-(COALESCE(atip_25_29_m_pos.value,0)+COALESCE(atip_30_49_m_pos.value,0)) AS HTS_TST_Other_25_49_m_pos,
-(COALESCE(atip_25_29_m_neg.value,0)+COALESCE(atip_30_49_m_neg.value,0)) AS HTS_TST_Other_25_49_m_neg,
-(COALESCE(atip_50_f_pos.value,0)) AS HTS_TST_Other_50_f_pos,
-(COALESCE(atip_50_f_neg.value,0)) AS HTS_TST_Other_50_f_neg,
+COALESCE(atip_25_29_f_pos.value,0) AS HTS_TST_Other_25_29_f_pos,
+COALESCE(atip_25_29_f_neg.value,0) AS HTS_TST_Other_25_29_f_neg,
+COALESCE(atip_25_29_m_pos.value,0) AS HTS_TST_Other_25_29_m_pos,
+COALESCE(atip_25_29_m_neg.value,0) AS HTS_TST_Other_25_29_m_neg,
+COALESCE(atip_30_49_f_pos.value,0) AS HTS_TST_Other_30_49_f_pos,
+COALESCE(atip_30_49_f_neg.value,0) AS HTS_TST_Other_30_49_f_neg,
+COALESCE(atip_30_49_m_pos.value,0) AS HTS_TST_Other_30_49_m_pos,
+COALESCE(atip_30_49_m_neg.value,0) AS HTS_TST_Other_30_49_m_neg,
+COALESCE(atip_50_f_pos.value,0) AS HTS_TST_Other_50_f_pos,
+COALESCE(atip_50_f_neg.value,0) AS HTS_TST_Other_50_f_neg,
 COALESCE(atip_50_m_pos.value,0) AS HTS_TST_Other_50_m_pos,
 COALESCE(atip_50_m_neg.value,0) AS HTS_TST_Other_50_m_neg,
 /*HTS_TST (Facility)-VCT*/
@@ -453,53 +660,183 @@ COALESCE(ats_20_24_f_pos.value,0) AS HTS_TST_VCT_20_24_f_pos,
 COALESCE(ats_20_24_f_neg.value,0) AS HTS_TST_VCT_20_24_f_neg,
 COALESCE(ats_20_24_m_pos.value,0) AS HTS_TST_VCT_20_24_m_pos,
 COALESCE(ats_20_24_m_neg.value,0) AS HTS_TST_VCT_20_24_m_neg,
-(COALESCE(ats_25_29_f_pos.value,0)+COALESCE(ats_30_49_f_pos.value,0)) AS HTS_TST_VCT_25_49_f_pos,
-(COALESCE(ats_25_29_f_neg.value,0)+COALESCE(ats_30_49_f_neg.value,0)) AS HTS_TST_VCT_25_49_f_neg,
-(COALESCE(ats_25_29_m_pos.value,0)+COALESCE(ats_30_49_m_pos.value,0)) AS HTS_TST_VCT_25_49_m_pos,
-(COALESCE(ats_25_29_m_neg.value,0)+COALESCE(ats_30_49_m_neg.value,0)) AS HTS_TST_VCT_25_49_m_neg,
+COALESCE(ats_25_29_f_pos.value,0) AS HTS_TST_VCT_25_29_f_pos,
+COALESCE(ats_25_29_f_neg.value,0) AS HTS_TST_VCT_25_29_f_neg,
+COALESCE(ats_25_29_m_pos.value,0) AS HTS_TST_VCT_25_29_m_pos,
+COALESCE(ats_25_29_m_neg.value,0) AS HTS_TST_VCT_25_29_m_neg,
+COALESCE(ats_30_49_f_pos.value,0) AS HTS_TST_VCT_30_49_f_pos,
+COALESCE(ats_30_49_f_neg.value,0) AS HTS_TST_VCT_30_49_f_neg,
+COALESCE(ats_30_49_m_pos.value,0) AS HTS_TST_VCT_30_49_m_pos,
+COALESCE(ats_30_49_m_neg.value,0) AS HTS_TST_VCT_30_49_m_neg,
 COALESCE(ats_50_f_pos.value,0) AS HTS_TST_VCT_50_f_pos,
 COALESCE(ats_50_f_neg.value,0) AS HTS_TST_VCT_50_f_neg,
 COALESCE(ats_50_m_pos.value,0) AS HTS_TST_VCT_50_m_pos,
 COALESCE(ats_50_m_neg.value,0) AS HTS_TST_VCT_50_m_neg,
 /*Index Testing*/
+/*Offered*/
+COALESCE(index_offered_unk.value,0) AS Index_offered_unk,
+'' AS placeholder19,
+'' AS placeholder20,
+'' AS placeholder21,
+(COALESCE(HTS_TST_PMTCT_10_14_pos.value,0)+COALESCE(PMTCT_STAT_17q2_10_14_known_pos.value,0)) AS HTS_TST_PMTCT_10_14_pos3,
+(COALESCE(HTS_TST_PMTCT_15_19_pos.value,0)+COALESCE(PMTCT_STAT_17q2_15_19_known_pos.value,0)) AS HTS_TST_PMTCT_15_19_pos3,
+(COALESCE(HTS_TST_PMTCT_20_24_pos.value,0)+COALESCE(PMTCT_STAT_17q2_20_24_known_pos.value,0)) AS HTS_TST_PMTCT_20_24_pos3,
+(COALESCE(HTS_TST_PMTCT_25_pos.value,0)+COALESCE(PMTCT_STAT_17q2_25_known_pos.value,0)) AS HTS_TST_PMTCT_25_29_pos3,
+'' AS placeholder31,
+'' AS placeholder32,
+'' AS placeholder33,
+'' AS placeholder34,
+'' AS placeholder35,
+'' AS placeholder36,
+'' AS placeholder37,
+'' AS placeholder38,
+'' AS placeholder39,
+'' AS placeholder30,
+'' AS placeholder41,
+'' AS placeholder42,
+'' AS placeholder43,
+'' AS placeholder44,
+'' AS placeholder45,
+'' AS placeholder46,
+'' AS placeholder47,
+'' AS placeholder48,
+'' AS placeholder49,
+'' AS placeholder50,
+'' AS placeholder51,
+'' AS placeholder52,
+'' AS placeholder53,
+'' AS placeholder54,
+'' AS placeholder55,
+'' AS placeholder56,
+'' AS placeholder57,
+'' AS placeholder58,
+'' AS placeholder59,
+'' AS placeholder60,
+'' AS placeholder61,
+'' AS placeholder62,
+'' AS placeholder63,
+'' AS placeholder64,
+'' AS placeholder65,
+'' AS placeholder66,
+'' AS placeholder67,
+'' AS placeholder68,
+'' AS placeholder69,
+'' AS placeholder70,
+'' AS placeholder71,
+'' AS placeholder72,
+'' AS placeholder73,
+'' AS placeholder74,
+/*Elicited*/
+COALESCE(cpn_index_contact_pos.value,0) AS CPN_index_contact_m_pos_unk1,
+COALESCE(cpn_index_contact_neg.value,0) AS CPN_index_contact_m_neg_unk1,
+(COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0)+
+COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0)+
+COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0)+
+COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0)
+) AS Index_contact_men15_f_pos,
+(COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0)+
+COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0)+
+COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0)+
+COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0)
+) AS Index_contact_men15_f_neg,
+(COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0)+
+COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0)+
+COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0)+
+COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0)
+) AS Index_contact_men15_m_pos,
+(COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0)+
+COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0)+
+COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0)+
+COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0)
+) AS Index_contact_men15_m_neg,
+(COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0) +
+COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0) +
+COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0) +
+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0) +
+COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0)
+) AS Index_contact_mai15_f_pos,
+(COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0) +
+COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0) +
+COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0) +
+COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0) +
+COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0)
+) AS Index_contact_mai15_f_neg,
+(COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0) +
+COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0) +
+COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0) +
+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0) +
+COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0)
+) AS Index_contact_mai15_m_pos,
+(COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0) +
+COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0) +
+COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0) +
+COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0) +
+COALESCE(atip_index_50_m_neg.value,0)+COALESCE(ats_index_50_m_neg.value,0)
+) AS Index_contact_mai15_m_neg,   
+/*Contacts*/
+COALESCE(cpn_index_contact_pos.value,0) AS CPN_index_contact_m_pos_unk,
 (COALESCE(atip_index_0_8_f_pos.value,0)+COALESCE(ats_index_0_8_f_pos.value,0)) AS HTS_TST_Index_men1_f_pos,
-(COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0)) AS HTS_TST_Index_men1_f_neg,
 (COALESCE(atip_index_0_8_m_pos.value,0)+COALESCE(ats_index_0_8_m_pos.value,0)) AS HTS_TST_Index_men1_m_pos,
-(COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0)) AS HTS_TST_Index_men1_m_neg,
 (COALESCE(atip_index_9_18_f_pos.value,0)+COALESCE(atip_index_19_4_f_pos.value,0)+COALESCE(ats_index_9_18_f_pos.value,0)+COALESCE(ats_index_19_4_f_pos.value,0)) AS HTS_TST_Index_1_4_f_pos,
-(COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0)) AS HTS_TST_Index_1_4_f_neg,
 (COALESCE(atip_index_9_18_m_pos.value,0)+COALESCE(atip_index_19_4_m_pos.value,0)+COALESCE(ats_index_9_18_m_pos.value,0)+COALESCE(ats_index_19_4_m_pos.value,0)) AS HTS_TST_Index_1_4_m_pos,
-(COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0)) AS HTS_TST_Index_1_4_m_neg,
 (COALESCE(atip_index_5_9_f_pos.value,0)+COALESCE(ats_index_5_9_f_pos.value,0)) AS HTS_TST_Index_5_9_f_pos,
-(COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0)) AS HTS_TST_Index_5_9_f_neg,
 (COALESCE(atip_index_5_9_m_pos.value,0)+COALESCE(ats_index_5_9_m_pos.value,0)) AS HTS_TST_Index_5_9_m_pos,
-(COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0)) AS HTS_TST_Index_5_9_m_neg,
 (COALESCE(atip_index_10_14_f_pos.value,0)+COALESCE(ats_index_10_14_f_pos.value,0)) AS HTS_TST_Index_10_14_f_pos,
-(COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0)) AS HTS_TST_Index_10_14_f_neg,
 (COALESCE(atip_index_10_14_m_pos.value,0)+COALESCE(ats_index_10_14_m_pos.value,0)) AS HTS_TST_Index_10_14_m_pos,
-(COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0)) AS HTS_TST_Index_10_14_m_neg,
 (COALESCE(atip_index_15_19_f_pos.value,0)+COALESCE(ats_index_15_19_f_pos.value,0)) AS HTS_TST_Index_15_19_f_pos,
-(COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0)) AS HTS_TST_Index_15_19_f_neg,
 (COALESCE(atip_index_15_19_m_pos.value,0)+COALESCE(ats_index_15_19_m_pos.value,0)) AS HTS_TST_Index_15_19_m_pos,
-(COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0)) AS HTS_TST_Index_15_19_m_neg,
 (COALESCE(atip_index_20_24_f_pos.value,0)+COALESCE(ats_index_20_24_f_pos.value,0)) AS HTS_TST_Index_20_24_f_pos,
-(COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0)) AS HTS_TST_Index_20_24_f_neg,
 (COALESCE(atip_index_20_24_m_pos.value,0)+COALESCE(ats_index_20_24_m_pos.value,0)) AS HTS_TST_Index_20_24_m_pos,
-(COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0)) AS HTS_TST_Index_20_24_m_neg,
-(COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0)) AS HTS_TST_Index_25_49_f_pos,
-(COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0)) AS HTS_TST_Index_25_49_f_neg,
-(COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0)) AS HTS_TST_Index_25_49_m_pos,
-(COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0)) AS HTS_TST_Index_25_49_m_neg,
+(COALESCE(atip_index_25_29_f_pos.value,0)+COALESCE(ats_index_25_29_f_pos.value,0)) AS HTS_TST_Index_25_29_f_pos,
+(COALESCE(atip_index_25_29_m_pos.value,0)+COALESCE(ats_index_25_29_m_pos.value,0)) AS HTS_TST_Index_25_29_m_pos,
+(COALESCE(atip_index_30_49_f_pos.value,0)+COALESCE(ats_index_30_49_f_pos.value,0)) AS HTS_TST_Index_30_49_f_pos,
+(COALESCE(atip_index_30_49_m_pos.value,0)+COALESCE(ats_index_30_49_m_pos.value,0)) AS HTS_TST_Index_30_49_m_pos,
 (COALESCE(atip_index_50_f_pos.value,0)+COALESCE(ats_index_50_f_pos.value,0)) AS HTS_TST_Index_50_f_pos,
-(COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0)) AS HTS_TST_Index_50_f_neg,
 (COALESCE(atip_index_50_m_pos.value,0)+COALESCE(ats_index_50_m_pos.value,0)) AS HTS_TST_Index_50_m_pos,
+COALESCE(cpn_index_contact_neg.value,0) AS CPN_index_contact_m_neg_unk,
+(COALESCE(atip_index_0_8_f_neg.value,0)+COALESCE(ats_index_0_8_f_neg.value,0)) AS HTS_TST_Index_men1_f_neg,
+(COALESCE(atip_index_0_8_m_neg.value,0)+COALESCE(ats_index_0_8_m_neg.value,0)) AS HTS_TST_Index_men1_m_neg,
+(COALESCE(atip_index_9_18_f_neg.value,0)+COALESCE(atip_index_19_4_f_neg.value,0)+COALESCE(ats_index_9_18_f_neg.value,0)+COALESCE(ats_index_19_4_f_neg.value,0)) AS HTS_TST_Index_1_4_f_neg,
+(COALESCE(atip_index_9_18_m_neg.value,0)+COALESCE(atip_index_19_4_m_neg.value,0)+COALESCE(ats_index_9_18_m_neg.value,0)+COALESCE(ats_index_19_4_m_neg.value,0)) AS HTS_TST_Index_1_4_m_neg,
+(COALESCE(atip_index_5_9_f_neg.value,0)+COALESCE(ats_index_5_9_f_neg.value,0)) AS HTS_TST_Index_5_9_f_neg,
+(COALESCE(atip_index_5_9_m_neg.value,0)+COALESCE(ats_index_5_9_m_neg.value,0)) AS HTS_TST_Index_5_9_m_neg,
+(COALESCE(atip_index_10_14_f_neg.value,0)+COALESCE(ats_index_10_14_f_neg.value,0)) AS HTS_TST_Index_10_14_f_neg,
+(COALESCE(atip_index_10_14_m_neg.value,0)+COALESCE(ats_index_10_14_m_neg.value,0)) AS HTS_TST_Index_10_14_m_neg,
+(COALESCE(atip_index_15_19_f_neg.value,0)+COALESCE(ats_index_15_19_f_neg.value,0)) AS HTS_TST_Index_15_19_f_neg,
+(COALESCE(atip_index_15_19_m_neg.value,0)+COALESCE(ats_index_15_19_m_neg.value,0)) AS HTS_TST_Index_15_19_m_neg,
+(COALESCE(atip_index_20_24_f_neg.value,0)+COALESCE(ats_index_20_24_f_neg.value,0)) AS HTS_TST_Index_20_24_f_neg,
+(COALESCE(atip_index_20_24_m_neg.value,0)+COALESCE(ats_index_20_24_m_neg.value,0)) AS HTS_TST_Index_20_24_m_neg,
+(COALESCE(atip_index_25_29_f_neg.value,0)+COALESCE(ats_index_25_29_f_neg.value,0)) AS HTS_TST_Index_25_29_f_neg,
+(COALESCE(atip_index_25_29_m_neg.value,0)+COALESCE(ats_index_25_29_m_neg.value,0)) AS HTS_TST_Index_25_29_m_neg,
+(COALESCE(atip_index_30_49_f_neg.value,0)+COALESCE(ats_index_30_49_f_neg.value,0)) AS HTS_TST_Index_30_49_f_neg,
+(COALESCE(atip_index_30_49_m_neg.value,0)+COALESCE(ats_index_30_49_m_neg.value,0)) AS HTS_TST_Index_30_49_m_neg,
+(COALESCE(atip_index_50_f_neg.value,0)+COALESCE(ats_index_50_f_neg.value,0)) AS HTS_TST_Index_50_f_neg,
 (COALESCE(atip_index_50_m_neg.value,0)+COALESCE(ats_index_50_m_neg.value,0)) AS HTS_TST_Index_50_m_neg,
+
+/*Auto-Calculate*/
 /*PMTCT_STAT (Numerator)*/
+/*
+Since Q1FY19 its Auto-Calculate
 (COALESCE(PMTCT_STAT_17q2_num.value,0)+COALESCE(PMTCT_STAT_17q1_num.value,0)) AS PMTCT_STAT_num,
+Since Q1FY19 its not necessary desagregate by Age
 (COALESCE(HTS_TST_PMTCT_10_14_pos.value,0)+COALESCE(HTS_TST_PMTCT_10_14_neg.value,0)+COALESCE(PMTCT_STAT_17q2_10_14_known_pos.value,0)) AS PMTCT_STAT_10_14_num,
 (COALESCE(HTS_TST_PMTCT_15_19_pos.value,0)+COALESCE(HTS_TST_PMTCT_15_19_neg.value,0)+COALESCE(PMTCT_STAT_17q2_15_19_known_pos.value,0)) AS PMTCT_STAT_15_19_num,
 (COALESCE(HTS_TST_PMTCT_20_24_pos.value,0)+COALESCE(HTS_TST_PMTCT_20_24_neg.value,0)+COALESCE(PMTCT_STAT_17q2_20_24_known_pos.value,0)) AS PMTCT_STAT_20_24_num,
-(COALESCE(PMTCT_STAT_17q2_25_49_known_pos.value,0)+COALESCE(HTS_TST_PMTCT_25_pos.value,0)+COALESCE(HTS_TST_PMTCT_25_neg.value,0)+COALESCE(PMTCT_STAT_17q2_25_known_pos.value,0)) AS PMTCT_STAT_25_49_num,
+(COALESCE(PMTCT_STAT_17q2_25_49_known_pos.value,0)+COALESCE(HTS_TST_PMTCT_25_pos.value,0)+COALESCE(HTS_TST_PMTCT_25_neg.value,0)+COALESCE(PMTCT_STAT_17q2_25_known_pos.value,0)) AS PMTCT_STAT_25_49_num,*/
+(
+COALESCE(PMTCT_STAT_17q2_10_14_known_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_10_14_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_10_14_neg.value,0) +
+COALESCE(PMTCT_STAT_17q2_15_19_known_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_15_19_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_15_19_neg.value,0) +
+COALESCE(PMTCT_STAT_17q2_20_24_known_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_20_24_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_20_24_neg.value,0) +
+(COALESCE(PMTCT_STAT_17q2_25_49_known_pos.value,0)+COALESCE(PMTCT_STAT_17q2_25_known_pos.value,0)) +
+COALESCE(HTS_TST_PMTCT_25_pos.value,0) +
+COALESCE(HTS_TST_PMTCT_25_neg.value,0) 
+) AS PMTCT_STAT_num,
 COALESCE(PMTCT_STAT_17q2_10_14_known_pos.value,0) AS PMTCT_STAT_10_14_known_pos,
 COALESCE(HTS_TST_PMTCT_10_14_pos.value,0) AS HTS_TST_PMTCT_10_14_pos2,
 COALESCE(HTS_TST_PMTCT_10_14_neg.value,0) AS HTS_TST_PMTCT_10_14_neg2,
@@ -512,18 +849,37 @@ COALESCE(HTS_TST_PMTCT_20_24_neg.value,0) AS HTS_TST_PMTCT_20_24_neg2,
 (COALESCE(PMTCT_STAT_17q2_25_49_known_pos.value,0)+COALESCE(PMTCT_STAT_17q2_25_known_pos.value,0)) AS PMTCT_STAT_25_49_known_pos,
 COALESCE(HTS_TST_PMTCT_25_pos.value,0) AS HTS_TST_PMTCT_25_49_pos2,
 COALESCE(HTS_TST_PMTCT_25_neg.value,0) AS HTS_TST_PMTCT_25_49_neg2,
+/*Auto-Calculate*/
 /*PMTCT_STAT (Denominator)*/
+(
+COALESCE(PMTCT_STAT_17q2_10_14_den.value,0) +
+COALESCE(PMTCT_STAT_17q2_15_19_den.value,0) +
+COALESCE(PMTCT_STAT_17q2_20_24_den.value,0) +
+(COALESCE(PMTCT_STAT_17q2_25_49_den.value,0)+COALESCE(PMTCT_STAT_17q2_25_den.value,0)) 
+) AS PMTCT_STAT_den,
 COALESCE(PMTCT_STAT_17q2_10_14_den.value,0) AS PMTCT_STAT_10_14_den,
 COALESCE(PMTCT_STAT_17q2_15_19_den.value,0) AS PMTCT_STAT_15_19_den,
 COALESCE(PMTCT_STAT_17q2_20_24_den.value,0) AS PMTCT_STAT_20_24_den,
 (COALESCE(PMTCT_STAT_17q2_25_49_den.value,0)+COALESCE(PMTCT_STAT_17q2_25_den.value,0)) AS PMTCT_STAT_25_49_den,
+/*Auto-Calculate*/
 /*PMTCT_EID*/
+(
+COALESCE(PMTCT_EID_0_2_total.value,0) +
+COALESCE(PMTCT_EID_2_12_total.value,0)
+) AS PMTCT_EID,
 COALESCE(PMTCT_EID_0_2_total.value,0) AS PMTCT_EID_0_2_test,
 COALESCE(PMTCT_EID_2_12_total.value,0) AS PMTCT_EID_2_12_test,
+/*Auto-Calculate*/
+/*PMTCT_HEI_POS*/
+(
+COALESCE(PMTCT_EID_0_2_pos.value,0) +
+COALESCE(PMTCT_EID_2_12_pos_sum_prev.value,0) 
+) AS PMTCT_HEI_POS,
 COALESCE(PMTCT_EID_0_2_pos.value,0) AS PMTCT_EID_0_2_pos,
-COALESCE(PMTCT_EID_0_2_art.value,0) AS PMTCT_EID_0_2_art,
 COALESCE(PMTCT_EID_2_12_pos_sum_prev.value,0) AS PMTCT_EID_2_12_pos,
+COALESCE(PMTCT_EID_0_2_art.value,0) AS PMTCT_EID_0_2_art,
 COALESCE(PMTCT_EID_2_12_art.value,0) AS PMTCT_EID_2_12_art,
+/*Auto-Calculate*/
 /*TB_STAT Numerator*/
 (
 COALESCE(TB_STAT_kp_men1_f.value,0)+
@@ -550,7 +906,7 @@ COALESCE(TB_STAT_kp_45_49_f.value,0)+
 COALESCE(TB_STAT_kp_45_49_m.value,0)+
 COALESCE(TB_STAT_kp_50_f.value,0)+
 COALESCE(TB_STAT_kp_50_m.value,0)+
-COALESCE(TB_STAT_kn_men1_f.value,0)+
+/*COALESCE(TB_STAT_kn_men1_f.value,0)+
 COALESCE(TB_STAT_kn_men1_m.value,0)+
 COALESCE(TB_STAT_kn_1_4_f.value,0)+
 COALESCE(TB_STAT_kn_1_4_m.value,0)+
@@ -573,7 +929,7 @@ COALESCE(TB_STAT_kn_40_44_m.value,0)+
 COALESCE(TB_STAT_kn_45_49_f.value,0)+
 COALESCE(TB_STAT_kn_45_49_m.value,0)+
 COALESCE(TB_STAT_kn_50_f.value,0)+
-COALESCE(TB_STAT_kn_50_m.value,0)+
+COALESCE(TB_STAT_kn_50_m.value,0)+*/
 COALESCE(HTS_TST_TB_men1_f_pos.value,0)+
 COALESCE(HTS_TST_TB_men1_m_pos.value,0)+
 COALESCE(HTS_TST_TB_1_4_f_pos.value,0)+
@@ -698,7 +1054,8 @@ COALESCE(HTS_TST_TB_45_49_f_neg.value,0) AS HTS_TST_TB_45_49_f_neg2,
 COALESCE(HTS_TST_TB_45_49_m_neg.value,0) AS HTS_TST_TB_45_49_m_neg2,
 COALESCE(HTS_TST_TB_50_f_neg.value,0) AS HTS_TST_TB_50_f_neg2,
 COALESCE(HTS_TST_TB_50_m_neg.value,0) AS HTS_TST_TB_50_m_neg2,
-/* TB_STAT Denominator*/
+/*Auto-Calculate*/
+/*TB_STAT Denominator*/
 (
 COALESCE(TB_STAT_den_men1_f.value,0)+
 COALESCE(TB_STAT_den_men1_m.value,0)+
@@ -752,7 +1109,6 @@ COALESCE(TB_STAT_den_50_m.value,0) AS TB_STAT_den_50_m,
 /*On ART*/
 /*TX_NEW*/
 COALESCE(TX_NEW_num.value,0) AS TX_NEW_num,
-COALESCE(TX_NEW_preg.value,0) AS TX_NEW_preg,
 COALESCE(TX_NEW_breast.value,0) AS TX_NEW_breast,
 COALESCE(TX_NEW_men1_f.value,0) AS TX_NEW_men1_f,
 COALESCE(TX_NEW_1_4_f.value,0) AS TX_NEW_1_4_f,
@@ -812,6 +1168,7 @@ COALESCE(TX_CURR_coarse_f_men15.value,0) AS TX_CURR_coarse_f_men15,
 COALESCE(TX_CURR_coarse_f_mai15.value,0) AS TX_CURR_coarse_f_mai15,
 COALESCE(TX_CURR_coarse_m_men15.value,0) AS TX_CURR_coarse_m_men15,
 COALESCE(TX_CURR_coarse_m_mai15.value,0) AS TX_CURR_coarse_m_mai15,
+/*Auto-Calculate*/
 /*PMTCT_ART*/
 (
 COALESCE(PMTCT_ART_New_10_14.value,0)+
@@ -833,31 +1190,6 @@ COALESCE(PMTCT_ART_Already_20_24.value,0) AS PMTCT_ART_Already_20_24,
 COALESCE(PMTCT_ART_Already_25.value,0) AS PMTCT_ART_Already_25,
 /*TB_ART*/
 COALESCE(TB_ART_num.value,0) AS TB_ART_num,
-/*New*/
-(COALESCE(TB_ART_num_men1_f.value,0)-COALESCE(TB_ART_prev_men1_f.value,0)) AS TB_ART_num_men1_f,
-(COALESCE(TB_ART_num_men1_m.value,0)-COALESCE(TB_ART_prev_men1_m.value,0)) AS TB_ART_num_men1_m,
-(COALESCE(TB_ART_num_1_4_f.value,0)-COALESCE(TB_ART_prev_1_4_f.value,0)) AS TB_ART_num_1_4_f,
-(COALESCE(TB_ART_num_1_4_m.value,0)-COALESCE(TB_ART_prev_1_4_m.value,0)) AS TB_ART_num_1_4_m,
-(COALESCE(TB_ART_num_5_9_f.value,0)-COALESCE(TB_ART_prev_5_9_f.value,0)) AS TB_ART_num_5_9_f,
-(COALESCE(TB_ART_num_5_9_m.value,0)-COALESCE(TB_ART_prev_5_9_m.value,0)) AS TB_ART_num_5_9_m,
-(COALESCE(TB_ART_num_10_14_f.value,0)-COALESCE(TB_ART_prev_10_14_f.value,0)) AS TB_ART_num_10_14_f,
-(COALESCE(TB_ART_num_10_14_m.value,0)-COALESCE(TB_ART_prev_10_14_m.value,0)) AS TB_ART_num_10_14_m,
-(COALESCE(TB_ART_num_15_19_f.value,0)-COALESCE(TB_ART_prev_15_19_f.value,0)) AS TB_ART_num_15_19_f,
-(COALESCE(TB_ART_num_15_19_m.value,0)-COALESCE(TB_ART_prev_15_19_m.value,0)) AS TB_ART_num_15_19_m,
-(COALESCE(TB_ART_num_20_24_f.value,0)-COALESCE(TB_ART_prev_20_24_f.value,0)) AS TB_ART_num_20_24_f,
-(COALESCE(TB_ART_num_20_24_m.value,0)-COALESCE(TB_ART_prev_20_24_m.value,0)) AS TB_ART_num_20_24_m,
-(COALESCE(TB_ART_num_25_29_f.value,0)-COALESCE(TB_ART_prev_25_29_f.value,0)) AS TB_ART_num_25_29_f,
-(COALESCE(TB_ART_num_25_29_m.value,0)-COALESCE(TB_ART_prev_25_29_m.value,0)) AS TB_ART_num_25_29_m,
-(COALESCE(TB_ART_num_30_34_f.value,0)-COALESCE(TB_ART_prev_30_34_f.value,0)) AS TB_ART_num_30_34_f,
-(COALESCE(TB_ART_num_30_34_m.value,0)-COALESCE(TB_ART_prev_30_34_m.value,0)) AS TB_ART_num_30_34_m,
-(COALESCE(TB_ART_num_35_39_f.value,0)-COALESCE(TB_ART_prev_35_39_f.value,0)) AS TB_ART_num_35_39_f,
-(COALESCE(TB_ART_num_35_39_m.value,0)-COALESCE(TB_ART_prev_35_39_m.value,0)) AS TB_ART_num_35_39_m,
-(COALESCE(TB_ART_num_40_44_f.value,0)-COALESCE(TB_ART_prev_40_44_f.value,0)) AS TB_ART_num_40_44_f,
-(COALESCE(TB_ART_num_40_44_m.value,0)-COALESCE(TB_ART_prev_40_44_m.value,0)) AS TB_ART_num_40_44_m,
-(COALESCE(TB_ART_num_45_49_f.value,0)-COALESCE(TB_ART_prev_45_49_f.value,0)) AS TB_ART_num_45_49_f,
-(COALESCE(TB_ART_num_45_49_m.value,0)-COALESCE(TB_ART_prev_45_49_m.value,0)) AS TB_ART_num_45_49_m,
-(COALESCE(TB_ART_num_50_f.value,0)-COALESCE(TB_ART_prev_50_f.value,0)) AS TB_ART_num_50_f,
-(COALESCE(TB_ART_num_50_m.value,0)-COALESCE(TB_ART_prev_50_m.value,0)) AS TB_ART_num_50_m,
 /*Already*/
 COALESCE(TB_ART_prev_men1_f.value,0) AS TB_ART_prev_men1_f,
 COALESCE(TB_ART_prev_men1_m.value,0) AS TB_ART_prev_men1_m,
@@ -883,11 +1215,116 @@ COALESCE(TB_ART_prev_45_49_f.value,0) AS TB_ART_prev_45_49_f,
 COALESCE(TB_ART_prev_45_49_m.value,0) AS TB_ART_prev_45_49_m,
 COALESCE(TB_ART_prev_50_f.value,0) AS TB_ART_prev_50_f,
 COALESCE(TB_ART_prev_50_m.value,0) AS TB_ART_prev_50_m,
+/*New*/
+(COALESCE(TB_ART_num_men1_f.value,0)-COALESCE(TB_ART_prev_men1_f.value,0)) AS TB_ART_num_men1_f,
+(COALESCE(TB_ART_num_men1_m.value,0)-COALESCE(TB_ART_prev_men1_m.value,0)) AS TB_ART_num_men1_m,
+(COALESCE(TB_ART_num_1_4_f.value,0)-COALESCE(TB_ART_prev_1_4_f.value,0)) AS TB_ART_num_1_4_f,
+(COALESCE(TB_ART_num_1_4_m.value,0)-COALESCE(TB_ART_prev_1_4_m.value,0)) AS TB_ART_num_1_4_m,
+(COALESCE(TB_ART_num_5_9_f.value,0)-COALESCE(TB_ART_prev_5_9_f.value,0)) AS TB_ART_num_5_9_f,
+(COALESCE(TB_ART_num_5_9_m.value,0)-COALESCE(TB_ART_prev_5_9_m.value,0)) AS TB_ART_num_5_9_m,
+(COALESCE(TB_ART_num_10_14_f.value,0)-COALESCE(TB_ART_prev_10_14_f.value,0)) AS TB_ART_num_10_14_f,
+(COALESCE(TB_ART_num_10_14_m.value,0)-COALESCE(TB_ART_prev_10_14_m.value,0)) AS TB_ART_num_10_14_m,
+(COALESCE(TB_ART_num_15_19_f.value,0)-COALESCE(TB_ART_prev_15_19_f.value,0)) AS TB_ART_num_15_19_f,
+(COALESCE(TB_ART_num_15_19_m.value,0)-COALESCE(TB_ART_prev_15_19_m.value,0)) AS TB_ART_num_15_19_m,
+(COALESCE(TB_ART_num_20_24_f.value,0)-COALESCE(TB_ART_prev_20_24_f.value,0)) AS TB_ART_num_20_24_f,
+(COALESCE(TB_ART_num_20_24_m.value,0)-COALESCE(TB_ART_prev_20_24_m.value,0)) AS TB_ART_num_20_24_m,
+(COALESCE(TB_ART_num_25_29_f.value,0)-COALESCE(TB_ART_prev_25_29_f.value,0)) AS TB_ART_num_25_29_f,
+(COALESCE(TB_ART_num_25_29_m.value,0)-COALESCE(TB_ART_prev_25_29_m.value,0)) AS TB_ART_num_25_29_m,
+(COALESCE(TB_ART_num_30_34_f.value,0)-COALESCE(TB_ART_prev_30_34_f.value,0)) AS TB_ART_num_30_34_f,
+(COALESCE(TB_ART_num_30_34_m.value,0)-COALESCE(TB_ART_prev_30_34_m.value,0)) AS TB_ART_num_30_34_m,
+(COALESCE(TB_ART_num_35_39_f.value,0)-COALESCE(TB_ART_prev_35_39_f.value,0)) AS TB_ART_num_35_39_f,
+(COALESCE(TB_ART_num_35_39_m.value,0)-COALESCE(TB_ART_prev_35_39_m.value,0)) AS TB_ART_num_35_39_m,
+(COALESCE(TB_ART_num_40_44_f.value,0)-COALESCE(TB_ART_prev_40_44_f.value,0)) AS TB_ART_num_40_44_f,
+(COALESCE(TB_ART_num_40_44_m.value,0)-COALESCE(TB_ART_prev_40_44_m.value,0)) AS TB_ART_num_40_44_m,
+(COALESCE(TB_ART_num_45_49_f.value,0)-COALESCE(TB_ART_prev_45_49_f.value,0)) AS TB_ART_num_45_49_f,
+(COALESCE(TB_ART_num_45_49_m.value,0)-COALESCE(TB_ART_prev_45_49_m.value,0)) AS TB_ART_num_45_49_m,
+(COALESCE(TB_ART_num_50_f.value,0)-COALESCE(TB_ART_prev_50_f.value,0)) AS TB_ART_num_50_f,
+(COALESCE(TB_ART_num_50_m.value,0)-COALESCE(TB_ART_prev_50_m.value,0)) AS TB_ART_num_50_m,
+/*Auto-Calculate*/
 /*TX_PVLS*/
-COALESCE(TX_PVLS_num_und.value,0) as TX_PVLS_num,
-COALESCE(TX_PVLS_num_und.value,0) as TX_PVLS_num_und,
+/*Numerator*/
+(
+COALESCE(TX_PVLS_num_rou_f_men1.value,0)   +
+COALESCE(TX_PVLS_num_rou_f_1_4.value,0)    +
+COALESCE(TX_PVLS_num_rou_f_5_9.value,0)    +
+COALESCE(TX_PVLS_num_rou_f_10_14.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_15_19.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_20_24.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_25_29.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_30_34.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_35_39.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_40_44.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_45_49.value,0)  +
+COALESCE(TX_PVLS_num_rou_f_50.value,0)     +
+COALESCE(TX_PVLS_num_rou_m_men1.value,0)   +
+COALESCE(TX_PVLS_num_rou_m_1_4.value,0)    +
+COALESCE(TX_PVLS_num_rou_m_5_9.value,0)    +
+COALESCE(TX_PVLS_num_rou_m_10_14.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_15_19.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_20_24.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_25_29.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_30_34.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_35_39.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_40_44.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_45_49.value,0)  +
+COALESCE(TX_PVLS_num_rou_m_50.value,0)     +
+/*Not Documented*/                         
+COALESCE(TX_PVLS_num_und_f_men1.value,0)   +
+COALESCE(TX_PVLS_num_und_f_1_4.value,0)    +
+COALESCE(TX_PVLS_num_und_f_5_9.value,0)    +
+COALESCE(TX_PVLS_num_und_f_10_14.value,0)  +
+COALESCE(TX_PVLS_num_und_f_15_19.value,0)  +
+COALESCE(TX_PVLS_num_und_f_20_24.value,0)  +
+COALESCE(TX_PVLS_num_und_f_25_29.value,0)  +
+COALESCE(TX_PVLS_num_und_f_30_34.value,0)  +
+COALESCE(TX_PVLS_num_und_f_35_39.value,0)  +
+COALESCE(TX_PVLS_num_und_f_40_44.value,0)  +
+COALESCE(TX_PVLS_num_und_f_45_49.value,0)  +
+COALESCE(TX_PVLS_num_und_f_50.value,0)     +
+COALESCE(TX_PVLS_num_und_m_men1.value,0)   +
+COALESCE(TX_PVLS_num_und_m_1_4.value,0)    +
+COALESCE(TX_PVLS_num_und_m_5_9.value,0)    +
+COALESCE(TX_PVLS_num_und_m_10_14.value,0)  +
+COALESCE(TX_PVLS_num_und_m_15_19.value,0)  +
+COALESCE(TX_PVLS_num_und_m_20_24.value,0)  +
+COALESCE(TX_PVLS_num_und_m_25_29.value,0)  +
+COALESCE(TX_PVLS_num_und_m_30_34.value,0)  +
+COALESCE(TX_PVLS_num_und_m_35_39.value,0)  +
+COALESCE(TX_PVLS_num_und_m_40_44.value,0)  +
+COALESCE(TX_PVLS_num_und_m_45_49.value,0)  +
+COALESCE(TX_PVLS_num_und_m_50.value,0)     
+) 
+AS TX_PVLS_num,
+COALESCE(TX_PVLS_num_rou_preg.value,0) as TX_PVLS_num_rou_preg,
+COALESCE(TX_PVLS_num_rou_breast.value,0) as TX_PVLS_num_rou_breast,
 COALESCE(TX_PVLS_num_und_preg.value,0) as TX_PVLS_num_und_preg,
 COALESCE(TX_PVLS_num_und_breast.value,0) as TX_PVLS_num_und_breast,
+/*Routine*/
+COALESCE(TX_PVLS_num_rou_f_men1.value,0) as TX_PVLS_num_rou_f_men1,
+COALESCE(TX_PVLS_num_rou_f_1_4.value,0) as TX_PVLS_num_rou_f_1_4,
+COALESCE(TX_PVLS_num_rou_f_5_9.value,0) as TX_PVLS_num_rou_f_5_9,
+COALESCE(TX_PVLS_num_rou_f_10_14.value,0) as TX_PVLS_num_rou_f_10_14,
+COALESCE(TX_PVLS_num_rou_f_15_19.value,0) as TX_PVLS_num_rou_f_15_19,
+COALESCE(TX_PVLS_num_rou_f_20_24.value,0) as TX_PVLS_num_rou_f_20_24,
+COALESCE(TX_PVLS_num_rou_f_25_29.value,0) as TX_PVLS_num_rou_f_25_29,
+COALESCE(TX_PVLS_num_rou_f_30_34.value,0) as TX_PVLS_num_rou_f_30_34,
+COALESCE(TX_PVLS_num_rou_f_35_39.value,0) as TX_PVLS_num_rou_f_35_39,
+COALESCE(TX_PVLS_num_rou_f_40_44.value,0) as TX_PVLS_num_rou_f_40_44,
+COALESCE(TX_PVLS_num_rou_f_45_49.value,0) as TX_PVLS_num_rou_f_45_49,
+COALESCE(TX_PVLS_num_rou_f_50.value,0) as TX_PVLS_num_rou_f_50,
+COALESCE(TX_PVLS_num_rou_m_men1.value,0) as TX_PVLS_num_rou_m_men1,
+COALESCE(TX_PVLS_num_rou_m_1_4.value,0) as TX_PVLS_num_rou_m_1_4,
+COALESCE(TX_PVLS_num_rou_m_5_9.value,0) as TX_PVLS_num_rou_m_5_9,
+COALESCE(TX_PVLS_num_rou_m_10_14.value,0) as TX_PVLS_num_rou_m_10_14,
+COALESCE(TX_PVLS_num_rou_m_15_19.value,0) as TX_PVLS_num_rou_m_15_19,
+COALESCE(TX_PVLS_num_rou_m_20_24.value,0) as TX_PVLS_num_rou_m_20_24,
+COALESCE(TX_PVLS_num_rou_m_25_29.value,0) as TX_PVLS_num_rou_m_25_29,
+COALESCE(TX_PVLS_num_rou_m_30_34.value,0) as TX_PVLS_num_rou_m_30_34,
+COALESCE(TX_PVLS_num_rou_m_35_39.value,0) as TX_PVLS_num_rou_m_35_39,
+COALESCE(TX_PVLS_num_rou_m_40_44.value,0) as TX_PVLS_num_rou_m_40_44,
+COALESCE(TX_PVLS_num_rou_m_45_49.value,0) as TX_PVLS_num_rou_m_45_49,
+COALESCE(TX_PVLS_num_rou_m_50.value,0) as TX_PVLS_num_rou_m_50,
+/*Not Documented*/
 COALESCE(TX_PVLS_num_und_f_men1.value,0) as TX_PVLS_num_und_f_men1,
 COALESCE(TX_PVLS_num_und_f_1_4.value,0) as TX_PVLS_num_und_f_1_4,
 COALESCE(TX_PVLS_num_und_f_5_9.value,0) as TX_PVLS_num_und_f_5_9,
@@ -912,10 +1349,89 @@ COALESCE(TX_PVLS_num_und_m_35_39.value,0) as TX_PVLS_num_und_m_35_39,
 COALESCE(TX_PVLS_num_und_m_40_44.value,0) as TX_PVLS_num_und_m_40_44,
 COALESCE(TX_PVLS_num_und_m_45_49.value,0) as TX_PVLS_num_und_m_45_49,
 COALESCE(TX_PVLS_num_und_m_50.value,0) as TX_PVLS_num_und_m_50,
-COALESCE(TX_PVLS_den_und.value,0) as TX_PVLS_den,
-COALESCE(TX_PVLS_den_und.value,0) as TX_PVLS_den_und,
+/*Denominator*/
+(
+COALESCE(TX_PVLS_den_rou_f_men1.value,0)   +
+COALESCE(TX_PVLS_den_rou_f_1_4.value,0)    +
+COALESCE(TX_PVLS_den_rou_f_5_9.value,0)    +
+COALESCE(TX_PVLS_den_rou_f_10_14.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_15_19.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_20_24.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_25_29.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_30_34.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_35_39.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_40_44.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_45_49.value,0)  +
+COALESCE(TX_PVLS_den_rou_f_50.value,0)     +
+COALESCE(TX_PVLS_den_rou_m_men1.value,0)   +
+COALESCE(TX_PVLS_den_rou_m_1_4.value,0)    +
+COALESCE(TX_PVLS_den_rou_m_5_9.value,0)    +
+COALESCE(TX_PVLS_den_rou_m_10_14.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_15_19.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_20_24.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_25_29.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_30_34.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_35_39.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_40_44.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_45_49.value,0)  +
+COALESCE(TX_PVLS_den_rou_m_50.value,0)     +
+/*Not Documented*/                         
+COALESCE(TX_PVLS_den_und_f_men1.value,0)   +
+COALESCE(TX_PVLS_den_und_f_1_4.value,0)    +
+COALESCE(TX_PVLS_den_und_f_5_9.value,0)    +
+COALESCE(TX_PVLS_den_und_f_10_14.value,0)  +
+COALESCE(TX_PVLS_den_und_f_15_19.value,0)  +
+COALESCE(TX_PVLS_den_und_f_20_24.value,0)  +
+COALESCE(TX_PVLS_den_und_f_25_29.value,0)  +
+COALESCE(TX_PVLS_den_und_f_30_34.value,0)  +
+COALESCE(TX_PVLS_den_und_f_35_39.value,0)  +
+COALESCE(TX_PVLS_den_und_f_40_44.value,0)  +
+COALESCE(TX_PVLS_den_und_f_45_49.value,0)  +
+COALESCE(TX_PVLS_den_und_f_50.value,0)     +
+COALESCE(TX_PVLS_den_und_m_men1.value,0)   +
+COALESCE(TX_PVLS_den_und_m_1_4.value,0)    +
+COALESCE(TX_PVLS_den_und_m_5_9.value,0)    +
+COALESCE(TX_PVLS_den_und_m_10_14.value,0)  +
+COALESCE(TX_PVLS_den_und_m_15_19.value,0)  +
+COALESCE(TX_PVLS_den_und_m_20_24.value,0)  +
+COALESCE(TX_PVLS_den_und_m_25_29.value,0)  +
+COALESCE(TX_PVLS_den_und_m_30_34.value,0)  +
+COALESCE(TX_PVLS_den_und_m_35_39.value,0)  +
+COALESCE(TX_PVLS_den_und_m_40_44.value,0)  +
+COALESCE(TX_PVLS_den_und_m_45_49.value,0)  +
+COALESCE(TX_PVLS_den_und_m_50.value,0)     
+) 
+AS TX_PVLS_den,
+COALESCE(TX_PVLS_den_rou_preg.value,0) as TX_PVLS_den_rou_preg,
+COALESCE(TX_PVLS_den_rou_breast.value,0) as TX_PVLS_den_rou_breast,
 COALESCE(TX_PVLS_den_und_preg.value,0) as TX_PVLS_den_und_preg,
 COALESCE(TX_PVLS_den_und_breast.value,0) as TX_PVLS_den_und_breast,
+/*Routine*/
+COALESCE(TX_PVLS_den_rou_f_men1.value,0) as TX_PVLS_den_rou_f_men1,
+COALESCE(TX_PVLS_den_rou_f_1_4.value,0) as TX_PVLS_den_rou_f_1_4,
+COALESCE(TX_PVLS_den_rou_f_5_9.value,0) as TX_PVLS_den_rou_f_5_9,
+COALESCE(TX_PVLS_den_rou_f_10_14.value,0) as TX_PVLS_den_rou_f_10_14,
+COALESCE(TX_PVLS_den_rou_f_15_19.value,0) as TX_PVLS_den_rou_f_15_19,
+COALESCE(TX_PVLS_den_rou_f_20_24.value,0) as TX_PVLS_den_rou_f_20_24,
+COALESCE(TX_PVLS_den_rou_f_25_29.value,0) as TX_PVLS_den_rou_f_25_29,
+COALESCE(TX_PVLS_den_rou_f_30_34.value,0) as TX_PVLS_den_rou_f_30_34,
+COALESCE(TX_PVLS_den_rou_f_35_39.value,0) as TX_PVLS_den_rou_f_35_39,
+COALESCE(TX_PVLS_den_rou_f_40_44.value,0) as TX_PVLS_den_rou_f_40_44,
+COALESCE(TX_PVLS_den_rou_f_45_49.value,0) as TX_PVLS_den_rou_f_45_49,
+COALESCE(TX_PVLS_den_rou_f_50.value,0) as TX_PVLS_den_rou_f_50,
+COALESCE(TX_PVLS_den_rou_m_men1.value,0) as TX_PVLS_den_rou_m_men1,
+COALESCE(TX_PVLS_den_rou_m_1_4.value,0) as TX_PVLS_den_rou_m_1_4,
+COALESCE(TX_PVLS_den_rou_m_5_9.value,0) as TX_PVLS_den_rou_m_5_9,
+COALESCE(TX_PVLS_den_rou_m_10_14.value,0) as TX_PVLS_den_rou_m_10_14,
+COALESCE(TX_PVLS_den_rou_m_15_19.value,0) as TX_PVLS_den_rou_m_15_19,
+COALESCE(TX_PVLS_den_rou_m_20_24.value,0) as TX_PVLS_den_rou_m_20_24,
+COALESCE(TX_PVLS_den_rou_m_25_29.value,0) as TX_PVLS_den_rou_m_25_29,
+COALESCE(TX_PVLS_den_rou_m_30_34.value,0) as TX_PVLS_den_rou_m_30_34,
+COALESCE(TX_PVLS_den_rou_m_35_39.value,0) as TX_PVLS_den_rou_m_35_39,
+COALESCE(TX_PVLS_den_rou_m_40_44.value,0) as TX_PVLS_den_rou_m_40_44,
+COALESCE(TX_PVLS_den_rou_m_45_49.value,0) as TX_PVLS_den_rou_m_45_49,
+COALESCE(TX_PVLS_den_rou_m_50.value,0) as TX_PVLS_den_rou_m_50,
+/*Not Documented*/
 COALESCE(TX_PVLS_den_und_f_men1.value,0) as TX_PVLS_den_und_f_men1,
 COALESCE(TX_PVLS_den_und_f_1_4.value,0) as TX_PVLS_den_und_f_1_4,
 COALESCE(TX_PVLS_den_und_f_5_9.value,0) as TX_PVLS_den_und_f_5_9,
@@ -1365,7 +1881,6 @@ left outer join (
  group by sourceid) as HTS_TST_TB_50_m_neg on HTS_TST_TB_50_m_neg.sourceid=ou.organisationunitid
 
  /*HTS_TST (Facility)-PITC PMTCT (ANC Only) Clinics*/
-
  /*10-14*/
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
@@ -2558,6 +3073,33 @@ left outer join (
 
 
  /*Index Testing*/
+ /*Offered UATS/ATIP*/
+ left outer join (
+ select sourceid,sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid IN (255151,43326)
+ and attributeoptioncomboid IN (229786,184430)
+ and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
+ group by sourceid) as index_offered_unk on index_offered_unk.sourceid=ou.organisationunitid
+ 
+/*Contacts*/
+/*CPN*/
+ left outer join (
+ select sourceid,sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid IN (1535896,1555061)
+ and categoryoptioncomboid=6924
+ and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
+ group by sourceid) as cpn_index_contact_pos on cpn_index_contact_pos.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid,sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid IN (1535896,1555061)
+ and categoryoptioncomboid=6925
+ and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
+ group by sourceid) as cpn_index_contact_neg on cpn_index_contact_neg.sourceid=ou.organisationunitid
+ 
  /*ATIP*/
  /*0-8m*/
  left outer join (
@@ -3261,6 +3803,7 @@ left outer join (
  group by sourceid) as ats_index_50_m_neg on ats_index_50_m_neg.sourceid=ou.organisationunitid
 
  /*PMTCT_STAT (Numerator)*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -3268,15 +3811,16 @@ left outer join (
  and categoryoptioncomboid IN (199702,199703,199704,199705,199706,199707,199708,199709,562864)
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as PMTCT_STAT_17q2_num on PMTCT_STAT_17q2_num.sourceid=ou.organisationunitid
-
+*/
  /*Age Unknown*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
  where dataelementid IN (6920,CASE WHEN periodid IN (5786,3799,3817,18562,19934,20612,35909,35910,36804,27077,27397,32124,17085,17084,17083,104544) THEN 7407 ELSE 0 END)
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as PMTCT_STAT_17q1_num on PMTCT_STAT_17q1_num.sourceid=ou.organisationunitid
-
+*/
  /*Age*/
  /*<10*/
  left outer join (
@@ -4562,6 +5106,7 @@ left outer join (
  
  /*Known Negative*/
 /*<1*/
+/*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4577,8 +5122,10 @@ left outer join (
  and categoryoptioncomboid=62282
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_men1_m on TB_STAT_kn_men1_m.sourceid=ou.organisationunitid
+ */
  
  /*1-4*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4594,8 +5141,9 @@ left outer join (
  and categoryoptioncomboid=62283
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_1_4_m on TB_STAT_kn_1_4_m.sourceid=ou.organisationunitid
- 
+ */
  /*5-9*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4611,8 +5159,9 @@ left outer join (
  and categoryoptioncomboid=62284
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_5_9_m on TB_STAT_kn_5_9_m.sourceid=ou.organisationunitid
-
+*/
  /*10-14*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4628,8 +5177,9 @@ left outer join (
  and categoryoptioncomboid=62285
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_10_14_m on TB_STAT_kn_10_14_m.sourceid=ou.organisationunitid
-
+*/
  /*15-19*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4645,8 +5195,9 @@ left outer join (
  and categoryoptioncomboid=62286
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_15_19_m on TB_STAT_kn_15_19_m.sourceid=ou.organisationunitid
-
+*/
  /*20-24*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4662,8 +5213,9 @@ left outer join (
  and categoryoptioncomboid=62287
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_20_24_m on TB_STAT_kn_20_24_m.sourceid=ou.organisationunitid
-
+*/
  /*25-29*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4679,8 +5231,9 @@ left outer join (
  and categoryoptioncomboid=561772
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_25_29_m on TB_STAT_kn_25_29_m.sourceid=ou.organisationunitid
-
+*/
  /*30-34*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4696,8 +5249,9 @@ left outer join (
  and categoryoptioncomboid=561773
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_30_34_m on TB_STAT_kn_30_34_m.sourceid=ou.organisationunitid
-
+*/
  /*35-39*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4713,8 +5267,9 @@ left outer join (
  and categoryoptioncomboid=561774
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_35_39_m on TB_STAT_kn_35_39_m.sourceid=ou.organisationunitid
-
+*/
  /*40-44*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4730,8 +5285,9 @@ left outer join (
  and categoryoptioncomboid=1480512
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_40_44_m on TB_STAT_kn_40_44_m.sourceid=ou.organisationunitid
-
+*/
  /*45-49*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4747,8 +5303,9 @@ left outer join (
  and categoryoptioncomboid=1480513
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_45_49_m on TB_STAT_kn_45_49_m.sourceid=ou.organisationunitid
-
+*/
  /*50+*/
+ /*
  left outer join (
  select sourceid,sum(cast(value as double precision)) as value
  from datavalue
@@ -4764,7 +5321,7 @@ left outer join (
  and categoryoptioncomboid=62289
  and periodid IN (select distinct(ps.periodid) from _periodstructure ps, period p where quarterly=(SELECT quarterly from _periodstructure where periodid=630920) and ps.periodid=p.periodid and p.periodtypeid=3)
  group by sourceid) as TB_STAT_kn_50_m on TB_STAT_kn_50_m.sourceid=ou.organisationunitid
- 
+ */
  /*TB_STAT*/
  /*Denominator*/
 /*<1*/
@@ -5930,15 +6487,217 @@ left outer join (
  group by sourceid) as TB_ART_prev_50_m on TB_ART_prev_50_m.sourceid=ou.organisationunitid
  
  /*TX_PVLS*/
- /*TX_PVLS (Numerator)*/
+ /*Routine*/
  left outer join (
  select sourceid, sum(cast(value as double precision)) as value
  from datavalue
- where dataelementid=484185
- and categoryoptioncomboid=484019
+ where dataelementid=484186
+ and categoryoptioncomboid=484024
  and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
- group by sourceid) as TX_PVLS_num_und on TX_PVLS_num_und.sourceid=ou.organisationunitid
+ group by sourceid) as TX_PVLS_num_rou_preg on TX_PVLS_num_rou_preg.sourceid=ou.organisationunitid
  
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484186
+ and categoryoptioncomboid=484023
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_breast on TX_PVLS_num_rou_breast.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538088
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_men1 on TX_PVLS_num_rou_f_men1.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538094
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_1_4 on TX_PVLS_num_rou_f_1_4.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538100
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_5_9 on TX_PVLS_num_rou_f_5_9.sourceid=ou.organisationunitid
+ 
+left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484042
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_10_14 on TX_PVLS_num_rou_f_10_14.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484039
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_15_19 on TX_PVLS_num_rou_f_15_19.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484038
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_20_24 on TX_PVLS_num_rou_f_20_24.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603107
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_25_29 on TX_PVLS_num_rou_f_25_29.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603113
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_30_34 on TX_PVLS_num_rou_f_30_34.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603119
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_35_39 on TX_PVLS_num_rou_f_35_39.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538106
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_40_44 on TX_PVLS_num_rou_f_40_44.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538112
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_45_49 on TX_PVLS_num_rou_f_45_49.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484057
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_f_50 on TX_PVLS_num_rou_f_50.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538085
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_men1 on TX_PVLS_num_rou_m_men1.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538091
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_1_4 on TX_PVLS_num_rou_m_1_4.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538097
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_5_9 on TX_PVLS_num_rou_m_5_9.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484055
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_10_14 on TX_PVLS_num_rou_m_10_14.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484041
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_15_19 on TX_PVLS_num_rou_m_15_19.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484061
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_20_24 on TX_PVLS_num_rou_m_20_24.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603104
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_25_29 on TX_PVLS_num_rou_m_25_29.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603110
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_30_34 on TX_PVLS_num_rou_m_30_34.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=603116
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_35_39 on TX_PVLS_num_rou_m_35_39.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538103
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_40_44 on TX_PVLS_num_rou_m_40_44.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=1538109
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_45_49 on TX_PVLS_num_rou_m_45_49.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484188
+ and categoryoptioncomboid=484065
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_num_rou_m_50 on TX_PVLS_num_rou_m_50.sourceid=ou.organisationunitid
+ 
+ /*Undocumented*/
  left outer join (
  select sourceid, sum(cast(value as double precision)) as value
  from datavalue
@@ -6148,14 +6907,216 @@ left outer join (
  group by sourceid) as TX_PVLS_num_und_m_50 on TX_PVLS_num_und_m_50.sourceid=ou.organisationunitid
  
  /*TX_PVLS (Denominator)*/
+ /*Routine*/
  left outer join (
  select sourceid, sum(cast(value as double precision)) as value
  from datavalue
- where dataelementid=484192
- and categoryoptioncomboid=484019
+ where dataelementid=484191
+ and categoryoptioncomboid=484024
  and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
- group by sourceid) as TX_PVLS_den_und on TX_PVLS_den_und.sourceid=ou.organisationunitid
+ group by sourceid) as TX_PVLS_den_rou_preg on TX_PVLS_den_rou_preg.sourceid=ou.organisationunitid
  
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484191
+ and categoryoptioncomboid=484023
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_breast on TX_PVLS_den_rou_breast.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538088
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_men1 on TX_PVLS_den_rou_f_men1.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538094
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_1_4 on TX_PVLS_den_rou_f_1_4.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538100
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_5_9 on TX_PVLS_den_rou_f_5_9.sourceid=ou.organisationunitid
+ 
+left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484042
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_10_14 on TX_PVLS_den_rou_f_10_14.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484039
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_15_19 on TX_PVLS_den_rou_f_15_19.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484038
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_20_24 on TX_PVLS_den_rou_f_20_24.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603107
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_25_29 on TX_PVLS_den_rou_f_25_29.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603113
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_30_34 on TX_PVLS_den_rou_f_30_34.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603119
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_35_39 on TX_PVLS_den_rou_f_35_39.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538106
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_40_44 on TX_PVLS_den_rou_f_40_44.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538112
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_45_49 on TX_PVLS_den_rou_f_45_49.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484057
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_f_50 on TX_PVLS_den_rou_f_50.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538085
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_men1 on TX_PVLS_den_rou_m_men1.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538091
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_1_4 on TX_PVLS_den_rou_m_1_4.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538097
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_5_9 on TX_PVLS_den_rou_m_5_9.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484055
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_10_14 on TX_PVLS_den_rou_m_10_14.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484041
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_15_19 on TX_PVLS_den_rou_m_15_19.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484061
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_20_24 on TX_PVLS_den_rou_m_20_24.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603104
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_25_29 on TX_PVLS_den_rou_m_25_29.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603110
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_30_34 on TX_PVLS_den_rou_m_30_34.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=603116
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_35_39 on TX_PVLS_den_rou_m_35_39.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538103
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_40_44 on TX_PVLS_den_rou_m_40_44.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=1538109
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_45_49 on TX_PVLS_den_rou_m_45_49.sourceid=ou.organisationunitid
+ 
+ left outer join (
+ select sourceid, sum(cast(value as double precision)) as value
+ from datavalue
+ where dataelementid=484189
+ and categoryoptioncomboid=484065
+ and periodid=(select ps.periodid from _periodstructure ps where iso=(SELECT quarterly from _periodstructure where periodid=630920))
+ group by sourceid) as TX_PVLS_den_rou_m_50 on TX_PVLS_den_rou_m_50.sourceid=ou.organisationunitid
+ 
+ /*Undocumented*/
  left outer join (
  select sourceid, sum(cast(value as double precision)) as value
  from datavalue
