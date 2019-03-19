@@ -78,7 +78,7 @@ i = i + 1000
 FormProgressBar.Hide
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("XH10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("XH10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AGG10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AGG10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
@@ -94,7 +94,7 @@ Else
     End With
 
     'Call DHIS2 javascript function to select Org Unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("XH10") & "' )", "JavaScript")
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AGG10") & "' )", "JavaScript")
     Application.Wait Now + TimeValue("00:00:30")
     
     'Select the Dataset and Period only at 1st time
@@ -106,9 +106,9 @@ Else
     IE.Document.GetElementByID("selectedDataSetId").dispatchEvent evt
     Application.Wait Now + TimeValue("00:00:04")
     'Select the Period
-    Call IE.Document.parentWindow.execScript("previousPeriodsSelected()", "JavaScript")
-    Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("selectedPeriodId").Value = "2018Q4"
+    'Call IE.Document.parentWindow.execScript("previousPeriodsSelected()", "JavaScript")
+    'Application.Wait Now + TimeValue("00:00:03")
+    IE.Document.GetElementByID("selectedPeriodId").Value = "2019Q1"
     IE.Document.GetElementByID("selectedPeriodId").dispatchEvent evt
     Application.Wait Now + TimeValue("00:00:30")
     End If
@@ -116,6 +116,24 @@ Else
     '--------------------------------------------------------------------
     '                        CALL FUNCTIONS
     '--------------------------------------------------------------------
+    'PREVENTION
+    'Select TAB
+    IE.Document.GetElementByID("ui-id-2").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    IE.Document.GetElementByID("ui-id-7").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    'Quarterly
+    'Semiannually
+    Call PrEP_NEW
+    Call PrEP_CURR
+    Call TB_PREV
+
+    'TESTING
+    'Select TAB
+    IE.Document.GetElementByID("ui-id-3").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    IE.Document.GetElementByID("ui-id-10").Click
+    Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     Call PICT_Inpatient
     Call PICT_Pediatric
@@ -127,11 +145,34 @@ Else
     Call PMTCT_STAT
     Call PMTCT_EID_HEI_POS
     Call TB_STAT
+    'Semiannually
+    Call CXCA_SCRN
+
+    'TREATMENT
+    'Select TAB
+    IE.Document.GetElementByID("ui-id-4").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    IE.Document.GetElementByID("ui-id-12").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    'Quarterly
     Call TX_NEW
     Call TX_CURR
     Call PMTCT_ART
     Call TB_ART
+    'Semiannualy
+    Call TX_ML
+    Call TX_TB
+    Call CXCA_TX
+
+    'VIRAL SUPRESSION
+    'Select TAB
+    IE.Document.GetElementByID("ui-id-5").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    IE.Document.GetElementByID("ui-id-14").Click
+    Application.Wait Now + TimeValue("00:00:03")
+    'Quarterly
     Call TX_PVLS
+    'Semiannually
 
     ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
     Application.Wait Now + TimeValue("00:00:04") 
@@ -176,11 +217,6 @@ End Sub
 Sub PICT_Inpatient()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Select TAB
-IE.Document.GetElementByID("ui-id-3").Click
-Application.Wait Now + TimeValue("00:00:03")
-IE.Document.GetElementByID("ui-id-10").Click
-Application.Wait Now + TimeValue("00:00:03")
 
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("G10")) Then
 '<1,F,Positive
@@ -2325,11 +2361,6 @@ End Sub
 Sub TX_NEW()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Select TAB
-IE.Document.GetElementByID("ui-id-4").Click
-Application.Wait Now + TimeValue("00:00:03")
-IE.Document.GetElementByID("ui-id-12").Click
-Application.Wait Now + TimeValue("00:00:03")
 
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("OT10")) Then
 'Breastfeeding
@@ -2338,7 +2369,7 @@ IE.Document.GetElementByID("QI0LrOAmBCG-jaxEUorPKgv-val").Value = ThisWorkbook.S
 IE.Document.GetElementByID("QI0LrOAmBCG-jaxEUorPKgv-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
 
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("OU10")) Then
+If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("PS10:PV10")) = 0  Then
 '<1,F
 IE.Document.GetElementByID("yXZtvoYQXcD-OMVFa98P0Yg-val").Focus
 IE.Document.GetElementByID("yXZtvoYQXcD-OMVFa98P0Yg-val").Value = ThisWorkbook.Sheets("sheet1").Range("OU10")
@@ -2459,8 +2490,7 @@ IE.Document.GetElementByID("yXZtvoYQXcD-QwUdNwRA8Uc-val").Focus
 IE.Document.GetElementByID("yXZtvoYQXcD-QwUdNwRA8Uc-val").Value = ThisWorkbook.Sheets("sheet1").Range("PR10")
 IE.Document.GetElementByID("yXZtvoYQXcD-QwUdNwRA8Uc-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
-End If
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("OU10")) Then
+Else
 '<15,F
 IE.Document.GetElementByID("NBLKn7nRBfo-wIv7t5fSIlK-val").Focus
 IE.Document.GetElementByID("NBLKn7nRBfo-wIv7t5fSIlK-val").Value = ThisWorkbook.Sheets("sheet1").Range("PS10")
@@ -2502,6 +2532,7 @@ Sub TX_CURR()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("PX10")) Then
+If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("QV10:QY10")) = 0 Then
 '<1,F
 IE.Document.GetElementByID("Hyvw9VnZ2ch-OMVFa98P0Yg-val").Focus
 IE.Document.GetElementByID("Hyvw9VnZ2ch-OMVFa98P0Yg-val").Value = ThisWorkbook.Sheets("sheet1").Range("PX10")
@@ -2622,9 +2653,7 @@ IE.Document.GetElementByID("Hyvw9VnZ2ch-QwUdNwRA8Uc-val").Focus
 IE.Document.GetElementByID("Hyvw9VnZ2ch-QwUdNwRA8Uc-val").Value = ThisWorkbook.Sheets("sheet1").Range("QU10")
 IE.Document.GetElementByID("Hyvw9VnZ2ch-QwUdNwRA8Uc-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
-End If
-If IsEmpty(ThisWorkbook.Sheets("sheet1").Range("PX10")) Then
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("QV10")) Then
+Else
 '<15,F
 IE.Document.GetElementByID("c03urRVExYe-wIv7t5fSIlK-val").Focus
 IE.Document.GetElementByID("c03urRVExYe-wIv7t5fSIlK-val").Value = ThisWorkbook.Sheets("sheet1").Range("QV10")
@@ -2990,11 +3019,6 @@ End Sub
 Sub TX_PVLS()
 Set evt = IE.Document.createEvent("HTMLEvents")
 evt.initEvent "change", True, False
-'Select TAB
-IE.Document.GetElementByID("ui-id-5").Click
-Application.Wait Now + TimeValue("00:00:03")
-IE.Document.GetElementByID("ui-id-14").Click
-Application.Wait Now + TimeValue("00:00:03")
 
 'Numerator
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("TG10")) Then
@@ -3526,7 +3550,1281 @@ IE.Document.GetElementByID("kznQBykTtJt-E4AmAvdxkJA-val").Value = ThisWorkbook.S
 IE.Document.GetElementByID("kznQBykTtJt-E4AmAvdxkJA-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
 End If
-End Sub    
+End Sub
+
+' PPPPPPPPP          rEEEEEEEEEE EPPPPPPPP         NNN   NNNN  NEEEEEEEEEEEEWW  WWWWW   WWW  
+' PPPPPPPPPP         rEEEEEEEEEE EPPPPPPPPP        NNNN  NNNN  NEEEEEEEEEEEEWW  WWWWW  WWWW  
+' PPPPPPPPPPP        rEEEEEEEEEE EPPPPPPPPPP       NNNN  NNNN  NEEEEEEEEEEEEWW  WWWWWW WWWW  
+' PPPP   PPPPPPrrrrrrrEEE        EPPP   PPPP       NNNNN NNNN  NEEE       EEWW WWWWWWW WWWW  
+' PPPP   PPPPPPrrrrrrrEEE        EPPP   PPPP       NNNNN NNNN  NEEE       EEWW WWWWWWW WWWW  
+' PPPPPPPPPPPPPrrr   rEEEEEEEEE  EPPPPPPPPPP       NNNNNNNNNN  NEEEEEEEEE  EWWWWWWWWWW WWW   
+' PPPPPPPPPP PPrr    rEEEEEEEEE  EPPPPPPPPP        NNNNNNNNNN  NEEEEEEEEE  EWWWWWW WWWWWWW   
+' PPPPPPPPP  PPrr    rEEEEEEEEE  EPPPPPPPP         NNNNNNNNNN  NEEEEEEEEE  EWWWWWW WWWWWWW   
+' PPPP       PPrr    rEEE        EPPP              NNNNNNNNNN  NEEE        EWWWWWW WWWWWWW   
+' PPPP       PPrr    rEEE        EPPP              NNN NNNNNN  NEEE        EWWWWWW WWWWWWW   
+' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN  NNNNN  NEEEEEEEEEE  WWWWW   WWWWW    
+' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN  NNNNN  NEEEEEEEEEE  WWWWW   WWWWW    
+' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN   NNNN  NEEEEEEEEEE  WWWWW   WWWWW    
+Sub PrEP_NEW()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("XI10")) Then
+'15-19,F  
+IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("XI10")
+IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24,F  
+IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("XJ10")
+IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29,F  
+IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("XK10")
+IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34,F  
+IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("XL10")
+IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39,F  
+IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("XM10")
+IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44,F  
+IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("XN10")
+IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49,F  
+IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("XO10")
+IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50,F  
+IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("XP10")
+IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'15-19,M 
+IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("XQ10")
+IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24,M  
+IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("XR10")
+IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29,M  
+IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("XS10")
+IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34,M  
+IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("XT10")
+IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39,M  
+IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("XU10")
+IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44,M 
+IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("XV10")
+IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49,M 
+IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("XW10")
+IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50,M 
+IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Focus
+IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("XX10")
+IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End if
+End Sub
+
+'PPPPPPPPP          rEEEEEEEEEE EPPPPPPPP          CCCCCCC    CUUU   UUUU  URRRRRRRRR   RRRRRRRRRR    
+'PPPPPPPPPP         rEEEEEEEEEE EPPPPPPPPP        CCCCCCCCC   CUUU   UUUU  URRRRRRRRRR  RRRRRRRRRRR   
+'PPPPPPPPPPP        rEEEEEEEEEE EPPPPPPPPPP       CCCCCCCCCC  CUUU   UUUU  URRRRRRRRRR  RRRRRRRRRRR   
+'PPPP   PPPPPPrrrrrrrEEE        EPPP   PPPP       CCC   CCCCC CUUU   UUUU  URRR   RRRRR RRRR   RRRRR  
+'PPPP   PPPPPPrrrrrrrEEE        EPPP   PPPP       CC     CCC  CUUU   UUUU  URRR   RRRRR RRRR   RRRRR  
+'PPPPPPPPPPPPPrrr   rEEEEEEEEE  EPPPPPPPPPP       CC          CUUU   UUUU  URRRRRRRRRR  RRRRRRRRRRR   
+'PPPPPPPPPP PPrr    rEEEEEEEEE  EPPPPPPPPP        CC          CUUU   UUUU  URRRRRRRRRR  RRRRRRRRRRR   
+'PPPPPPPPP  PPrr    rEEEEEEEEE  EPPPPPPPP         CC          CUUU   UUUU  URRRRRRR     RRRRRRRR      
+'PPPP       PPrr    rEEE        EPPP              CC     CCC  CUUU   UUUU  URRR RRRR    RRRR RRRR     
+'PPPP       PPrr    rEEE        EPPP              CCC   CCCCC CUUU   UUUU  URRR  RRRR   RRRR  RRRR    
+'PPPP       PPrr    rEEEEEEEEEE EPPP              CCCCCCCCCC  CUUUUUUUUUU  URRR  RRRRR  RRRR  RRRRR   
+'PPPP       PPrr    rEEEEEEEEEE EPPP              CCCCCCCCCC   UUUUUUUUU   URRR   RRRRR RRRR   RRRRR  
+'PPPP       PPrr    rEEEEEEEEEE EPPP               CCCCCCC      UUUUUUU    URRR    RRRR RRRR    RRRR  
+Sub PrEP_CURR()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("XZ10")) Then
+'15-19,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("XZ10")
+IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("YA10")
+IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("YB10")
+IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("YC10")
+IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("YD10")
+IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("YE10")
+IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("YF10")
+IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50,F  
+IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("YG10")
+IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'15-19,M 
+IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("YH10")
+IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24,M  
+IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("YI10")
+IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29,M  
+IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("YJ10")
+IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34,M  
+IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("YK10")
+IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39,M  
+IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("YL10")
+IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44,M 
+IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("YM10")
+IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49,M 
+IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("YN10")
+IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50,M 
+IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Focus
+IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("YO10")
+IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Positive
+IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Focus
+IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Value = ThisWorkbook.Sheets("sheet1").Range("YP10")
+IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Negative
+IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Focus
+IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Value = ThisWorkbook.Sheets("sheet1").Range("YQ10")
+IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Three month
+IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Focus
+IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Value = ThisWorkbook.Sheets("sheet1").Range("YR10")
+IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End if
+End Sub
+
+'TTTTTTTTTTTBBBBBBBBBB        PPPPPPPPP   PRRRRRRRRR   EEEEEEEEEEEEEVV    VVVV  
+'TTTTTTTTTTTBBBBBBBBBBB       PPPPPPPPPP  PRRRRRRRRRR  EEEEEEEEEEEEEVV    VVVV  
+'TTTTTTTTTTTBBBBBBBBBBB       PPPPPPPPPPP PRRRRRRRRRR  EEEEEEEEEEEEEVV    VVVV  
+'   TTTT    BBBB   BBBB       PPPP   PPPP PRRR   RRRRR EEEE       EEVVV  VVVV   
+'   TTTT    BBBB   BBBB       PPPP   PPPP PRRR   RRRRR EEEE        EVVV  VVVV   
+'   TTTT    BBBBBBBBBBB       PPPPPPPPPPP PRRRRRRRRRR  EEEEEEEEEE  EVVV  VVVV   
+'   TTTT    BBBBBBBBBB        PPPPPPPPPP  PRRRRRRRRRR  EEEEEEEEEE  EVVVVVVVV    
+'   TTTT    BBBBBBBBBBB       PPPPPPPPP   PRRRRRRR     EEEEEEEEEE   VVVVVVVV    
+'   TTTT    BBBB    BBBB      PPPP        PRRR RRRR    EEEE         VVVVVVVV    
+'   TTTT    BBBB    BBBB      PPPP        PRRR  RRRR   EEEE         VVVVVVV     
+'   TTTT    BBBBBBBBBBBB      PPPP        PRRR  RRRRR  EEEEEEEEEEE   VVVVVV     
+'   TTTT    BBBBBBBBBBB       PPPP        PRRR   RRRRR EEEEEEEEEEE   VVVVVV     
+'   TTTT    BBBBBBBBBB        PPPP        PRRR    RRRR EEEEEEEEEEE   VVVVV  
+Sub TB_PREV()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("YT10")) Then
+'Numerator
+'IPT, Newly, <15, F
+IE.Document.GetElementByID("snsnfDStk7C-mi7E9CADWSN-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-mi7E9CADWSN-val").Value = ThisWorkbook.Sheets("sheet1").Range("YT10")
+IE.Document.GetElementByID("snsnfDStk7C-mi7E9CADWSN-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, 15+, F
+IE.Document.GetElementByID("snsnfDStk7C-JR95o8Xtizl-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-JR95o8Xtizl-val").Value = ThisWorkbook.Sheets("sheet1").Range("YU10")
+IE.Document.GetElementByID("snsnfDStk7C-JR95o8Xtizl-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, <15, M
+IE.Document.GetElementByID("snsnfDStk7C-wf5dnqcNzsC-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-wf5dnqcNzsC-val").Value = ThisWorkbook.Sheets("sheet1").Range("YV10")
+IE.Document.GetElementByID("snsnfDStk7C-wf5dnqcNzsC-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, 15+, M
+IE.Document.GetElementByID("snsnfDStk7C-DYWHCdJGVCo-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-DYWHCdJGVCo-val").Value = ThisWorkbook.Sheets("sheet1").Range("YW10")
+IE.Document.GetElementByID("snsnfDStk7C-DYWHCdJGVCo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, <15, F
+IE.Document.GetElementByID("snsnfDStk7C-EtjoXVvdmke-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-EtjoXVvdmke-val").Value = ThisWorkbook.Sheets("sheet1").Range("YX10")
+IE.Document.GetElementByID("snsnfDStk7C-EtjoXVvdmke-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, 15+, F
+IE.Document.GetElementByID("snsnfDStk7C-M4jO9QCDbGa-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-M4jO9QCDbGa-val").Value = ThisWorkbook.Sheets("sheet1").Range("YY10")
+IE.Document.GetElementByID("snsnfDStk7C-M4jO9QCDbGa-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, <15, M
+IE.Document.GetElementByID("snsnfDStk7C-H7mVNYfFpZK-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-H7mVNYfFpZK-val").Value = ThisWorkbook.Sheets("sheet1").Range("YZ10")
+IE.Document.GetElementByID("snsnfDStk7C-H7mVNYfFpZK-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, 15+, M
+IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZA10")
+IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, <15, F
+IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZB10")
+IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, 15+, F
+IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZC10")
+IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, <15, M
+IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZD10")
+IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, 15+, M
+IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZE10")
+IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, <15, F
+IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZF10")
+IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, 15+, F
+IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZG10")
+IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, <15, M
+IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZH10")
+IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, 15+, M
+IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").Focus
+IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZI10")
+IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ZK10")) Then
+'Denominator
+'IPT, Newly, <15, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-mi7E9CADWSN-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-mi7E9CADWSN-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZK10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-mi7E9CADWSN-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, 15+, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-JR95o8Xtizl-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-JR95o8Xtizl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZL10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-JR95o8Xtizl-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, <15, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-wf5dnqcNzsC-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-wf5dnqcNzsC-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZM10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-wf5dnqcNzsC-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Newly, 15+, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-DYWHCdJGVCo-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-DYWHCdJGVCo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZN10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-DYWHCdJGVCo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, <15, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-EtjoXVvdmke-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-EtjoXVvdmke-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZO10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-EtjoXVvdmke-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, 15+, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-M4jO9QCDbGa-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-M4jO9QCDbGa-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZP10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-M4jO9QCDbGa-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, <15, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-H7mVNYfFpZK-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-H7mVNYfFpZK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZQ10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-H7mVNYfFpZK-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'IPT, Already, 15+, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, <15, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, 15+, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, <15, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Newly, 15+, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, <15, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, 15+, F
+IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, <15, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Alternate, Already, 15+, M
+IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").Focus
+IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
+IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
+
+'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA           SSSSSSS      CCCCCCC    RRRRRRRRRR   NNNN   NNNN  
+'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          SSSSSSSSS    CCCCCCCCC   RRRRRRRRRRR  NNNNN  NNNN  
+'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          SSSSSSSSSS  CCCCCCCCCCC  RRRRRRRRRRR  NNNNN  NNNN  
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA         SSSS  SSSS  CCCC   CCCCC RRRR   RRRRR NNNNNN NNNN  
+' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA         SSSS       SCCC     CCC  RRRR   RRRRR NNNNNN NNNN  
+' CCCC            XXXXXX   XCCC           AAAAAAAA         SSSSSSS    SCCC          RRRRRRRRRRR  NNNNNNNNNNN  
+' CCCC            XXXXX    XCCC           AAAA AAAA         SSSSSSSSS SCCC          RRRRRRRRRRR  NNNNNNNNNNN  
+' CCCC            XXXXXX   XCCC          AAAAAAAAAA           SSSSSSS SCCC          RRRRRRRR     NNNNNNNNNNN  
+' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA             SSSSSSCCC     CCC  RRRR RRRR    NNNNNNNNNNN  
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA       SSS    SSSS CCCC   CCCCC RRRR  RRRR   NNNN NNNNNN  
+'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA       SSSSSSSSSSS CCCCCCCCCCC  RRRR  RRRRR  NNNN  NNNNN  
+'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA      SSSSSSSSSS   CCCCCCCCCC  RRRR   RRRRR NNNN  NNNNN  
+'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA       SSSSSSSS     CCCCCCC    RRRR    RRRR NNNN   NNNN  
+Sub CXCA_SCRN()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+Application.Wait Now + TimeValue("00:00:03")
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AAB10")) Then
+'Negative
+'15-19
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAB10")
+IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAC10")
+IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAD10")
+IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAE10")
+IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAF10")
+IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAG10")
+IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAH10")
+IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAI10")
+IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Positive
+'15-19
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAJ10")
+IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAK10")
+IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAL10")
+IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAM10")
+IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAN10")
+IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAO10")
+IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAP10")
+IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAQ10")
+IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Suspected
+'15-19
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAR10")
+IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAS10")
+IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAT10")
+IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAU10")
+IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAV10")
+IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAW10")
+IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAX10")
+IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Focus
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAY10")
+IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
+
+'TTTTTTTTTTTXXXX  XXXXX      MMMM   MMMMMM LLLL       
+'TTTTTTTTTTTXXXX  XXXX       MMMM   MMMMMM LLLL       
+'TTTTTTTTTTTXXXXXXXXXX       MMMM   MMMMMM LLLL       
+'   TTTT     XXXXXXXX        MMMMM MMMMMMM LLLL       
+'   TTTT      XXXXXX         MMMMM MMMMMMM LLLL       
+'   TTTT      XXXXXX         MMMMM MMMMMMM LLLL       
+'   TTTT      XXXXX          MMMMMMMMMMMMM LLLL       
+'   TTTT      XXXXXX         MMMMMMMMMMMMM LLLL       
+'   TTTT     XXXXXXXX        MMMMMMMMMMMMM LLLL       
+'   TTTT     XXXXXXXX        MM MMMMM MMMM LLLL       
+'   TTTT    XXXX XXXXX       MM MMMMM MMMM LLLLLLLLL  
+'   TTTT   TXXXX  XXXXX      MM MMMMM MMMM LLLLLLLLL  
+'   TTTT   TXXX    XXXX      MM MMMMM MMMM LLLLLLLLL  
+Sub TX_ML()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ABA10")) Then
+'<1,F,Died
+IE.Document.GetElementByID("DRRao8jDO3b-HCBbyzN9hg8-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-HCBbyzN9hg8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABA10")
+IE.Document.GetElementByID("DRRao8jDO3b-HCBbyzN9hg8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,F,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-DuKFTCDTm36-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-DuKFTCDTm36-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABB10")
+IE.Document.GetElementByID("DRRao8jDO3b-DuKFTCDTm36-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,F,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-UbzJ7tg5zo2-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-UbzJ7tg5zo2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABC10")
+IE.Document.GetElementByID("DRRao8jDO3b-UbzJ7tg5zo2-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-zh9NgGkXtF8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-zh9NgGkXtF8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABD10")
+IE.Document.GetElementByID("DRRao8jDO3b-zh9NgGkXtF8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Hs4V3lH4yQU-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Hs4V3lH4yQU-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABE10")
+IE.Document.GetElementByID("DRRao8jDO3b-Hs4V3lH4yQU-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-UmxJVH7qDiF-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-UmxJVH7qDiF-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABF10")
+IE.Document.GetElementByID("DRRao8jDO3b-UmxJVH7qDiF-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Equr4VbOl5H-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Equr4VbOl5H-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABG10")
+IE.Document.GetElementByID("DRRao8jDO3b-Equr4VbOl5H-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-LInafos6gzb-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-LInafos6gzb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABH10")
+IE.Document.GetElementByID("DRRao8jDO3b-LInafos6gzb-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-C87iWhgzBDu-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-C87iWhgzBDu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABI10")
+IE.Document.GetElementByID("DRRao8jDO3b-C87iWhgzBDu-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-JQEU6nKw7gb-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-JQEU6nKw7gb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABJ10")
+IE.Document.GetElementByID("DRRao8jDO3b-JQEU6nKw7gb-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,F,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-P0NgrRvn84T-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-P0NgrRvn84T-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABK10")
+IE.Document.GetElementByID("DRRao8jDO3b-P0NgrRvn84T-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,F,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-yybElZFCO86-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-yybElZFCO86-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABL10")
+IE.Document.GetElementByID("DRRao8jDO3b-yybElZFCO86-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'<1,M,Died                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-jWiak0ltNja-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-jWiak0ltNja-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABM10")
+IE.Document.GetElementByID("DRRao8jDO3b-jWiak0ltNja-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,M,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-e8nZ8Rb8EMt-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-e8nZ8Rb8EMt-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABN10")
+IE.Document.GetElementByID("DRRao8jDO3b-e8nZ8Rb8EMt-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,M,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-xVjQHjVzAU0-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-xVjQHjVzAU0-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABO10")
+IE.Document.GetElementByID("DRRao8jDO3b-xVjQHjVzAU0-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-mjJM5dG14VO-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-mjJM5dG14VO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABP10")
+IE.Document.GetElementByID("DRRao8jDO3b-mjJM5dG14VO-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-E8qNYIDZfnQ-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-E8qNYIDZfnQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-E8qNYIDZfnQ-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-WMOWrnR0Tk6-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-WMOWrnR0Tk6-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABR10")
+IE.Document.GetElementByID("DRRao8jDO3b-WMOWrnR0Tk6-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Ftq9p9Xzahl-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Ftq9p9Xzahl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABS10")
+IE.Document.GetElementByID("DRRao8jDO3b-Ftq9p9Xzahl-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-QKoLnrKVGpz-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-QKoLnrKVGpz-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABT10")
+IE.Document.GetElementByID("DRRao8jDO3b-QKoLnrKVGpz-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-fNEJdk6Vl8e-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-fNEJdk6Vl8e-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABU10")
+IE.Document.GetElementByID("DRRao8jDO3b-fNEJdk6Vl8e-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-GnyPqshMifv-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GnyPqshMifv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABV10")
+IE.Document.GetElementByID("DRRao8jDO3b-GnyPqshMifv-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,M,Died                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-P7KWqQDn7W5-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-P7KWqQDn7W5-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABW10")
+IE.Document.GetElementByID("DRRao8jDO3b-P7KWqQDn7W5-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,M,Died                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABX10")
+IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'<1,F,Undocumented
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABY10")
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABZ10")
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACA10")
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACB10")
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACC10")
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACD10")
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACE10")
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACF10")
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACG10")
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACH10")
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACI10")
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACJ10")
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'<1,M,Undocumented                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACK10")
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACL10")
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACM10")
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACN10")
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACO10")
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACP10")
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACR10")
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACS10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACT10")
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACU10")
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACV10")
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'<1,F,Traced
+IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACW10")
+IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,F,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-ZaX7T1mm60R-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZaX7T1mm60R-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACX10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZaX7T1mm60R-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,F,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-VMun3Ah6e2k-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-VMun3Ah6e2k-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACY10")
+IE.Document.GetElementByID("DRRao8jDO3b-VMun3Ah6e2k-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-LllUyIWhS95-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-LllUyIWhS95-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACZ10")
+IE.Document.GetElementByID("DRRao8jDO3b-LllUyIWhS95-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-EUfl8e8BFwN-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-EUfl8e8BFwN-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADA10")
+IE.Document.GetElementByID("DRRao8jDO3b-EUfl8e8BFwN-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-yGoN7frP7i8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-yGoN7frP7i8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADB10")
+IE.Document.GetElementByID("DRRao8jDO3b-yGoN7frP7i8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-ku6Q0SHxw6c-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ku6Q0SHxw6c-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADC10")
+IE.Document.GetElementByID("DRRao8jDO3b-ku6Q0SHxw6c-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-uKQCp8AOQUL-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-uKQCp8AOQUL-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADD10")
+IE.Document.GetElementByID("DRRao8jDO3b-uKQCp8AOQUL-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-l1DgaTNLde2-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-l1DgaTNLde2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADE10")
+IE.Document.GetElementByID("DRRao8jDO3b-l1DgaTNLde2-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Qw8gl4XnlCl-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Qw8gl4XnlCl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADF10")
+IE.Document.GetElementByID("DRRao8jDO3b-Qw8gl4XnlCl-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,F,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-We6rTd6cmTn-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-We6rTd6cmTn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADG10")
+IE.Document.GetElementByID("DRRao8jDO3b-We6rTd6cmTn-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,F,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-Sf78ll04lov-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Sf78ll04lov-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADH10")
+IE.Document.GetElementByID("DRRao8jDO3b-Sf78ll04lov-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'<1,M,Traced                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-ZRAcFMpcVKE-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZRAcFMpcVKE-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADI10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZRAcFMpcVKE-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,M,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-gDy1YoIcG47-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-gDy1YoIcG47-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADJ10")
+IE.Document.GetElementByID("DRRao8jDO3b-gDy1YoIcG47-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,M,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-rHMVe4mVaaF-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-rHMVe4mVaaF-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADK10")
+IE.Document.GetElementByID("DRRao8jDO3b-rHMVe4mVaaF-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-QDMMRyv1b7C-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-QDMMRyv1b7C-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADL10")
+IE.Document.GetElementByID("DRRao8jDO3b-QDMMRyv1b7C-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-MnuYBsHKprM-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-MnuYBsHKprM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADM10")
+IE.Document.GetElementByID("DRRao8jDO3b-MnuYBsHKprM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-e5VaP9zoRlF-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-e5VaP9zoRlF-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADN10")
+IE.Document.GetElementByID("DRRao8jDO3b-e5VaP9zoRlF-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-d7q0I4AnH38-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-d7q0I4AnH38-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADO10")
+IE.Document.GetElementByID("DRRao8jDO3b-d7q0I4AnH38-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-iCf9JjKSCs9-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-iCf9JjKSCs9-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADP10")
+IE.Document.GetElementByID("DRRao8jDO3b-iCf9JjKSCs9-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-sZC9E3g2YMR-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-sZC9E3g2YMR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-sZC9E3g2YMR-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-DkxCY8ooSbT-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-DkxCY8ooSbT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADR10")
+IE.Document.GetElementByID("DRRao8jDO3b-DkxCY8ooSbT-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,M,Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-B9qdd7xhhV8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-B9qdd7xhhV8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADS10")
+IE.Document.GetElementByID("DRRao8jDO3b-B9qdd7xhhV8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,M,Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADT10")
+IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'<1,F,Not Traced
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADU10")
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADV10")
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADW10")
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADX10")
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADY10")
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADZ10")
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEA10")
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEB10")
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEC10")
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AED10")
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEE10")
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEF10")
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'<1,M,Not Traced                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEG10")
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'1-4,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEH10")
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'5-9,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEI10")
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'10-14,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEJ10")
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'15-19,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEK10")
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'20-24,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEL10")
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'25-29,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEM10")
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'30-34,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEN10")
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'35-39,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEO10")
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'40-44,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEP10")
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'45-49,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:01")                                                            
+'50+,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AER10")
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
+
+' TTTTTTTTTTTXXXX  XXXXX       TTTTTTTTTTBBBBBBBBBB   
+' TTTTTTTTTTTXXXX  XXXX        TTTTTTTTTTBBBBBBBBBBB  
+' TTTTTTTTTTTXXXXXXXXXX        TTTTTTTTTTBBBBBBBBBBB  
+'    TTTT     XXXXXXXX           TTTT    BBBB   BBBB  
+'    TTTT      XXXXXX            TTTT    BBBB   BBBB  
+'    TTTT      XXXXXX            TTTT    BBBBBBBBBBB  
+'    TTTT      XXXXX             TTTT    BBBBBBBBBB   
+'    TTTT      XXXXXX            TTTT    BBBBBBBBBBB  
+'    TTTT     XXXXXXXX           TTTT    BBBB    BBB  
+'    TTTT     XXXXXXXX           TTTT    BBBB    BBB  
+'    TTTT    XXXX XXXXX          TTTT    BBBBBBBBBBB  
+'    TTTT   TXXXX  XXXXX         TTTT    BBBBBBBBBBB  
+'    TTTT   TXXX    XXXX         TTTT    BBBBBBBBBB   
+Sub TX_TB()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AET10")) Then
+'Numerator
+'New,F,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("AET10")
+IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'New,F,15+                                                                                        
+IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEU10")
+IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'New,M,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEV10")
+IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'New,M,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEW10")
+IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Already,F,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEX10")
+IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Already,F,15+                                                                                        
+IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEY10")
+IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Already,M,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AEZ10")
+IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Already,M,<15                                                                                          
+IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Focus                                         
+IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFA10")
+IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AFC10")) Then
+'Denominator
+'SP, Newly, <15, F
+IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFC10")
+IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Newly, 15+, F
+IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFD10")
+IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Newly, <15, M
+IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFE10")
+IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Newly, 15+, M
+IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFF10")
+IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Already, <15, F
+IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFG10")
+IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Already, 15+, F
+IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFH10")
+IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Already, <15, M
+IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFI10")
+IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'SP, Already, 15+, M
+IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFJ10")
+IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Newly, <15, F
+IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFK10")
+IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Newly, 15+, F
+IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFL10")
+IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Newly, <15, M
+IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFM10")
+IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Newly, 15+, M
+IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFN10")
+IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Already, <15, F
+IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFO10")
+IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Already, 15+, F
+IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFP10")
+IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Already, <15, M
+IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFQ10")
+IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'NP, Already, 15+, M
+IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Focus
+IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFR10")
+IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Specimen Sent
+IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Focus
+IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFS10")
+IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Smear Only
+IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Focus
+IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFT10")
+IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Gene Xpert
+IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Focus
+IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFU10")
+IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Other
+IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Focus
+IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFV10")
+IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'Positve returned
+IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Focus
+IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFW10")
+IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
+
+'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA          TTTTTTTTTTXXXXX  XXXXX  
+'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          TTTTTTTTTTXXXXX  XXXX   
+'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          TTTTTTTTTTXXXXXXXXXXX   
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA            TTTT     XXXXXXXX    
+' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA            TTTT      XXXXXX     
+' CCCC            XXXXXX   XCCC           AAAAAAAA            TTTT      XXXXXX     
+' CCCC            XXXXX    XCCC           AAAA AAAA           TTTT      XXXXX      
+' CCCC            XXXXXX   XCCC          AAAAAAAAAA           TTTT      XXXXXX     
+' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA          TTTT     XXXXXXXX    
+'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA          TTTT     XXXXXXXX    
+'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA          TTTT    XXXX XXXXX   
+'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA         TTTT   XXXXX  XXXXX  
+'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA         TTTT   XXXX    XXXX  
+Sub CXCA_TX()
+Set evt = IE.Document.createEvent("HTMLEvents")
+evt.initEvent "change", True, False
+
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AFY10")) Then
+'Cervical Cancer screen: Cryotherapy
+'15-19
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFY10")
+IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'20-24
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFZ10")
+IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'25-29
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGA10")
+IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'30-34
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGB10")
+IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'35-39
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGC10")
+IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'40-44
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGDC10")
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'45-49
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGE10")
+IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+'50+
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Focus
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGF10")
+IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:01")
+End If
+End Sub
 
 Sub SendEmailNotification()
 
@@ -3556,7 +4854,7 @@ Sub SendEmailNotification()
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
-        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz"
+        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz;luis.macave@fgh.org.mz"
         .HTMLBody = lStr
     End With
 
