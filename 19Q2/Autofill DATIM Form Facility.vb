@@ -15,7 +15,10 @@
 Public IE As Object
 Public ouList As String
 Public fillDuration As Date
+Public fillDuration2 As Date
 Public lastRow As Long
+Public startTime2 As Date
+Public endTime2 As Date
 
 'Main function that should be called by the button on Excel file
 Sub MainMacro()
@@ -95,6 +98,7 @@ Else
 
     'Call DHIS2 javascript function to select Org Unit on tree
     Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AGG10") & "' )", "JavaScript")
+    startTime2 = Now
     Application.Wait Now + TimeValue("00:00:30")
     
     'Select the Dataset and Period only at 1st time
@@ -174,8 +178,15 @@ Else
     Call TX_PVLS
     'Semiannually
 
+    'Send E-mail notification
+    'Calculate the total duration time
+    endTime2 = Now
+    fillDuration2 = endTime2 - startTime2
+    Call SendEmailNotification
+    Application.Wait Now + TimeValue("00:00:05")
+    'Next HF
     ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
-    Application.Wait Now + TimeValue("00:00:04") 
+    Application.Wait Now + TimeValue("00:00:10")
 
 End If
     
@@ -184,15 +195,14 @@ i = i + 1
 End If
 Loop
 
+MsgBox "Dados enviados para o DATIM com sucesso!", vbInformation, "FGH-SIS"
+
 'Calculate the total duration time
 endTime = Now
 fillDuration = endTime - startTime
 FormProgressBar.CheckBox2.Value = True
 FormProgressBar.Label5.Caption = Now 
 '& ", Duração: " & Format(fillDuration, "hh") & ":" & Format(fillDuration, "nn:ss")
-
-'Send E-mail notification
-Call SendEmailNotification
 
 End Sub
 
@@ -4232,6 +4242,8 @@ IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABX10")
 IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ABY10")) Then
 '<1,F,Undocumented
 IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABY10")
@@ -4352,6 +4364,8 @@ IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACV10")
 IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ACW10")) Then
 '<1,F,Traced
 IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACW10")
@@ -4472,6 +4486,8 @@ IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADT10")
 IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ADU10")) Then
 '<1,F,Not Traced
 IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Focus
 IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Value = ThisWorkbook.Sheets("sheet1").Range("ADU10")
@@ -4828,8 +4844,6 @@ End Sub
 
 Sub SendEmailNotification()
 
-    On Error GoTo Err
-
     Dim NewMail As Object
     Dim mailConfig As Object
     Dim fields As Variant
@@ -4845,16 +4859,18 @@ Sub SendEmailNotification()
 
     Dim lStr As String
     lStr = ""
-    lStr =  lStr & "<table border='1' style='border-color:#EEEEEE;' cellspacing='0' cellpadding='5' width=420><tr><td colspan='2' style='background-color:#0288D1;color:white;text-align:center;'>Digitação automática completa no DATIM</td></tr><tr><td bgcolor='#F3F3F3'>Nome do Utilizador do SO:</td><td>" & FormProgressBar.LabelUserInfo & "</td></tr><tr><td bgcolor='#F3F3F3'>Agente do Utilizador:</td><td>" & FormProgressBar.LabelUserAgentInfo & "</td></tr><tr><td bgcolor='#F3F3F3'>Hora inicial:</td><td>" & FormProgressBar.Label3 & "</td></tr><tr><td bgcolor='#F3F3F3'>Hora final:</td><td>" & FormProgressBar.Label5 & "</td></tr><tr><td bgcolor='#F3F3F3'>Duração:</td><td>" & Format(fillDuration, "hh") & ":" & Format(fillDuration, "nn:ss") & "</td></tr><tr><td bgcolor='#F3F3F3'>Período de reportagem:</td><td>" & Replace(ThisWorkbook.Sheets("sheet1").Range("A4"),"Period:","") & "</td></tr><tr><td bgcolor='#F3F3F3'>Unidades Organizacionais<br>digitadas:</td><td>" & ouList & "</td></tr>"
-    lStr =  lStr & "<tr><td bgcolor='#F3F3F3'>Nº de UO digitadas:</td><td>" & lastRow & "</td></tr><tr><td bgcolor='#F3F3F3'>Observação:</td><td>" & ThisWorkbook.Sheets("sheet1").Range("A5") & "</td></tr><tr><td colspan='2' style='text-align:center;background-color:#0288D1;color:white;'> <a href='http://196.28.230.195:8080/dhis'><span style='color:#00FFFF;'>DHIS-FGH</span></a><br><a href='https://www.datim.org/'><span style='color:#00FFFF;'>DATIM</span></a><br>" & Year(Now()) & " &copy; <a href='mailto:sis@fgh.org.mz'><span style='color:#00FFFF;'>sis@fgh.org.mz</span></a></td></tr></table>"
+    lStr =  lStr & "<table border='1' style='border-color:#EEEEEE;' cellspacing='0' cellpadding='5' width=420><tr><td colspan='2' style='background-color:#0288D1;color:white;text-align:center;'>Digitação automática completa no DATIM</td></tr><tr><td bgcolor='#F3F3F3'>Nome do Utilizador do<br>Sistema Operativo:</td><td>" & FormProgressBar.LabelUserInfo & "</td></tr><tr><td bgcolor='#F3F3F3'>Agente do Utilizador:</td><td>" & FormProgressBar.LabelUserAgentInfo & "</td></tr><tr><td bgcolor='#F3F3F3'>Hora inicial:</td><td>" & startTime2 & "</td></tr><tr><td bgcolor='#F3F3F3'>Hora final:</td><td>" & endTime2 & "</td></tr><tr><td bgcolor='#F3F3F3'>Duração:</td><td>" & Format(fillDuration2, "hh") & ":" & Format(fillDuration2, "nn:ss") & "</td></tr><tr><td bgcolor='#F3F3F3'>Período de reportagem:</td><td>" & Replace(ThisWorkbook.Sheets("sheet1").Range("A4"),"Period:","") & "</td></tr>"
+    lStr =  lStr & "<tr><td bgcolor='#F3F3F3'>Unidade Organizacional<br>digitada:</td><td>" & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")" & "</td></tr>"
+    lStr =  lStr & "<tr><td bgcolor='#F3F3F3'>Observação:</td><td>" & ThisWorkbook.Sheets("sheet1").Range("A5") & "</td></tr><tr><td colspan='2' style='text-align:center;background-color:#0288D1;color:white;'> <a href='http://196.28.230.195:8080/dhis'><span style='color:#00FFFF;'>DHIS-FGH</span></a><br><a href='https://www.datim.org/'><span style='color:#00FFFF;'>DATIM</span></a><br>" & Year(Now()) & " &copy; <a href='mailto:sis@fgh.org.mz'><span style='color:#00FFFF;'>sis@fgh.org.mz</span></a></td></tr></table>"
 
     'Set All Email Properties
     With NewMail
-        .Subject = "[SIS-FGH] Digitação automática completa no DATIM: " & FormProgressBar.LabelUserInfo & ", " & Now
+        .Subject = "[SIS-FGH] Digitação automática completa no DATIM"
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
-        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz;luis.macave@fgh.org.mz"
+        .BCC= "damasceno.lopes@fgh.org.mz"
+        '.BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz;luis.macave@fgh.org.mz"
         .HTMLBody = lStr
     End With
 
@@ -4883,27 +4899,7 @@ Sub SendEmailNotification()
     End With
     NewMail.Configuration = mailConfig
     NewMail.Send
-    MsgBox "Dados enviados para o DATIM com sucesso!", vbInformation, "FGH-SIS"
+   
 
-Exit_Err:
-
-    Set NewMail = Nothing
-    Set mailConfig = Nothing
-    End
-
-Err:
-    Select Case Err.Number
-
-    Case -2147220973  'Could be because of Internet Connection
-        MsgBox " Could be no Internet Connection !!  -- " & Err.Description
-
-    Case -2147220975  'Incorrect credentials User ID or password
-        MsgBox "Incorrect Credentials !!  -- " & Err.Description
-
-    Case Else   'Rest other errors
-        MsgBox "Error occured while sending the email !!  -- " & Err.Description
-    End Select
-
-    Resume Exit_Err
 
 End Sub
