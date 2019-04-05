@@ -4826,7 +4826,7 @@ IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
 '40-44
 IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGDC10")
+IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGD10")
 IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
 '45-49
@@ -4869,8 +4869,8 @@ Sub SendEmailNotification()
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
-        .BCC= "damasceno.lopes@fgh.org.mz"
-        '.BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz;luis.macave@fgh.org.mz"
+        '.BCC= "damasceno.lopes@fgh.org.mz"
+        .BCC = "damasceno.lopes@fgh.org.mz;prosperino.mbalame@fgh.org.mz;hamilton.mutemba@fgh.org.mz;eurico.jose@fgh.org.mz;antonio.mastala@fgh.org.mz;idelina.albano@fgh.org.mz;luis.macave@fgh.org.mz"
         .HTMLBody = lStr
     End With
 
