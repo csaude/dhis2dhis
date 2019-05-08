@@ -3835,46 +3835,6 @@ IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").Focus
 IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZA10")
 IE.Document.GetElementByID("snsnfDStk7C-UhCTzS8qdWx-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, <15, F
-IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZB10")
-IE.Document.GetElementByID("snsnfDStk7C-l2FnKuSuntB-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, 15+, F
-IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZC10")
-IE.Document.GetElementByID("snsnfDStk7C-LOEuWArojN7-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, <15, M
-IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZD10")
-IE.Document.GetElementByID("snsnfDStk7C-moyK8BYZIvs-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, 15+, M
-IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZE10")
-IE.Document.GetElementByID("snsnfDStk7C-YR98qZg7lGb-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, <15, F
-IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZF10")
-IE.Document.GetElementByID("snsnfDStk7C-pgiGwqvipEi-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, 15+, F
-IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZG10")
-IE.Document.GetElementByID("snsnfDStk7C-WU9HyL17b2S-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, <15, M
-IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZH10")
-IE.Document.GetElementByID("snsnfDStk7C-UVIXQTIxILK-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, 15+, M
-IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").Focus
-IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZI10")
-IE.Document.GetElementByID("snsnfDStk7C-B4XkBcZAtsu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ZK10")) Then
 'Denominator
@@ -3917,46 +3877,6 @@ Application.Wait Now + TimeValue("00:00:01")
 IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").Focus
 IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
 IE.Document.GetElementByID("KTrXeuvf4iQ-UhCTzS8qdWx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, <15, F
-IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-l2FnKuSuntB-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, 15+, F
-IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-LOEuWArojN7-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, <15, M
-IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-moyK8BYZIvs-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Newly, 15+, M
-IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-YR98qZg7lGb-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, <15, F
-IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-pgiGwqvipEi-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, 15+, F
-IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-WU9HyL17b2S-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, <15, M
-IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-UVIXQTIxILK-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Alternate, Already, 15+, M
-IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").Focus
-IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
-IE.Document.GetElementByID("KTrXeuvf4iQ-B4XkBcZAtsu-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
 End If
 End Sub
@@ -4752,31 +4672,6 @@ IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Focus
 IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFR10")
 IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:01")
-'Specimen Sent
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Focus
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFS10")
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Smear Only
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFT10")
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Gene Xpert
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFU10")
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Other
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFV10")
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
-'Positve returned
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Focus
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AFW10")
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:01")
 End If
 End Sub
 
@@ -4865,7 +4760,7 @@ Sub SendEmailNotification()
 
     'Set All Email Properties
     With NewMail
-        .Subject = "[SIS-FGH] Digitação automática completa no DATIM"
+        .Subject = "[SIS-FGH] Digitação completa no DATIM: " & ThisWorkbook.Sheets("sheet1").Range("A10")
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
