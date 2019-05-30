@@ -112,7 +112,7 @@ Else
     'Select the Period
     'Call IE.Document.parentWindow.execScript("previousPeriodsSelected()", "JavaScript")
     'Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("selectedPeriodId").Value = "2019Q1"
+    IE.Document.GetElementByID("selectedPeriodId").Value = "2019Q2"
     IE.Document.GetElementByID("selectedPeriodId").dispatchEvent evt
     Application.Wait Now + TimeValue("00:00:30")
     End If

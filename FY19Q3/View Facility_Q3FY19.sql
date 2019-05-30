@@ -931,6 +931,12 @@ COALESCE(HTS_TST_Other_index_15_19_f_neg.value,0)+COALESCE(VCT_index_15_19_f_neg
 COALESCE(HTS_TST_Other_index_20_24_f_neg.value,0)+COALESCE(VCT_index_20_24_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_25_29_f_neg.value,0)+COALESCE(VCT_index_25_29_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_30_49_f_neg.value,0)+COALESCE(VCT_index_30_49_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_f_neg.value,0)+COALESCE(VCT_index_35_39_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_f_neg.value,0)+COALESCE(VCT_index_40_44_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_f_neg.value,0)+COALESCE(VCT_index_45_49_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_f_pos.value,0)+COALESCE(VCT_index_35_39_f_pos.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_f_pos.value,0)+COALESCE(VCT_index_40_44_f_pos.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_f_pos.value,0)+COALESCE(VCT_index_45_49_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_50_f_neg.value,0)+COALESCE(VCT_index_50_f_neg.value,0)
 ) AS Index_contact_mai15_f,
 (COALESCE(HTS_TST_Other_index_15_19_m_pos.value,0)+COALESCE(VCT_index_15_19_m_pos.value,0)+
@@ -942,6 +948,12 @@ COALESCE(HTS_TST_Other_index_15_19_m_neg.value,0)+COALESCE(VCT_index_15_19_m_neg
 COALESCE(HTS_TST_Other_index_20_24_m_neg.value,0)+COALESCE(VCT_index_20_24_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_25_29_m_neg.value,0)+COALESCE(VCT_index_25_29_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_30_49_m_neg.value,0)+COALESCE(VCT_index_30_49_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_m_neg.value,0)+COALESCE(VCT_index_35_39_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_m_neg.value,0)+COALESCE(VCT_index_40_44_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_m_neg.value,0)+COALESCE(VCT_index_45_49_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_m_pos.value,0)+COALESCE(VCT_index_35_39_m_pos.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_m_pos.value,0)+COALESCE(VCT_index_40_44_m_pos.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_m_pos.value,0)+COALESCE(VCT_index_45_49_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_50_m_neg.value,0)+COALESCE(VCT_index_50_m_neg.value,0)
 ) AS Index_contact_mai15_m,
 /*Contacts*/

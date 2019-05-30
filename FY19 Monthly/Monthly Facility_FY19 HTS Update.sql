@@ -931,6 +931,12 @@ COALESCE(HTS_TST_Other_index_15_19_f_neg.value,0)+COALESCE(VCT_index_15_19_f_neg
 COALESCE(HTS_TST_Other_index_20_24_f_neg.value,0)+COALESCE(VCT_index_20_24_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_25_29_f_neg.value,0)+COALESCE(VCT_index_25_29_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_30_49_f_neg.value,0)+COALESCE(VCT_index_30_49_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_f_neg.value,0)+COALESCE(VCT_index_35_39_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_f_neg.value,0)+COALESCE(VCT_index_40_44_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_f_neg.value,0)+COALESCE(VCT_index_45_49_f_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_f_pos.value,0)+COALESCE(VCT_index_35_39_f_pos.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_f_pos.value,0)+COALESCE(VCT_index_40_44_f_pos.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_f_pos.value,0)+COALESCE(VCT_index_45_49_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_50_f_neg.value,0)+COALESCE(VCT_index_50_f_neg.value,0)
 ) AS Index_contact_mai15_f,
 (COALESCE(HTS_TST_Other_index_15_19_m_pos.value,0)+COALESCE(VCT_index_15_19_m_pos.value,0)+
@@ -942,6 +948,12 @@ COALESCE(HTS_TST_Other_index_15_19_m_neg.value,0)+COALESCE(VCT_index_15_19_m_neg
 COALESCE(HTS_TST_Other_index_20_24_m_neg.value,0)+COALESCE(VCT_index_20_24_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_25_29_m_neg.value,0)+COALESCE(VCT_index_25_29_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_30_49_m_neg.value,0)+COALESCE(VCT_index_30_49_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_m_neg.value,0)+COALESCE(VCT_index_35_39_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_m_neg.value,0)+COALESCE(VCT_index_40_44_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_m_neg.value,0)+COALESCE(VCT_index_45_49_m_neg.value,0)+
+COALESCE(HTS_TST_Other_index_35_39_m_pos.value,0)+COALESCE(VCT_index_35_39_m_pos.value,0)+
+COALESCE(HTS_TST_Other_index_40_44_m_pos.value,0)+COALESCE(VCT_index_40_44_m_pos.value,0)+
+COALESCE(HTS_TST_Other_index_45_49_m_pos.value,0)+COALESCE(VCT_index_45_49_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_50_m_neg.value,0)+COALESCE(VCT_index_50_m_neg.value,0)
 ) AS Index_contact_mai15_m,
 /*Contacts*/
@@ -1556,7 +1568,16 @@ COALESCE(RP33_8_anc.value,0) AS RP33_8_anc,
 COALESCE(RP33_8_014.value,0) AS RP33_8_014,
 /*EID_Neg*/
 COALESCE(PMTCT_EID_0_2_neg.value,0) AS PMTCT_EID_0_2_neg,
-COALESCE(PMTCT_EID_2_12_neg.value,0) AS PMTCT_EID_2_12_neg
+COALESCE(PMTCT_EID_2_12_neg.value,0) AS PMTCT_EID_2_12_neg,
+/*VBG*/
+COALESCE(VBG.value,0) AS VBG,
+/*IM-ER*/
+COALESCE(IM_ER_c_n.value,0) AS IM_ER_c_n,
+(COALESCE(IM_ER_c_d_i.value,0)-COALESCE(IM_ER_c_d_t.value,0)) AS IM_ER_c_d,
+COALESCE(IM_ER_g_n.value,0) AS IM_ER_g_n,
+(COALESCE(IM_ER_g_d_i.value,0)-COALESCE(IM_ER_g_d_t.value,0)) AS IM_ER_g_d,
+COALESCE(IM_ER_a_n.value,0) AS IM_ER_a_n,
+(COALESCE(IM_ER_a_d_i.value,0)-COALESCE(IM_ER_a_d_t.value,0)) AS IM_ER_a_d
 
 FROM organisationunit ou
 LEFT OUTER JOIN _orgunitstructure ous
@@ -8524,5 +8545,95 @@ left outer join (
  WHERE dataelementid=1538665
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
  GROUP BY sourceid) AS RP33_8_014 ON RP33_8_014.sourceid=ou.organisationunitid
+ 
+/*VBG*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=13043
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS VBG ON VBG.sourceid=ou.organisationunitid
+ 
+/*IM-ER*/
+/*Crianças Numerador*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836280
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_c_n ON IM_ER_c_n.sourceid=ou.organisationunitid
+ 
+ /*Crianças Denominador Initiated*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844870
+ AND categoryoptioncomboid=1844868
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_c_d_i ON IM_ER_c_d_i.sourceid=ou.organisationunitid
+ 
+  /*Crianças Denominador Transferred*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836282
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_c_d_t ON IM_ER_c_d_t.sourceid=ou.organisationunitid
+
+/*Gravidas Numerador*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836270
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_g_n ON IM_ER_g_n.sourceid=ou.organisationunitid
+ 
+ /*Gravidas Denominador Initiated*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844870
+ AND categoryoptioncomboid=1844866
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_g_d_i ON IM_ER_g_d_i.sourceid=ou.organisationunitid
+ 
+  /*Gravidas Denominador Transferred*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836272
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_g_d_t ON IM_ER_g_d_t.sourceid=ou.organisationunitid
+ 
+ /*Adultos Numerador*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836285
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_a_n ON IM_ER_a_n.sourceid=ou.organisationunitid
+ 
+ /*Adultos Denominador Initiated*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844870
+ AND categoryoptioncomboid=1844869
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_a_d_i ON IM_ER_a_d_i.sourceid=ou.organisationunitid
+ 
+  /*Adultos Denominador Transferred*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836290
+ AND categoryoptioncomboid=1836287
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS IM_ER_a_d_t ON IM_ER_a_d_t.sourceid=ou.organisationunitid
  
 WHERE ous.level=4 AND ous.idlevel2=110 ORDER BY district.name || ' / ' || ou.name ASC;
