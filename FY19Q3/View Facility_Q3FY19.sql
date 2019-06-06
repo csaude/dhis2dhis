@@ -102,6 +102,31 @@ COALESCE(HTS_TST_TB_50_f_pos.value,0)+
 COALESCE(HTS_TST_TB_50_f_neg.value,0)+
 COALESCE(HTS_TST_TB_50_m_pos.value,0)+
 COALESCE(HTS_TST_TB_50_m_neg.value,0)+
+/*Known Negative*/
+COALESCE(TB_STAT_kn_men1_f.value,0)+
+COALESCE(TB_STAT_kn_men1_m.value,0)+
+COALESCE(TB_STAT_kn_1_4_f.value,0)+
+COALESCE(TB_STAT_kn_1_4_m.value,0)+
+COALESCE(TB_STAT_kn_5_9_f.value,0)+
+COALESCE(TB_STAT_kn_5_9_m.value,0)+
+COALESCE(TB_STAT_kn_10_14_f.value,0)+
+COALESCE(TB_STAT_kn_10_14_m.value,0)+
+COALESCE(TB_STAT_kn_15_19_f.value,0)+
+COALESCE(TB_STAT_kn_15_19_m.value,0)+
+COALESCE(TB_STAT_kn_20_24_f.value,0)+
+COALESCE(TB_STAT_kn_20_24_m.value,0)+
+COALESCE(TB_STAT_kn_25_29_f.value,0)+
+COALESCE(TB_STAT_kn_25_29_m.value,0)+
+COALESCE(TB_STAT_kn_30_34_f.value,0)+
+COALESCE(TB_STAT_kn_30_34_m.value,0)+
+COALESCE(TB_STAT_kn_35_39_f.value,0)+
+COALESCE(TB_STAT_kn_35_39_m.value,0)+
+COALESCE(TB_STAT_kn_40_44_f.value,0)+
+COALESCE(TB_STAT_kn_40_44_m.value,0)+
+COALESCE(TB_STAT_kn_45_49_f.value,0)+
+COALESCE(TB_STAT_kn_45_49_m.value,0)+
+COALESCE(TB_STAT_kn_50_f.value,0)+
+COALESCE(TB_STAT_kn_50_m.value,0)+
 /*HTS_TST (Facility)-PITC PMTCT (ANC Only) Clinics*/
 COALESCE(HTS_TST_PMTCT_10_14_pos.value,0)+
 COALESCE(HTS_TST_PMTCT_10_14_neg.value,0)+
@@ -659,7 +684,32 @@ COALESCE(HTS_TST_TB_40_44_m_neg.value,0)+
 COALESCE(HTS_TST_TB_45_49_f_neg.value,0)+
 COALESCE(HTS_TST_TB_45_49_m_neg.value,0)+
 COALESCE(HTS_TST_TB_50_f_neg.value,0)+
-COALESCE(HTS_TST_TB_50_m_neg.value,0) 
+COALESCE(HTS_TST_TB_50_m_neg.value,0)+
+/*Known Negative*/
+COALESCE(TB_STAT_kn_men1_f.value,0)+
+COALESCE(TB_STAT_kn_men1_m.value,0)+
+COALESCE(TB_STAT_kn_1_4_f.value,0)+
+COALESCE(TB_STAT_kn_1_4_m.value,0)+
+COALESCE(TB_STAT_kn_5_9_f.value,0)+
+COALESCE(TB_STAT_kn_5_9_m.value,0)+
+COALESCE(TB_STAT_kn_10_14_f.value,0)+
+COALESCE(TB_STAT_kn_10_14_m.value,0)+
+COALESCE(TB_STAT_kn_15_19_f.value,0)+
+COALESCE(TB_STAT_kn_15_19_m.value,0)+
+COALESCE(TB_STAT_kn_20_24_f.value,0)+
+COALESCE(TB_STAT_kn_20_24_m.value,0)+
+COALESCE(TB_STAT_kn_25_29_f.value,0)+
+COALESCE(TB_STAT_kn_25_29_m.value,0)+
+COALESCE(TB_STAT_kn_30_34_f.value,0)+
+COALESCE(TB_STAT_kn_30_34_m.value,0)+
+COALESCE(TB_STAT_kn_35_39_f.value,0)+
+COALESCE(TB_STAT_kn_35_39_m.value,0)+
+COALESCE(TB_STAT_kn_40_44_f.value,0)+
+COALESCE(TB_STAT_kn_40_44_m.value,0)+
+COALESCE(TB_STAT_kn_45_49_f.value,0)+
+COALESCE(TB_STAT_kn_45_49_m.value,0)+
+COALESCE(TB_STAT_kn_50_f.value,0)+
+COALESCE(TB_STAT_kn_50_m.value,0)
 ) AS HTS_TST_TB_neg,
 /*Auto-Calculate*/
 /*HTS_TST (Facility)-PITC PMTCT (ANC1 Only) Clinics*/
@@ -1182,6 +1232,30 @@ COALESCE(TB_STAT_kp_45_49_f.value,0)+
 COALESCE(TB_STAT_kp_45_49_m.value,0)+
 COALESCE(TB_STAT_kp_50_f.value,0)+
 COALESCE(TB_STAT_kp_50_m.value,0)+
+COALESCE(TB_STAT_kn_men1_f.value,0)+
+COALESCE(TB_STAT_kn_men1_m.value,0)+
+COALESCE(TB_STAT_kn_1_4_f.value,0)+
+COALESCE(TB_STAT_kn_1_4_m.value,0)+
+COALESCE(TB_STAT_kn_5_9_f.value,0)+
+COALESCE(TB_STAT_kn_5_9_m.value,0)+
+COALESCE(TB_STAT_kn_10_14_f.value,0)+
+COALESCE(TB_STAT_kn_10_14_m.value,0)+
+COALESCE(TB_STAT_kn_15_19_f.value,0)+
+COALESCE(TB_STAT_kn_15_19_m.value,0)+
+COALESCE(TB_STAT_kn_20_24_f.value,0)+
+COALESCE(TB_STAT_kn_20_24_m.value,0)+
+COALESCE(TB_STAT_kn_25_29_f.value,0)+
+COALESCE(TB_STAT_kn_25_29_m.value,0)+
+COALESCE(TB_STAT_kn_30_34_f.value,0)+
+COALESCE(TB_STAT_kn_30_34_m.value,0)+
+COALESCE(TB_STAT_kn_35_39_f.value,0)+
+COALESCE(TB_STAT_kn_35_39_m.value,0)+
+COALESCE(TB_STAT_kn_40_44_f.value,0)+
+COALESCE(TB_STAT_kn_40_44_m.value,0)+
+COALESCE(TB_STAT_kn_45_49_f.value,0)+
+COALESCE(TB_STAT_kn_45_49_m.value,0)+
+COALESCE(TB_STAT_kn_50_f.value,0)+
+COALESCE(TB_STAT_kn_50_m.value,0)+
 COALESCE(HTS_TST_TB_men1_f_pos.value,0)+
 COALESCE(HTS_TST_TB_men1_m_pos.value,0)+
 COALESCE(HTS_TST_TB_1_4_f_pos.value,0)+
@@ -1281,31 +1355,31 @@ COALESCE(HTS_TST_TB_45_49_f_pos.value,0) AS HTS_TST_TB_45_49_f_pos2,
 COALESCE(HTS_TST_TB_45_49_m_pos.value,0) AS HTS_TST_TB_45_49_m_pos2,
 COALESCE(HTS_TST_TB_50_f_pos.value,0) AS HTS_TST_TB_50_f_pos2,
 COALESCE(HTS_TST_TB_50_m_pos.value,0) AS HTS_TST_TB_50_m_pos2,
-/*New Negatives*/
-COALESCE(HTS_TST_TB_men1_f_neg.value,0) AS HTS_TST_TB_men1_f_neg2,
-COALESCE(HTS_TST_TB_men1_m_neg.value,0) AS HTS_TST_TB_men1_m_neg2,
-COALESCE(HTS_TST_TB_1_4_f_neg.value,0) AS HTS_TST_TB_1_4_f_neg2,
-COALESCE(HTS_TST_TB_1_4_m_neg.value,0) AS HTS_TST_TB_1_4_m_neg2,
-COALESCE(HTS_TST_TB_5_9_f_neg.value,0) AS HTS_TST_TB_5_9_f_neg2,
-COALESCE(HTS_TST_TB_5_9_m_neg.value,0) AS HTS_TST_TB_5_9_m_neg2,
-COALESCE(HTS_TST_TB_10_14_f_neg.value,0) AS HTS_TST_TB_10_14_f_neg2,
-COALESCE(HTS_TST_TB_10_14_m_neg.value,0) AS HTS_TST_TB_10_14_m_neg2,
-COALESCE(HTS_TST_TB_15_19_f_neg.value,0) AS HTS_TST_TB_15_19_f_neg2,
-COALESCE(HTS_TST_TB_15_19_m_neg.value,0) AS HTS_TST_TB_15_19_m_neg2,
-COALESCE(HTS_TST_TB_20_24_f_neg.value,0) AS HTS_TST_TB_20_24_f_neg2,
-COALESCE(HTS_TST_TB_20_24_m_neg.value,0) AS HTS_TST_TB_20_24_m_neg2,
-COALESCE(HTS_TST_TB_25_29_f_neg.value,0) AS HTS_TST_TB_25_29_f_neg2,
-COALESCE(HTS_TST_TB_25_29_m_neg.value,0) AS HTS_TST_TB_25_29_m_neg2,
-COALESCE(HTS_TST_TB_30_34_f_neg.value,0) AS HTS_TST_TB_30_34_f_neg2,
-COALESCE(HTS_TST_TB_30_34_m_neg.value,0) AS HTS_TST_TB_30_34_m_neg2,
-COALESCE(HTS_TST_TB_35_39_f_neg.value,0) AS HTS_TST_TB_35_39_f_neg2,
-COALESCE(HTS_TST_TB_35_39_m_neg.value,0) AS HTS_TST_TB_35_39_m_neg2,
-COALESCE(HTS_TST_TB_40_44_f_neg.value,0) AS HTS_TST_TB_40_44_f_neg2,
-COALESCE(HTS_TST_TB_40_44_m_neg.value,0) AS HTS_TST_TB_40_44_m_neg2,
-COALESCE(HTS_TST_TB_45_49_f_neg.value,0) AS HTS_TST_TB_45_49_f_neg2,
-COALESCE(HTS_TST_TB_45_49_m_neg.value,0) AS HTS_TST_TB_45_49_m_neg2,
-COALESCE(HTS_TST_TB_50_f_neg.value,0) AS HTS_TST_TB_50_f_neg2,
-COALESCE(HTS_TST_TB_50_m_neg.value,0) AS HTS_TST_TB_50_m_neg2,
+/*New Negatives + Known Negatives*/
+(COALESCE(HTS_TST_TB_men1_f_neg.value,0)+COALESCE(TB_STAT_kn_men1_f.value,0)) AS HTS_TST_TB_men1_f_neg2,
+(COALESCE(HTS_TST_TB_men1_m_neg.value,0)+COALESCE(TB_STAT_kn_men1_m.value,0)) AS HTS_TST_TB_men1_m_neg2,
+(COALESCE(HTS_TST_TB_1_4_f_neg.value,0)+COALESCE(TB_STAT_kn_1_4_f.value,0)) AS HTS_TST_TB_1_4_f_neg2,
+(COALESCE(HTS_TST_TB_1_4_m_neg.value,0)+COALESCE(TB_STAT_kn_1_4_m.value,0)) AS HTS_TST_TB_1_4_m_neg2,
+(COALESCE(HTS_TST_TB_5_9_f_neg.value,0)+COALESCE(TB_STAT_kn_5_9_f.value,0)) AS HTS_TST_TB_5_9_f_neg2,
+(COALESCE(HTS_TST_TB_5_9_m_neg.value,0)+COALESCE(TB_STAT_kn_5_9_m.value,0)) AS HTS_TST_TB_5_9_m_neg2,
+(COALESCE(HTS_TST_TB_10_14_f_neg.value,0)+COALESCE(TB_STAT_kn_10_14_f.value,0)) AS HTS_TST_TB_10_14_f_neg2,
+(COALESCE(HTS_TST_TB_10_14_m_neg.value,0)+COALESCE(TB_STAT_kn_10_14_m.value,0)) AS HTS_TST_TB_10_14_m_neg2,
+(COALESCE(HTS_TST_TB_15_19_f_neg.value,0)+COALESCE(TB_STAT_kn_15_19_f.value,0)) AS HTS_TST_TB_15_19_f_neg2,
+(COALESCE(HTS_TST_TB_15_19_m_neg.value,0)+COALESCE(TB_STAT_kn_15_19_m.value,0)) AS HTS_TST_TB_15_19_m_neg2,
+(COALESCE(HTS_TST_TB_20_24_f_neg.value,0)+COALESCE(TB_STAT_kn_20_24_f.value,0)) AS HTS_TST_TB_20_24_f_neg2,
+(COALESCE(HTS_TST_TB_20_24_m_neg.value,0)+COALESCE(TB_STAT_kn_20_24_m.value,0)) AS HTS_TST_TB_20_24_m_neg2,
+(COALESCE(HTS_TST_TB_25_29_f_neg.value,0)+COALESCE(TB_STAT_kn_25_29_f.value,0)) AS HTS_TST_TB_25_29_f_neg2,
+(COALESCE(HTS_TST_TB_25_29_m_neg.value,0)+COALESCE(TB_STAT_kn_25_29_m.value,0)) AS HTS_TST_TB_25_29_m_neg2,
+(COALESCE(HTS_TST_TB_30_34_f_neg.value,0)+COALESCE(TB_STAT_kn_30_34_f.value,0)) AS HTS_TST_TB_30_34_f_neg2,
+(COALESCE(HTS_TST_TB_30_34_m_neg.value,0)+COALESCE(TB_STAT_kn_30_34_m.value,0)) AS HTS_TST_TB_30_34_m_neg2,
+(COALESCE(HTS_TST_TB_35_39_f_neg.value,0)+COALESCE(TB_STAT_kn_35_39_f.value,0)) AS HTS_TST_TB_35_39_f_neg2,
+(COALESCE(HTS_TST_TB_35_39_m_neg.value,0)+COALESCE(TB_STAT_kn_35_39_m.value,0)) AS HTS_TST_TB_35_39_m_neg2,
+(COALESCE(HTS_TST_TB_40_44_f_neg.value,0)+COALESCE(TB_STAT_kn_40_44_f.value,0)) AS HTS_TST_TB_40_44_f_neg2,
+(COALESCE(HTS_TST_TB_40_44_m_neg.value,0)+COALESCE(TB_STAT_kn_40_44_m.value,0)) AS HTS_TST_TB_40_44_m_neg2,
+(COALESCE(HTS_TST_TB_45_49_f_neg.value,0)+COALESCE(TB_STAT_kn_45_49_f.value,0)) AS HTS_TST_TB_45_49_f_neg2,
+(COALESCE(HTS_TST_TB_45_49_m_neg.value,0)+COALESCE(TB_STAT_kn_45_49_m.value,0)) AS HTS_TST_TB_45_49_m_neg2,
+(COALESCE(HTS_TST_TB_50_f_neg.value,0) +COALESCE(TB_STAT_kn_50_f.value,0)) AS HTS_TST_TB_50_f_neg2,
+(COALESCE(HTS_TST_TB_50_m_neg.value,0) +COALESCE(TB_STAT_kn_50_m.value,0)) AS HTS_TST_TB_50_m_neg2,
 /*Auto-Calculate*/
 /*TB_STAT Denominator*/
 (
@@ -6596,6 +6670,213 @@ LEFT OUTER JOIN organisationunit district
  AND categoryoptioncomboid=62273
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1599464) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS TB_STAT_kp_50_m ON TB_STAT_kp_50_m.sourceid=ou.organisationunitid
+ 
+  /*Known Negative*/
+/*<1*/
+
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62290
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_men1_f ON TB_STAT_kn_men1_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62282
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_men1_m ON TB_STAT_kn_men1_m.sourceid=ou.organisationunitid
+ 
+ 
+ /*1-4*/
+
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62291
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_1_4_f ON TB_STAT_kn_1_4_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62283
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_1_4_m ON TB_STAT_kn_1_4_m.sourceid=ou.organisationunitid
+
+ /*5-9*/
+
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62292
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_5_9_f ON TB_STAT_kn_5_9_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62284
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_5_9_m ON TB_STAT_kn_5_9_m.sourceid=ou.organisationunitid
+
+ /*10-14*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62293
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_10_14_f ON TB_STAT_kn_10_14_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62285
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_10_14_m ON TB_STAT_kn_10_14_m.sourceid=ou.organisationunitid
+
+ /*15-19*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62294
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_15_19_f ON TB_STAT_kn_15_19_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62286
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_15_19_m ON TB_STAT_kn_15_19_m.sourceid=ou.organisationunitid
+
+ /*20-24*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62295
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_20_24_f ON TB_STAT_kn_20_24_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62287
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_20_24_m ON TB_STAT_kn_20_24_m.sourceid=ou.organisationunitid
+
+ /*25-29*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561776
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_25_29_f ON TB_STAT_kn_25_29_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561772
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_25_29_m ON TB_STAT_kn_25_29_m.sourceid=ou.organisationunitid
+
+ /*30-34*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561777
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_30_34_f ON TB_STAT_kn_30_34_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561773
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_30_34_m ON TB_STAT_kn_30_34_m.sourceid=ou.organisationunitid
+
+ /*35-39*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561778
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_35_39_f ON TB_STAT_kn_35_39_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=561774
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_35_39_m ON TB_STAT_kn_35_39_m.sourceid=ou.organisationunitid
+
+ /*40-44*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=1480514
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_40_44_f ON TB_STAT_kn_40_44_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=1480512
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_40_44_m ON TB_STAT_kn_40_44_m.sourceid=ou.organisationunitid
+
+ /*45-49*/
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=1480515
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_45_49_f ON TB_STAT_kn_45_49_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=1480513
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_45_49_m ON TB_STAT_kn_45_49_m.sourceid=ou.organisationunitid
+
+ /*50+*/
+
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62297
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_50_f ON TB_STAT_kn_50_f.sourceid=ou.organisationunitid
+ LEFT OUTER JOIN (
+ SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=62230
+ AND categoryoptioncomboid=62289
+ AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps, period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1743759) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS TB_STAT_kn_50_m ON TB_STAT_kn_50_m.sourceid=ou.organisationunitid
+ 
 
 /*
  * TB_STAT (Denominator)
