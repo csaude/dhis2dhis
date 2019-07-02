@@ -5438,7 +5438,7 @@ Sub SendEmailNotification()
 
     'Set All Email Properties
     With NewMail
-        .Subject = "[DHIS-FGH] Autofill DATIM: " & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")" & ", nº " & i & " de " & lastRow
+        .Subject = "[DHIS-FGH] Autofill DATIM"  & ", nº " & i & " de " & lastRow & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & "): "  & ThisWorkbook.Sheets("sheet1").Range("A10") 
         .From = "dhis.fgh@gmail.com"
         .To = ""
         .CC = ""
