@@ -1962,30 +1962,30 @@ COALESCE(TX_ML_ded_50_m.value,0) AS TX_ML_ded_50_m,
 '' AS placeholder,
 '' AS placeholder,
 '' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
+COALESCE(TX_ML_traced_men1_f.value,0) AS TX_ML_traced_men1_f,
+COALESCE(TX_ML_traced_1_4_f.value,0) AS TX_ML_traced_1_4_f,
+COALESCE(TX_ML_traced_5_9_f.value,0) AS TX_ML_traced_5_9_f,
+COALESCE(TX_ML_traced_10_14_f.value,0) AS TX_ML_traced_10_14_f,
+COALESCE(TX_ML_traced_15_19_f.value,0) AS TX_ML_traced_15_19_f,
+COALESCE(TX_ML_traced_20_24_f.value,0) AS TX_ML_traced_20_24_f,
+COALESCE(TX_ML_traced_25_29_f.value,0) AS TX_ML_traced_25_29_f,
+COALESCE(TX_ML_traced_30_34_f.value,0) AS TX_ML_traced_30_34_f,
+COALESCE(TX_ML_traced_35_39_f.value,0) AS TX_ML_traced_35_39_f,
+COALESCE(TX_ML_traced_40_44_f.value,0) AS TX_ML_traced_40_44_f,
+COALESCE(TX_ML_traced_45_49_f.value,0) AS TX_ML_traced_45_49_f,
+COALESCE(TX_ML_traced_50_f.value,0) AS TX_ML_traced_50_f,
+COALESCE(TX_ML_traced_men1_m.value,0) AS TX_ML_traced_men1_m,
+COALESCE(TX_ML_traced_1_4_m.value,0) AS TX_ML_traced_1_4_m,
+COALESCE(TX_ML_traced_5_9_m.value,0) AS TX_ML_traced_5_9_m,
+COALESCE(TX_ML_traced_10_14_m.value,0) AS TX_ML_traced_10_14_m,
+COALESCE(TX_ML_traced_15_19_m.value,0) AS TX_ML_traced_15_19_m,
+COALESCE(TX_ML_traced_20_24_m.value,0) AS TX_ML_traced_20_24_m,
+COALESCE(TX_ML_traced_25_29_m.value,0) AS TX_ML_traced_25_29_m,
+COALESCE(TX_ML_traced_30_34_m.value,0) AS TX_ML_traced_30_34_m,
+COALESCE(TX_ML_traced_35_39_m.value,0) AS TX_ML_traced_35_39_m,
+COALESCE(TX_ML_traced_40_44_m.value,0) AS TX_ML_traced_40_44_m,
+COALESCE(TX_ML_traced_45_49_m.value,0) AS TX_ML_traced_45_49_m,
+COALESCE(TX_ML_traced_50_m.value,0) AS TX_ML_traced_50_m,
 '' AS placeholder,
 '' AS placeholder,
 '' AS placeholder,
@@ -2075,7 +2075,8 @@ COALESCE(GEND_GBV_sexual_f_20_24.value,0) AS GEND_GBV_sexual_f_20_24,
 COALESCE(GEND_GBV_sexual_f_25_29.value,0) AS GEND_GBV_sexual_f_25_29,
 COALESCE(GEND_GBV_sexual_f_30_34.value,0) AS GEND_GBV_sexual_f_30_34,
 COALESCE(GEND_GBV_sexual_f_35_39.value,0) AS GEND_GBV_sexual_f_35_39,
-COALESCE(GEND_GBV_sexual_f_40_49.value,0) AS GEND_GBV_sexual_f_40_49,
+COALESCE(GEND_GBV_sexual_f_40_44.value,0) AS GEND_GBV_sexual_f_40_44,
+COALESCE(GEND_GBV_sexual_f_45_49.value,0) AS GEND_GBV_sexual_f_45_49,
 COALESCE(GEND_GBV_sexual_f_50.value,0) AS GEND_GBV_sexual_f_50,
 COALESCE(GEND_GBV_sexual_m_men10.value,0) AS GEND_GBV_sexual_m_men10,
 COALESCE(GEND_GBV_sexual_m_10_14.value,0) AS GEND_GBV_sexual_m_10_14,
@@ -2084,7 +2085,8 @@ COALESCE(GEND_GBV_sexual_m_20_24.value,0) AS GEND_GBV_sexual_m_20_24,
 COALESCE(GEND_GBV_sexual_m_25_29.value,0) AS GEND_GBV_sexual_m_25_29,
 COALESCE(GEND_GBV_sexual_m_30_34.value,0) AS GEND_GBV_sexual_m_30_34,
 COALESCE(GEND_GBV_sexual_m_35_39.value,0) AS GEND_GBV_sexual_m_35_39,
-COALESCE(GEND_GBV_sexual_m_40_49.value,0) AS GEND_GBV_sexual_m_40_49,
+COALESCE(GEND_GBV_sexual_m_40_44.value,0) AS GEND_GBV_sexual_m_40_44,
+COALESCE(GEND_GBV_sexual_m_45_49.value,0) AS GEND_GBV_sexual_m_45_49,
 COALESCE(GEND_GBV_sexual_m_50.value,0) AS GEND_GBV_sexual_m_50,
 COALESCE(GEND_GBV_physical_f_men10.value,0) AS GEND_GBV_physical_f_men10,
 COALESCE(GEND_GBV_physical_f_10_14.value,0) AS GEND_GBV_physical_f_10_14,
@@ -2093,7 +2095,8 @@ COALESCE(GEND_GBV_physical_f_20_24.value,0) AS GEND_GBV_physical_f_20_24,
 COALESCE(GEND_GBV_physical_f_25_29.value,0) AS GEND_GBV_physical_f_25_29,
 COALESCE(GEND_GBV_physical_f_30_34.value,0) AS GEND_GBV_physical_f_30_34,
 COALESCE(GEND_GBV_physical_f_35_39.value,0) AS GEND_GBV_physical_f_35_39,
-COALESCE(GEND_GBV_physical_f_40_49.value,0) AS GEND_GBV_physical_f_40_49,
+COALESCE(GEND_GBV_physical_f_40_44.value,0) AS GEND_GBV_physical_f_40_44,
+COALESCE(GEND_GBV_physical_f_45_49.value,0) AS GEND_GBV_physical_f_45_49,
 COALESCE(GEND_GBV_physical_f_50.value,0) AS GEND_GBV_physical_f_50,
 COALESCE(GEND_GBV_physical_m_men10.value,0) AS GEND_GBV_physical_m_men10,
 COALESCE(GEND_GBV_physical_m_10_14.value,0) AS GEND_GBV_physical_m_10_14,
@@ -2102,7 +2105,8 @@ COALESCE(GEND_GBV_physical_m_20_24.value,0) AS GEND_GBV_physical_m_20_24,
 COALESCE(GEND_GBV_physical_m_25_29.value,0) AS GEND_GBV_physical_m_25_29,
 COALESCE(GEND_GBV_physical_m_30_34.value,0) AS GEND_GBV_physical_m_30_34,
 COALESCE(GEND_GBV_physical_m_35_39.value,0) AS GEND_GBV_physical_m_35_39,
-COALESCE(GEND_GBV_physical_m_40_49.value,0) AS GEND_GBV_physical_m_40_49,
+COALESCE(GEND_GBV_physical_m_40_44.value,0) AS GEND_GBV_physical_m_40_44,
+COALESCE(GEND_GBV_physical_m_45_49.value,0) AS GEND_GBV_physical_m_45_49,
 COALESCE(GEND_GBV_physical_m_50.value,0) AS GEND_GBV_physical_m_50,
 COALESCE(GEND_GBV_pep_f_men10.value,0) AS GEND_GBV_pep_f_men10,
 COALESCE(GEND_GBV_pep_f_10_14.value,0) AS GEND_GBV_pep_f_10_14,
@@ -2111,7 +2115,8 @@ COALESCE(GEND_GBV_pep_f_20_24.value,0) AS GEND_GBV_pep_f_20_24,
 COALESCE(GEND_GBV_pep_f_25_29.value,0) AS GEND_GBV_pep_f_25_29,
 COALESCE(GEND_GBV_pep_f_30_34.value,0) AS GEND_GBV_pep_f_30_34,
 COALESCE(GEND_GBV_pep_f_35_39.value,0) AS GEND_GBV_pep_f_35_39,
-COALESCE(GEND_GBV_pep_f_40_49.value,0) AS GEND_GBV_pep_f_40_49,
+COALESCE(GEND_GBV_pep_f_40_44.value,0) AS GEND_GBV_pep_f_40_44,
+COALESCE(GEND_GBV_pep_f_45_49.value,0) AS GEND_GBV_pep_f_45_49,
 COALESCE(GEND_GBV_pep_f_50.value,0) AS GEND_GBV_pep_f_50,
 '' AS placeholder62,
 '' AS placeholder63,
@@ -2120,6 +2125,7 @@ COALESCE(GEND_GBV_pep_f_50.value,0) AS GEND_GBV_pep_f_50,
 '' AS placeholder66,
 '' AS placeholder67,
 '' AS placeholder68,
+'' AS placeholder69,
 '' AS placeholder69,
 '' AS placeholder70,
 /*FPINT_SITE*/
@@ -10666,6 +10672,200 @@ GROUP BY sourceid) AS TX_ML_num ON TX_ML_num.sourceid=ou.organisationunitid
  AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
  GROUP BY sourceid) AS TX_ML_ded_50_m ON TX_ML_ded_50_m.sourceid=ou.organisationunitid
  
+ /*Female*/
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772826
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_men1_f ON TX_ML_traced_men1_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772834
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_1_4_f ON TX_ML_traced_1_4_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772842
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_5_9_f ON TX_ML_traced_5_9_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772754
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_10_14_f ON TX_ML_traced_10_14_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772762
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_15_19_f ON TX_ML_traced_15_19_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772770
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_20_24_f ON TX_ML_traced_20_24_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772794
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_25_29_f ON TX_ML_traced_25_29_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772802
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_30_34_f ON TX_ML_traced_30_34_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772810
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_35_39_f ON TX_ML_traced_35_39_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772850
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_40_44_f ON TX_ML_traced_40_44_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772858
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_45_49_f ON TX_ML_traced_45_49_f.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772786
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_50_f ON TX_ML_traced_50_f.sourceid=ou.organisationunitid
+ 
+ /*Male*/
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772822
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_men1_m ON TX_ML_traced_men1_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772830
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_1_4_m ON TX_ML_traced_1_4_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772838
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_5_9_m ON TX_ML_traced_5_9_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772750
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_10_14_m ON TX_ML_traced_10_14_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772758
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_15_19_m ON TX_ML_traced_15_19_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772766
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_20_24_m ON TX_ML_traced_20_24_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772790
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_25_29_m ON TX_ML_traced_25_29_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772798
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_30_34_m ON TX_ML_traced_30_34_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772806
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_35_39_m ON TX_ML_traced_35_39_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772846
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_40_44_m ON TX_ML_traced_40_44_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772854
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_45_49_m ON TX_ML_traced_45_49_m.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1772864
+ AND categoryoptioncomboid=1772782
+ AND periodid=(SELECT ps.periodid FROM _periodstructure ps WHERE iso=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=1607220))
+ GROUP BY sourceid) AS TX_ML_traced_50_m ON TX_ML_traced_50_m.sourceid=ou.organisationunitid
+ 
 /* TX_TB (Numerator)
  * Source:
  * DATIM MER Results MER Semiannually
@@ -11305,6 +11505,22 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=562387
+ AND categoryoptioncomboid=1480202
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_sexual_f_40_44 ON GEND_GBV_sexual_f_40_44.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562387
+ AND categoryoptioncomboid=1480203
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_sexual_f_45_49 ON GEND_GBV_sexual_f_45_49.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562387
  AND categoryoptioncomboid=562385
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_sexual_f_50 ON GEND_GBV_sexual_f_50.sourceid=ou.organisationunitid
@@ -11373,6 +11589,22 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  AND categoryoptioncomboid=562375
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_sexual_m_40_49 ON GEND_GBV_sexual_m_40_49.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562387
+ AND categoryoptioncomboid=1480200
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_sexual_m_40_44 ON GEND_GBV_sexual_m_40_44.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562387
+ AND categoryoptioncomboid=1480201
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_sexual_m_45_49 ON GEND_GBV_sexual_m_45_49.sourceid=ou.organisationunitid
  
  LEFT OUTER JOIN (
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
@@ -11452,6 +11684,22 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=562386
+ AND categoryoptioncomboid=1480202
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_physical_f_40_44 ON GEND_GBV_physical_f_40_44.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562386
+ AND categoryoptioncomboid=1480203
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_physical_f_45_49 ON GEND_GBV_physical_f_45_49.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562386
  AND categoryoptioncomboid=562385
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_physical_f_50 ON GEND_GBV_physical_f_50.sourceid=ou.organisationunitid
@@ -11513,6 +11761,22 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_physical_m_35_39 ON GEND_GBV_physical_m_35_39.sourceid=ou.organisationunitid
  
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562386
+ AND categoryoptioncomboid=1480200
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_physical_m_40_44 ON GEND_GBV_physical_m_40_44.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562386
+ AND categoryoptioncomboid=1480201
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_physical_m_45_49 ON GEND_GBV_physical_m_45_49.sourceid=ou.organisationunitid
+ 
  LEFT OUTER JOIN (
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
@@ -11528,6 +11792,7 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  AND categoryoptioncomboid=562380
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_physical_m_50 ON GEND_GBV_physical_m_50.sourceid=ou.organisationunitid
+
  
  /*PEP*/
  /*Female*/
@@ -11594,6 +11859,22 @@ GROUP BY sourceid) AS CXCA_TX_cryo_50 ON CXCA_TX_cryo_50.sourceid=ou.organisatio
  AND categoryoptioncomboid=562399
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS GEND_GBV_pep_f_40_49 ON GEND_GBV_pep_f_40_49.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562401
+ AND categoryoptioncomboid=1480216
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_pep_f_40_44 ON GEND_GBV_pep_f_40_44.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=562401
+ AND categoryoptioncomboid=1480217
+ AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE financialoct=(SELECT financialoct FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
+ GROUP BY sourceid) AS GEND_GBV_pep_f_45_49 ON GEND_GBV_pep_f_45_49.sourceid=ou.organisationunitid
  
  LEFT OUTER JOIN (
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
