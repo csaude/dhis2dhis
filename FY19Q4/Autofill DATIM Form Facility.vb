@@ -2348,10 +2348,10 @@ IE.Document.GetElementByID("CfSIX5yTSdw-bZVkZBLtX1i-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))
 
 '<Unassisted self-testing kit used by: Self
-IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").Focus
-IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").Value = ThisWorkbook.Sheets("sheet1").Range("OH10")
-IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))
+'IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").Focus
+'IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").Value = ThisWorkbook.Sheets("sheet1").Range("OH10")
+'IE.Document.GetElementByID("ovQaECwOS1M-mYMRmrtoxVn-val").dispatchEvent evt
+'Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))
 '<Unassisted self-testing kit used by: Sex Partner
 IE.Document.GetElementByID("ovQaECwOS1M-loZmPoGpvEZ-val").Focus
 IE.Document.GetElementByID("ovQaECwOS1M-loZmPoGpvEZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("OI10")
