@@ -9500,9 +9500,8 @@ LEFT OUTER JOIN (
  WHERE dataelementid=1969455
  AND categoryoptioncomboid=2471633
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
- GROUP BY sourceid) AS HTS_SELF_assisted_Unkonwn_Age_f ON HTS_SELF_assisted_Unkonwn_Age_f.sourceid=ou.organisationunitid
- 
-  
+ GROUP BY sourceid) AS HTS_SELF_assisted_Unknown_Age_f ON HTS_SELF_assisted_Unknown_Age_f.sourceid=ou.organisationunitid
+   
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
