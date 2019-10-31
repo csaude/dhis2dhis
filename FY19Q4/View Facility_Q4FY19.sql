@@ -9827,7 +9827,7 @@ LEFT OUTER JOIN (
  WHERE dataelementid=1969455
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
- GROUP BY sourceid) AS HTS_SELF__Unknown_Sex ON HTS_SELF_Unknown_Sex.sourceid=ou.organisationunitid
+ GROUP BY sourceid) AS HTS_SELF_Unknown_Sex ON HTS_SELF_Unknown_Sex.sourceid=ou.organisationunitid
  /*KeyPop*/
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
