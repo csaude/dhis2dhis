@@ -9832,7 +9832,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=1969455
+ WHERE dataelementid=1969455 
  AND categoryoptioncomboid IN (1968836,1968848,1968854,1968860,1968866,1968878,1968902,1968908,1968920,1968926,1968932,1968938,1968944,1968956,1968962,1968968,1968974,1968986,1969010,1969016,1969028,1969034,1969040,1969046)
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS HTS_SELF_assisted_pwid ON HTS_SELF_assisted_pwid.sourceid=ou.organisationunitid
