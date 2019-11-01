@@ -1141,7 +1141,7 @@ COALESCE(HTS_SELF_unassisted_35_39_m.value,0) AS HTS_SELF_unassisted_35_39_m,
 COALESCE(HTS_SELF_unassisted_40_44_m.value,0) AS HTS_SELF_unassisted_40_44_m,
 COALESCE(HTS_SELF_unassisted_45_49_m.value,0) AS HTS_SELF_unassisted_45_49_m,
 COALESCE(HTS_SELF_unassisted_50_m.value,0) AS HTS_SELF_unassisted_50_m,
-COALESCE(HTS_SELF_unassisted_Uknown_Sex.value,0) AS HTS_SELF_unassisted_Uknown_Sex,
+COALESCE(HTS_SELF_unassisted_Unknown_Sex.value,0) AS HTS_SELF_unassisted_Unknown_Sex,
 COALESCE(HTS_SELF_assisted_pwid.value,0) AS HTS_SELF_assisted_pwid,
 COALESCE(HTS_SELF_assisted_msm.value,0) AS HTS_SELF_assisted_msm,
 COALESCE(HTS_SELF_assisted_tg.value,0) AS HTS_SELF_assisted_tg,
@@ -9746,7 +9746,7 @@ LEFT OUTER JOIN (
  WHERE dataelementid=1969455
  AND categoryoptioncomboid=2471632
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
- GROUP BY sourceid) AS HTS_SELF_unassisted_Unkown_Age_m ON HTS_SELF_unassisted_Unkown_Age_m.sourceid=ou.organisationunitid
+ GROUP BY sourceid) AS HTS_SELF_unassisted_Unknown_Age_m ON HTS_SELF_unassisted_Unknown_Age_m.sourceid=ou.organisationunitid
 
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
@@ -9826,7 +9826,7 @@ LEFT OUTER JOIN (
  WHERE dataelementid=1969455
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT DISTINCT(ps.periodid) FROM _periodstructure ps,period p WHERE quarterly=(SELECT quarterly FROM _periodstructure WHERE periodid=1607220) AND ps.periodid=p.periodid AND p.periodtypeid=3)
- GROUP BY sourceid) AS HTS_SELF_Unknown_Sex ON HTS_SELF_Unknown_Sex.sourceid=ou.organisationunitid
+ GROUP BY sourceid) AS HTS_SELF_unassisted_Unknown_Sex ON HTS_SELF_unassisted_Unknown_Sex.sourceid=ou.organisationunitid
  /*KeyPop*/
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
