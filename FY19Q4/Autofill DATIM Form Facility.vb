@@ -81,7 +81,7 @@ i = i + 1000
 FormProgressBar.Hide
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AUR10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AUM10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AUR10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AUR10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
@@ -91,13 +91,13 @@ Else
     ouList = ouList & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")" & "<br>"
     toComplete = i / lastRow
     With FormProgressBar
-        .LabelCaption.Caption = "Digitando Unidade Organizacional nÂº " & i & " de " & lastRow
+        .LabelCaption.Caption = "Digitando Unidade Organizacional nº " & i & " de " & lastRow
         .LabelOUInfo.Caption = "A digitar: " & ThisWorkbook.Sheets("sheet1").Range("A10") & " (" & ThisWorkbook.Sheets("sheet1").Range("B10") & ")"
         .LabelProgress.Width = toComplete * (.FrameProgress.Width)
     End With
 
     'Call DHIS2 javascript function to select Org Unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AUM10") & "' )", "JavaScript")
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AUR10") & "' )", "JavaScript")
     startTime2 = Now
     Application.Wait Now + TimeValue("00:00:30")
     
@@ -4889,6 +4889,130 @@ IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").Value = ThisWorkbook.S
 IE.Document.GetElementByID("DRRao8jDO3b-oBEwjtWfAr1-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((5 - 2 + 1) * Rnd + 2))
 End If
+
+If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AGP10:AHM10")) > 0 Then
+'<1,F,Undocumented
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGP10")
+IE.Document.GetElementByID("DRRao8jDO3b-jcGn34hM7CM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'1-4,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-snzivZEJGbS-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'5-9,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGR10")
+IE.Document.GetElementByID("DRRao8jDO3b-lAeUhj40On2-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'10-14,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGS10")
+IE.Document.GetElementByID("DRRao8jDO3b-M9K61pkTRQ7-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'15-19,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGT10")
+IE.Document.GetElementByID("DRRao8jDO3b-xquAaKS2vus-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'20-24,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGU10")
+IE.Document.GetElementByID("DRRao8jDO3b-nT8jUXqnSZb-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'25-29,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGV10")
+IE.Document.GetElementByID("DRRao8jDO3b-v2PeaF7bkNQ-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'30-34,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGW10")
+IE.Document.GetElementByID("DRRao8jDO3b-bSYbnekjG80-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'35-39,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGX10")
+IE.Document.GetElementByID("DRRao8jDO3b-FDfLnvQHv36-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'40-44,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGY10")
+IE.Document.GetElementByID("DRRao8jDO3b-sSCq0rQzP3N-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'45-49,F,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").Value = ThisWorkbook.Sheets("sheet1").Range("AGZ10")
+IE.Document.GetElementByID("DRRao8jDO3b-GSreeLJQ9zl-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'50+,F,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHA10")
+IE.Document.GetElementByID("DRRao8jDO3b-Wmb3xexdwAm-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'<1,M,Undocumented                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHB10")
+IE.Document.GetElementByID("DRRao8jDO3b-w2CW3477MZM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'1-4,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHC10")
+IE.Document.GetElementByID("DRRao8jDO3b-jxzbYhmX5nG-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'5-9,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHD10")
+IE.Document.GetElementByID("DRRao8jDO3b-TcEjofQpSBV-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'10-14,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHE10")
+IE.Document.GetElementByID("DRRao8jDO3b-Fqe0m1jYRXf-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'15-19,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHF10")
+IE.Document.GetElementByID("DRRao8jDO3b-QuXcOl4tIsf-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'20-24,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHG10")
+IE.Document.GetElementByID("DRRao8jDO3b-hUSzr4Oih8g-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'25-29,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHH10")
+IE.Document.GetElementByID("DRRao8jDO3b-MfGPeF35m97-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'30-34,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHI10")
+IE.Document.GetElementByID("DRRao8jDO3b-y3dBv0HtQYZ-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'35-39,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHJ10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZDG6xrz1vws-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'40-44,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHK10")
+IE.Document.GetElementByID("DRRao8jDO3b-IKqHtXAF5M4-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'45-49,M,Undocumented                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHL10")
+IE.Document.GetElementByID("DRRao8jDO3b-T3KexHFBsiY-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'50+,M,Undocumented                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AHM10")
+IE.Document.GetElementByID("DRRao8jDO3b-L10xZJdRTfn-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))
+End If
+
 If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AHN10")) Then
 '<1,F,Traced
 IE.Document.GetElementByID("DRRao8jDO3b-HV1wVebGpMx-val").Focus
@@ -5011,6 +5135,130 @@ IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").Value = ThisWorkbook.S
 IE.Document.GetElementByID("DRRao8jDO3b-GNsVNj0Ixaf-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((5 - 2 + 1) * Rnd + 2))
 End If
+
+If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AIL10:AJI10")) > 0 Then
+'<1,F,Not Traced
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Focus
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIL10")
+IE.Document.GetElementByID("DRRao8jDO3b-WaZ44hZGwnz-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'1-4,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIM10")
+IE.Document.GetElementByID("DRRao8jDO3b-GXFo4k45eAM-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'5-9,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIN10")
+IE.Document.GetElementByID("DRRao8jDO3b-vKg75GjS5QU-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'10-14,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIO10")
+IE.Document.GetElementByID("DRRao8jDO3b-dZwhp1lGH3p-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'15-19,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIP10")
+IE.Document.GetElementByID("DRRao8jDO3b-Q8IE6eZFU6b-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'20-24,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIQ10")
+IE.Document.GetElementByID("DRRao8jDO3b-sFYVPJeZeF8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'25-29,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIR10")
+IE.Document.GetElementByID("DRRao8jDO3b-EOlZOp0zPC8-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'30-34,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIS10")
+IE.Document.GetElementByID("DRRao8jDO3b-dN1vezY5hMc-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'35-39,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIT10")
+IE.Document.GetElementByID("DRRao8jDO3b-FrXeF1L4Cai-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'40-44,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIU10")
+IE.Document.GetElementByID("DRRao8jDO3b-I3s48dA0POC-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'45-49,F,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIV10")
+IE.Document.GetElementByID("DRRao8jDO3b-DRuqLDykEsD-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'50+,F,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIW10")
+IE.Document.GetElementByID("DRRao8jDO3b-O5R93yZV2vI-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'<1,M,Not Traced                                                                                                   
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIX10")
+IE.Document.GetElementByID("DRRao8jDO3b-O5eSRv5ilPX-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'1-4,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIY10")
+IE.Document.GetElementByID("DRRao8jDO3b-s7cVR8kuw6O-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'5-9,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AIZ10")
+IE.Document.GetElementByID("DRRao8jDO3b-lYZr3YQFhJT-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'10-14,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJA10")
+IE.Document.GetElementByID("DRRao8jDO3b-Pl43wEY2mzc-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'15-19,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJB10")
+IE.Document.GetElementByID("DRRao8jDO3b-fiPPb7yWErg-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'20-24,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJC10")
+IE.Document.GetElementByID("DRRao8jDO3b-Ruc2yLIdJ9j-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'25-29,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJD10")
+IE.Document.GetElementByID("DRRao8jDO3b-KMZYnlijkNP-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'30-34,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJE10")
+IE.Document.GetElementByID("DRRao8jDO3b-Dd09elTPhgB-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'35-39,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJF10")
+IE.Document.GetElementByID("DRRao8jDO3b-qIUoao32x7G-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'40-44,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJG10")
+IE.Document.GetElementByID("DRRao8jDO3b-BqaHdvdIGjY-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'45-49,M,Not Traced                                                                                                
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJH10")
+IE.Document.GetElementByID("DRRao8jDO3b-ZgKfWGQK5xR-val").dispatchEvent evt                             
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))                                                            
+'50+,M,Not Traced                                                                                                  
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").Focus                                         
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJI10")
+IE.Document.GetElementByID("DRRao8jDO3b-RSNoAYua8oo-val").dispatchEvent evt
+Application.Wait Now + TimeValue("00:00:0" & Int ((5 - 2 + 1) * Rnd + 2))
+End If
+
 End Sub
 
 ' TTTTTTTTTTTXXXX  XXXXX       TTTTTTTTTTBBBBBBBBBB
@@ -5990,6 +6238,8 @@ IE.Document.GetElementByID("mJONpM4NS83-PeDDjUaHEJS-val").Focus
 IE.Document.GetElementByID("mJONpM4NS83-PeDDjUaHEJS-val").Value = ThisWorkbook.Sheets("sheet1").Range("AQZ10")
 IE.Document.GetElementByID("mJONpM4NS83-PeDDjUaHEJS-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((5 - 2 + 1) * Rnd + 2))
+End If
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ARA10")) Then
 '2
 'HIV Serology/Diagnostic Testing
 IE.Document.GetElementByID("ifqUg8hufqa-M5ETn6L06TX-val").Focus
@@ -6130,7 +6380,7 @@ IE.Document.GetElementByID("iCBrw4jfZpW-oKmaZM3W8u4-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((5 - 2 + 1) * Rnd + 2))
 End If
 'POCT_Based
-If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ASB10")) Then
+If Not IsEmpty(ThisWorkbook.Sheets("sheet1").Range("ASG10")) Then
 'HIV Serology/Diagnostic Testing
 IE.Document.GetElementByID("kIec9Ct3rmW-hInFtmuzHDf-val").Focus
 IE.Document.GetElementByID("kIec9Ct3rmW-hInFtmuzHDf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ASG10")
