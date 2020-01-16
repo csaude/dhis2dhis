@@ -99,7 +99,7 @@ Else
     'Call DHIS2 javascript function to select Org Unit on tree
     Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AJE10") & "' )", "JavaScript")
     startTime2 = Now
-    Application.Wait Now + TimeValue("00:00:30")
+    Application.Wait Now + TimeValue("00:01:30")
     
     'Select the Dataset and Period only at 1st time
     If i = 1 Then
@@ -138,10 +138,10 @@ Else
 
     'Testing - HTS_TST
     'Select TAB
-    IE.Document.GetElementByID("ui-id-3").Click
-    Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("ui-id-9").Click
-    Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-3").Click
+    'Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-9").Click
+    'Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     Call KeyPopulation
     Call PICT_Inpatient
@@ -153,10 +153,10 @@ Else
 
     'Testing - All Others
     'Select TAB
-    IE.Document.GetElementByID("ui-id-5").Click
-    Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("ui-id-16").Click
-    Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-5").Click
+    'Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-16").Click
+    'Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     Call HTS_Index
     Call HTS_Self
@@ -171,10 +171,10 @@ Else
 
     'TREATMENT
     'Select TAB
-    IE.Document.GetElementByID("ui-id-6").Click
-    Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("ui-id-18").Click
-    Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-6").Click
+    'Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-18").Click
+    'Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     Call TX_NEW
     Call TX_CURR
@@ -188,10 +188,10 @@ Else
 
     'VIRAL SUPRESSION
     'Select TAB
-    IE.Document.GetElementByID("ui-id-7").Click
-    Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("ui-id-20").Click
-    Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-7").Click
+    'Application.Wait Now + TimeValue("00:00:03")
+    'IE.Document.GetElementByID("ui-id-20").Click
+    'Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     Call TX_PVLS
     'Semiannually
@@ -4055,7 +4055,7 @@ IE.Document.GetElementByID("tnthrE5AclR-zDtqexNpaj8-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int ((6 - 3 + 1) * Rnd + 3))
 End if
                                                             
-If ThisWorkbook.Sheets("sheet1").Range("QA10") > 0 Then
+If ThisWorkbook.Sheets("sheet1").Range("QW10") > 0 Then
 '25-29,M,NP                                                                                             
 IE.Document.GetElementByID("tnthrE5AclR-ClRyt3CO2CU-val").Focus                                         
 IE.Document.GetElementByID("tnthrE5AclR-ClRyt3CO2CU-val").Value = ThisWorkbook.Sheets("sheet1").Range("QW10")
@@ -4063,7 +4063,7 @@ IE.Document.GetElementByID("tnthrE5AclR-ClRyt3CO2CU-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int ((6 - 3 + 1) * Rnd + 3))
 End if
                                                             
-If ThisWorkbook.Sheets("sheet1").Range("QA10") > 0 Then
+If ThisWorkbook.Sheets("sheet1").Range("QX10") > 0 Then
 '30-34,F,NP                                                                                             
 IE.Document.GetElementByID("tnthrE5AclR-ewxqtAm93uz-val").Focus                                         
 IE.Document.GetElementByID("tnthrE5AclR-ewxqtAm93uz-val").Value = ThisWorkbook.Sheets("sheet1").Range("QX10")
@@ -4071,7 +4071,7 @@ IE.Document.GetElementByID("tnthrE5AclR-ewxqtAm93uz-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int ((6 - 3 + 1) * Rnd + 3))
 End if
                                                             
-If ThisWorkbook.Sheets("sheet1").Range("QA10") > 0 Then
+If ThisWorkbook.Sheets("sheet1").Range("QY10") > 0 Then
 '30-34,M,NP                                                                                             
 IE.Document.GetElementByID("tnthrE5AclR-rHymehDGb3n-val").Focus                                         
 IE.Document.GetElementByID("tnthrE5AclR-rHymehDGb3n-val").Value = ThisWorkbook.Sheets("sheet1").Range("QY10")
@@ -4079,7 +4079,7 @@ IE.Document.GetElementByID("tnthrE5AclR-rHymehDGb3n-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int ((6 - 3 + 1) * Rnd + 3))
 End if
                                                             
-If ThisWorkbook.Sheets("sheet1").Range("QA10") > 0 Then
+If ThisWorkbook.Sheets("sheet1").Range("QZ10") > 0 Then
 '35-39,F,NP                                                                                             
 IE.Document.GetElementByID("tnthrE5AclR-ew4H9zzs0GI-val").Focus                                         
 IE.Document.GetElementByID("tnthrE5AclR-ew4H9zzs0GI-val").Value = ThisWorkbook.Sheets("sheet1").Range("QZ10")
