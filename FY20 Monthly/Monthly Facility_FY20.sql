@@ -1,5 +1,5 @@
 SELECT district.name || ' / ' || ou.name AS facility,
-ou.code AS code,
+'0' || ou.code AS code,
 /*Auto-Calculate*/
 /*HTS_TST_num*/
 (
@@ -1619,27 +1619,6 @@ COALESCE(TX_PVLS_D_f.value,0) AS TX_PVLS_D_f,
 COALESCE(TX_PVLS_D_0_14.value,0) AS TX_PVLS_D_0_14,
 COALESCE(TX_PVLS_D_15.value,0) AS TX_PVLS_D_15,
 COALESCE(TX_PVLS_D_preg.value,0) AS TX_PVLS_D_preg,
-/*RP*/
-COALESCE(RP_ART.value,0) AS RP_ART,
-COALESCE(RP_175.value,0) AS RP_175,
-COALESCE(RP_GAAC.value,0) AS RP_GAAC,
-/*RP33*/
-COALESCE(RP33_3_all.value,0) AS RP33_3_all,
-COALESCE(RP33_3_anc.value,0) AS RP33_3_anc,
-COALESCE(RP33_3_014.value,0) AS RP33_3_014,
-COALESCE(RP33_4_all.value,0) AS RP33_4_all,
-COALESCE(RP33_4_anc.value,0) AS RP33_4_anc,
-COALESCE(RP33_4_014.value,0) AS RP33_4_014,
-/*RP99*/
-COALESCE(RP33_5_all.value,0) AS RP33_5_all,
-COALESCE(RP33_5_anc.value,0) AS RP33_5_anc,
-COALESCE(RP33_5_014.value,0) AS RP33_5_014,
-COALESCE(RP33_6_all.value,0) AS RP33_6_all,
-COALESCE(RP33_6_anc.value,0) AS RP33_6_anc,
-COALESCE(RP33_6_014.value,0) AS RP33_6_014,
-COALESCE(RP33_8_all.value,0) AS RP33_8_all,
-COALESCE(RP33_8_anc.value,0) AS RP33_8_anc,
-COALESCE(RP33_8_014.value,0) AS RP33_8_014,
 /*EID_Neg*/
 COALESCE(PMTCT_EID_0_2_neg.value,0) AS PMTCT_EID_0_2_neg,
 COALESCE(PMTCT_EID_2_12_neg.value,0) AS PMTCT_EID_2_12_neg,
@@ -1652,6 +1631,21 @@ COALESCE(IM_ER_g_n.value,0) AS IM_ER_g_n,
 (COALESCE(IM_ER_g_d_i.value,0)-COALESCE(IM_ER_g_d_t.value,0)) AS IM_ER_g_d,
 COALESCE(IM_ER_a_n.value,0) AS IM_ER_a_n,
 (COALESCE(IM_ER_a_d_i.value,0)-COALESCE(IM_ER_a_d_t.value,0)) AS IM_ER_a_d,
+/*MDS & RP*/
+COALESCE(DSD_Total.value,0) AS DSD_Total,
+COALESCE(DSD_Trimestral.value,0) AS DSD_Trimestral,
+COALESCE(DSD_Semestral.value,0) AS DSD_Semestral,
+COALESCE(DSD_GAAC.value,0) AS DSD_GAAC,
+
+COALESCE(RP61_all_n.value,0) AS RP61_all_n,
+(COALESCE(RP61_all_art.value,0)-COALESCE(RP61_all_trans.value,0)) AS RP61_all_d,
+COALESCE(RP61_mgl_n.value,0) AS RP61_mgl_n,
+(COALESCE(RP61_mgl_art.value,0)-COALESCE(RP61_mgl_trans.value,0)) AS RP61_mgl_d,
+COALESCE(RP61_child_n.value,0) AS RP61_child_n,
+(COALESCE(RP61_child_art.value,0)-COALESCE(RP61_child_trans.value,0)) AS RP61_child_d,
+COALESCE(RP61_adult_n.value,0) AS RP61_adult_n,
+(COALESCE(RP61_adult_art.value,0)-COALESCE(RP61_adult_trans.value,0)) AS RP61_adult_d,
+
 ou.coordinates AS coordinates
 
 FROM organisationunit ou
@@ -8697,136 +8691,7 @@ left outer join (
  WHERE dataelementid=1554551
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS TX_PVLS_D_preg ON TX_PVLS_D_preg.sourceid=ou.organisationunitid
- 
- /*RP*/
- LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806881
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP_ART ON RP_ART.sourceid=ou.organisationunitid
- 
- LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806882
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP_175 ON RP_175.sourceid=ou.organisationunitid
- 
- LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806904
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP_GAAC ON RP_GAAC.sourceid=ou.organisationunitid
- 
- /*RP_33*/
-  LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806689
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_3_all ON RP33_3_all.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806692
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_3_anc ON RP33_3_anc.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806688
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_3_014 ON RP33_3_014.sourceid=ou.organisationunitid
- 
-  LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806782
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_4_all ON RP33_4_all.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806781
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_4_anc ON RP33_4_anc.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806776
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_4_014 ON RP33_4_014.sourceid=ou.organisationunitid
- 
- /*RP_99*/
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806790
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_5_all ON RP33_5_all.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806791
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_5_anc ON RP33_5_anc.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806788
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_5_014 ON RP33_5_014.sourceid=ou.organisationunitid
- 
-    LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806805
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_6_all ON RP33_6_all.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806804
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_6_anc ON RP33_6_anc.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=806798
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_6_014 ON RP33_6_014.sourceid=ou.organisationunitid
- 
-     LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=1538663
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_8_all ON RP33_8_all.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=1538664
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_8_anc ON RP33_8_anc.sourceid=ou.organisationunitid
- 
-   LEFT OUTER JOIN (
- SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
- FROM datavalue
- WHERE dataelementid=1538665
- AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(CASE WHEN substring(CAST(${monthly} AS text) from 5 for 2)='01' THEN CAST(${monthly} AS INTEGER)-89 ELSE ${monthly}-1 END AS text))
- GROUP BY sourceid) AS RP33_8_014 ON RP33_8_014.sourceid=ou.organisationunitid
- 
+  
 /*VBG*/
 LEFT OUTER JOIN (
  SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
@@ -8916,5 +8781,139 @@ LEFT OUTER JOIN (
  AND categoryoptioncomboid=1836287
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS IM_ER_a_d_t ON IM_ER_a_d_t.sourceid=ou.organisationunitid
+ 
+ /*MDS*/
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=2545471
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS DSD_Total ON DSD_Total.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=2545472
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS DSD_Trimestral ON DSD_Trimestral.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=2545473
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS DSD_Semestral ON DSD_Semestral.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=2545474
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS DSD_GAAC ON DSD_GAAC.sourceid=ou.organisationunitid
+ 
+  /*RP61_120*/
+  /*All*/
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836265
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_all_n ON RP61_all_n.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844871
+ AND categoryoptioncomboid=1844865
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_all_art ON RP61_all_art.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836267
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_all_trans ON RP61_all_trans.sourceid=ou.organisationunitid
+ 
+ /*MGL*/
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid IN(1836270,1836275)
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_mgl_n ON RP61_mgl_n.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844871
+ AND categoryoptioncomboid IN (1844866,1844867)
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_mgl_art ON RP61_mgl_art.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid IN (1836272,1836277)
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_mgl_trans ON RP61_mgl_trans.sourceid=ou.organisationunitid
+ 
+   /*Children*/
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836280
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_child_n ON RP61_child_n.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844871
+ AND categoryoptioncomboid=1844868
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_child_art ON RP61_child_art.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836282
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_child_trans ON RP61_child_trans.sourceid=ou.organisationunitid
+ 
+ /*Adult*/
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836285
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_adult_n ON RP61_adult_n.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1844871
+ AND categoryoptioncomboid=1844869
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_adult_art ON RP61_adult_art.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=1836292
+ AND categoryoptioncomboid=1836287
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RP61_adult_trans ON RP61_adult_trans.sourceid=ou.organisationunitid
  
 WHERE ous.level=4 AND ous.idlevel2=110 AND ou.closeddate IS NULL ORDER BY district.name || ' / ' || ou.name ASC;

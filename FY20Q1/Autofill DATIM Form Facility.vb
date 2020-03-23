@@ -6302,7 +6302,7 @@ IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
 End if
 
-If ThisWorkbook.Sheets("sheet1").Range("ABC10") > 0 Then
+If ThisWorkbook.Sheets("sheet1").Range("ABD10") > 0 Then
 '50+,M
 IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Focus
 IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABD10")
