@@ -2150,11 +2150,11 @@ COALESCE(TX_TB_den_neg_already_f_men15.value,0) AS TX_TB_den_neg_already_f_men15
 COALESCE(TX_TB_den_neg_already_f_mai15.value,0) AS TX_TB_den_neg_already_f_mai15,
 COALESCE(TX_TB_den_neg_already_m_men15.value,0) AS TX_TB_den_neg_already_m_men15,
 COALESCE(TX_TB_den_neg_already_m_mai15.value,0) AS TX_TB_den_neg_already_m_mai15,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
-'' AS placeholder,
+COALESCE(TX_TB_specimem.value,0) AS TX_TB_specimem,
+COALESCE(TX_TB_smear.value,0) AS TX_TB_smear,
+COALESCE(TX_TB_xpert.value,0) AS TX_TB_xpert,
+COALESCE(TX_TB_other.value,0) AS TX_TB_other,
+COALESCE(TX_TB_pos_returned.value,0) AS TX_TB_pos_returned,
 /*CXCA_TX*/
 /*Auto Calculate*/
 (
