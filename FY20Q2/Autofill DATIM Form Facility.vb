@@ -8254,14 +8254,6 @@ IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
 End If
 
-If ThisWorkbook.Sheets("sheet1").Range("AJZ10") > zeroControl Then
-'PRISON
-IE.Document.GetElementByID("JoERp5gZ6o1-etnBr84tFtJ-val").Focus
-IE.Document.GetElementByID("JoERp5gZ6o1-etnBr84tFtJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJZ10")
-IE.Document.GetElementByID("JoERp5gZ6o1-etnBr84tFtJ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
 End If
 
 End Sub
@@ -8465,14 +8457,6 @@ If ThisWorkbook.Sheets("sheet1").Range("AKX10") > zeroControl Then
 IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Focus
 IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKX10")
 IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKY10") > zeroControl Then
-'PRISON
-IE.Document.GetElementByID("UEwNWt3chBv-etnBr84tFtJ-val").Focus
-IE.Document.GetElementByID("UEwNWt3chBv-etnBr84tFtJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKY10")
-IE.Document.GetElementByID("UEwNWt3chBv-etnBr84tFtJ-val").dispatchEvent evt
 Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
 End If
 
