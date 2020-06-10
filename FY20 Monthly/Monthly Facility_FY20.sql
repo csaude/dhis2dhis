@@ -1646,6 +1646,23 @@ COALESCE(RP61_child_n.value,0) AS RP61_child_n,
 COALESCE(RP61_adult_n.value,0) AS RP61_adult_n,
 (COALESCE(RP61_adult_art.value,0)-COALESCE(RP61_adult_trans.value,0)) AS RP61_adult_d,
 
+/*Boletim Mensal*/
+COALESCE(CLC0904.value,0) AS CLC0904,
+COALESCE(SEGUNDALINHA.value,0) AS segundalinha,
+COALESCE(RETTARV12CN.value,0) AS RETTARV12CN,
+COALESCE(RETTARV12CD.value,0) AS RETTARV12CD,
+COALESCE(RETTARV12MGLN.value,0) AS RETTARV12MGLN,
+COALESCE(RETTARV12MGLD.value,0) AS RETTARV12MGLD,
+COALESCE(RETTARV12AN.value,0) AS RETTARV12AN,
+COALESCE(RETTARV12AD.value,0) AS RETTARV12AD,
+COALESCE(CVCN.value,0) AS CVCN,
+COALESCE(CVCD.value,0) AS CVCD,
+COALESCE(CVMGLN.value,0) AS CVMGLN,
+COALESCE(CVMGLD.value,0) AS CVMGLD,
+COALESCE(CVAN.value,0) AS CVAN,
+COALESCE(CVAD.value,0) AS CVAD,
+COALESCE(TBPREVN.value,0) AS TBPREVN,
+
 ou.coordinates AS coordinates
 
 FROM organisationunit ou
@@ -2751,7 +2768,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(565937,565922,565938,565939,427177,427178,22454,338836)
+ AND categoryoptioncomboid IN(565937,565922,565938,565939,427177,427178,22454,338836,3019519)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_0_8_m_pos ON HTS_TST_Emergency_0_8_m_pos.sourceid=ou.organisationunitid
@@ -2760,7 +2777,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566126,566111,566127,566128,427225,427226,22304,338884)
+ AND categoryoptioncomboid IN(566126,566111,566127,566128,427225,427226,22304,338884,3019576)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_0_8_f_pos ON HTS_TST_Emergency_0_8_f_pos.sourceid=ou.organisationunitid
@@ -2769,7 +2786,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(565958,565943,565959,565960,427179,427180,22635,338838)
+ AND categoryoptioncomboid IN(565958,565943,565959,565960,427179,427180,22635,338838,3019520)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_0_8_m_neg ON HTS_TST_Emergency_0_8_m_neg.sourceid=ou.organisationunitid
@@ -2778,7 +2795,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566147,566132,566148,566149,427227,427228,22584,338886)
+ AND categoryoptioncomboid IN(566147,566132,566148,566149,427227,427228,22584,338886,3019577)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_0_8_f_neg ON HTS_TST_Emergency_0_8_f_neg.sourceid=ou.organisationunitid
@@ -2825,7 +2842,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566063,566048,566064,338842,427183,22372)
+ AND categoryoptioncomboid IN(566063,566048,566064,338842,427183,22372,3019522)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_19_4_m_pos ON HTS_TST_Emergency_19_4_m_pos.sourceid=ou.organisationunitid
@@ -2834,7 +2851,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566252,566237,566253,338890,427231,22246)
+ AND categoryoptioncomboid IN(566252,566237,566253,338890,427231,22246,3019579)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_19_4_f_pos ON HTS_TST_Emergency_19_4_f_pos.sourceid=ou.organisationunitid
@@ -2843,7 +2860,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566084,566069,566085,338844,427185,22671)
+ AND categoryoptioncomboid IN(566084,566069,566085,338844,427185,22671,3019523)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_19_4_m_neg ON HTS_TST_Emergency_19_4_m_neg.sourceid=ou.organisationunitid
@@ -2852,7 +2869,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(566273,566258,566274,338892,427233,22463)
+ AND categoryoptioncomboid IN(566273,566258,566274,338892,427233,22463,3019580)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_19_4_f_neg ON HTS_TST_Emergency_19_4_f_neg.sourceid=ou.organisationunitid
@@ -2862,7 +2879,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(22235,427237,427238,338896)
+ AND categoryoptioncomboid IN(22235,427237,427238,338896,3019582)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_5_9_f_pos ON HTS_TST_Emergency_5_9_f_pos.sourceid=ou.organisationunitid
@@ -2871,7 +2888,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338898,22295,427239,427240)
+ AND categoryoptioncomboid IN(338898,22295,427239,427240,3019583)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_5_9_f_neg ON HTS_TST_Emergency_5_9_f_neg.sourceid=ou.organisationunitid
@@ -2880,7 +2897,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(22512,338848,427189,427190)
+ AND categoryoptioncomboid IN(22512,338848,427189,427190,3019525)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_5_9_m_pos ON HTS_TST_Emergency_5_9_m_pos.sourceid=ou.organisationunitid
@@ -2889,7 +2906,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338850,22333,427191,427192)
+ AND categoryoptioncomboid IN(338850,22333,427191,427192,3019526)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_5_9_m_neg ON HTS_TST_Emergency_5_9_m_neg.sourceid=ou.organisationunitid
@@ -2899,7 +2916,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338902,22664,427243,427244)
+ AND categoryoptioncomboid IN(338902,22664,427243,427244,3019585)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_10_14_f_pos ON HTS_TST_Emergency_10_14_f_pos.sourceid=ou.organisationunitid
@@ -2908,7 +2925,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338904,22202,427245,427246)
+ AND categoryoptioncomboid IN(338904,22202,427245,427246,3019586)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_10_14_f_neg ON HTS_TST_Emergency_10_14_f_neg.sourceid=ou.organisationunitid
@@ -2917,7 +2934,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338854,22384,427195,427196)
+ AND categoryoptioncomboid IN(338854,22384,427195,427196,3019528)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_10_14_m_pos ON HTS_TST_Emergency_10_14_m_pos.sourceid=ou.organisationunitid
@@ -2926,7 +2943,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338856,22337,427197,427198)
+ AND categoryoptioncomboid IN(338856,22337,427197,427198,3019529)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_10_14_m_neg ON HTS_TST_Emergency_10_14_m_neg.sourceid=ou.organisationunitid
@@ -2936,7 +2953,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338908,22402,427249,427250)
+ AND categoryoptioncomboid IN(338908,22402,427249,427250,3019588)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_15_19_f_pos ON HTS_TST_Emergency_15_19_f_pos.sourceid=ou.organisationunitid
@@ -2945,7 +2962,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338910,22495,427251,427252)
+ AND categoryoptioncomboid IN(338910,22495,427251,427252,3019589)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_15_19_f_neg ON HTS_TST_Emergency_15_19_f_neg.sourceid=ou.organisationunitid
@@ -2954,7 +2971,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338860,22549,427201,427202)
+ AND categoryoptioncomboid IN(338860,22549,427201,427202,3019531)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_15_19_m_pos ON HTS_TST_Emergency_15_19_m_pos.sourceid=ou.organisationunitid
@@ -2963,7 +2980,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338862,22648,427203,427204)
+ AND categoryoptioncomboid IN(338862,22648,427203,427204,3019532)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_15_19_m_neg ON HTS_TST_Emergency_15_19_m_neg.sourceid=ou.organisationunitid
@@ -2973,7 +2990,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338914,22631,427255,427256)
+ AND categoryoptioncomboid IN(338914,22631,427255,427256,3019591)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_20_24_f_pos ON HTS_TST_Emergency_20_24_f_pos.sourceid=ou.organisationunitid
@@ -2982,7 +2999,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338916,22537,427257,427258)
+ AND categoryoptioncomboid IN(338916,22537,427257,427258,3019592)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_20_24_f_neg ON HTS_TST_Emergency_20_24_f_neg.sourceid=ou.organisationunitid
@@ -2991,7 +3008,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338866,22211,427207,427208)
+ AND categoryoptioncomboid IN(338866,22211,427207,427208,3019534)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_20_24_m_pos ON HTS_TST_Emergency_20_24_m_pos.sourceid=ou.organisationunitid
@@ -3000,7 +3017,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN(338868,22231,427209,427210)
+ AND categoryoptioncomboid IN(338868,22231,427209,427210,3019535)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_20_24_m_neg ON HTS_TST_Emergency_20_24_m_neg.sourceid=ou.organisationunitid
@@ -3047,7 +3064,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (562073,562058,562074,562075)
+ AND categoryoptioncomboid IN (562073,562058,562074,562075,3019600)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_25_29_f_pos ON HTS_TST_Emergency_25_29_f_pos.sourceid=ou.organisationunitid
@@ -3056,7 +3073,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (562094,562079,562095,562096)
+ AND categoryoptioncomboid IN (562094,562079,562095,562096,3019601)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_25_29_f_neg ON HTS_TST_Emergency_25_29_f_neg.sourceid=ou.organisationunitid
@@ -3065,7 +3082,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (561821,561806,561822,561823)
+ AND categoryoptioncomboid IN (561821,561806,561822,561823,3019543)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_25_29_m_pos ON HTS_TST_Emergency_25_29_m_pos.sourceid=ou.organisationunitid
@@ -3074,7 +3091,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (561842,561827,561843,561844)
+ AND categoryoptioncomboid IN (561842,561827,561843,561844,3019544)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_25_29_m_neg ON HTS_TST_Emergency_25_29_m_neg.sourceid=ou.organisationunitid
@@ -3084,7 +3101,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (565777,565762,565778,565779,562138,562136,562137,562121)
+ AND categoryoptioncomboid IN (565777,565762,565778,565779,562138,562136,562137,562121,3019603)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_30_49_f_pos ON HTS_TST_Emergency_30_49_f_pos.sourceid=ou.organisationunitid
@@ -3093,7 +3110,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (565798,565783,565799,565800,562157,562158,562142,562159)
+ AND categoryoptioncomboid IN (565798,565783,565799,565800,562157,562158,562142,562159,3019604)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_30_49_f_neg ON HTS_TST_Emergency_30_49_f_neg.sourceid=ou.organisationunitid
@@ -3102,7 +3119,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (565714,565699,565715,565716,561884,561886,561885,561869)
+ AND categoryoptioncomboid IN (565714,565699,565715,565716,561884,561886,561885,561869,3019546)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_30_49_m_pos ON HTS_TST_Emergency_30_49_m_pos.sourceid=ou.organisationunitid
@@ -3111,7 +3128,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (565735,565720,565736,565737,561905,561906,561890,561907)
+ AND categoryoptioncomboid IN (565735,565720,565736,565737,561905,561906,561890,561907,3019547)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_30_49_m_neg ON HTS_TST_Emergency_30_49_m_neg.sourceid=ou.organisationunitid
@@ -3121,7 +3138,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (562199,562200,562201,562184)
+ AND categoryoptioncomboid IN (562199,562200,562201,562184,3019606)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_35_39_f_pos ON HTS_TST_Emergency_35_39_f_pos.sourceid=ou.organisationunitid
@@ -3130,7 +3147,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (562220,562221,562222,562205)
+ AND categoryoptioncomboid IN (562220,562221,562222,562205,3019607)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_35_39_f_neg ON HTS_TST_Emergency_35_39_f_neg.sourceid=ou.organisationunitid
@@ -3139,7 +3156,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (561947,561948,561949,561932)
+ AND categoryoptioncomboid IN (561947,561948,561949,561932,3019549)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_35_39_m_pos ON HTS_TST_Emergency_35_39_m_pos.sourceid=ou.organisationunitid
@@ -3148,7 +3165,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (561968,561969,561970,561953)
+ AND categoryoptioncomboid IN (561968,561969,561970,561953,3019550)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_35_39_m_neg ON HTS_TST_Emergency_35_39_m_neg.sourceid=ou.organisationunitid
@@ -3158,7 +3175,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480373,1480374,1480375,1480358)
+ AND categoryoptioncomboid IN (1480373,1480374,1480375,1480358,3019627)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_40_44_f_pos ON HTS_TST_Emergency_40_44_f_pos.sourceid=ou.organisationunitid
@@ -3167,7 +3184,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480396,1480397,1480398,1480381)
+ AND categoryoptioncomboid IN (1480396,1480397,1480398,1480381,3019628)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_40_44_f_neg ON HTS_TST_Emergency_40_44_f_neg.sourceid=ou.organisationunitid
@@ -3176,7 +3193,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480235,1480236,1480237,1480220)
+ AND categoryoptioncomboid IN (1480235,1480236,1480237,1480220,3019570)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_40_44_m_pos ON HTS_TST_Emergency_40_44_m_pos.sourceid=ou.organisationunitid
@@ -3185,7 +3202,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480258,1480259,1480260,1480243)
+ AND categoryoptioncomboid IN (1480258,1480259,1480260,1480243,3019571)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_40_44_m_neg ON HTS_TST_Emergency_40_44_m_neg.sourceid=ou.organisationunitid
@@ -3195,7 +3212,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480442,1480443,1480444,1480427)
+ AND categoryoptioncomboid IN (1480442,1480443,1480444,1480427,3019630)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_45_49_f_pos ON HTS_TST_Emergency_45_49_f_pos.sourceid=ou.organisationunitid
@@ -3204,7 +3221,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480465,1480466,1480467,1480450)
+ AND categoryoptioncomboid IN (1480465,1480466,1480467,1480450,3019631)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_45_49_f_neg ON HTS_TST_Emergency_45_49_f_neg.sourceid=ou.organisationunitid
@@ -3213,7 +3230,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480304,1480305,1480306,1480289)
+ AND categoryoptioncomboid IN (1480304,1480305,1480306,1480289,3019573)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_45_49_m_pos ON HTS_TST_Emergency_45_49_m_pos.sourceid=ou.organisationunitid
@@ -3222,7 +3239,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (1480327,1480328,1480329,1480312)
+ AND categoryoptioncomboid IN (1480327,1480328,1480329,1480312,3019574)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_45_49_m_neg ON HTS_TST_Emergency_45_49_m_neg.sourceid=ou.organisationunitid
@@ -3232,7 +3249,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (338926,22596,427267,427268)
+ AND categoryoptioncomboid IN (338926,22596,427267,427268,3019597)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_50_f_pos ON HTS_TST_Emergency_50_f_pos.sourceid=ou.organisationunitid
@@ -3241,7 +3258,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (338928,22322,427269,427270)
+ AND categoryoptioncomboid IN (338928,22322,427269,427270,3019598)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_50_f_neg ON HTS_TST_Emergency_50_f_neg.sourceid=ou.organisationunitid
@@ -3250,7 +3267,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (338878,22647,427219,427220)
+ AND categoryoptioncomboid IN (338878,22647,427219,427220,3019540)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_50_m_pos ON HTS_TST_Emergency_50_m_pos.sourceid=ou.organisationunitid
@@ -3259,7 +3276,7 @@ LEFT OUTER JOIN organisationunit district
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
  WHERE dataelementid=22693
- AND categoryoptioncomboid IN (338880,22665,427221,427222)
+ AND categoryoptioncomboid IN (338880,22665,427221,427222,3019541)
  AND attributeoptioncomboid=230146
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS HTS_TST_Emergency_50_m_neg ON HTS_TST_Emergency_50_m_neg.sourceid=ou.organisationunitid 
@@ -8916,4 +8933,126 @@ LEFT OUTER JOIN (
  AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
  GROUP BY sourceid) AS RP61_adult_trans ON RP61_adult_trans.sourceid=ou.organisationunitid
  
+/*Boletim Mensal*/
+LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063257
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CLC0904 ON CLC0904.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063258
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS SEGUNDALINHA ON SEGUNDALINHA.sourceid=ou.organisationunitid
+ 
+ LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063259
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12CN ON RETTARV12CN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063260
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12CD ON RETTARV12CD.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063262
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12MGLN ON RETTARV12MGLN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063261
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12MGLD ON RETTARV12MGLD.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063264
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12AN ON RETTARV12AN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063263
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS RETTARV12AD ON RETTARV12AD.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063265
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVCN ON CVCN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063266
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVCD ON CVCD.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063270
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVMGLN ON CVMGLN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063269
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVMGLD ON CVMGLD.sourceid=ou.organisationunitid
+ 
+   LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063267
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVAN ON CVAN.sourceid=ou.organisationunitid
+ 
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063268
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS CVAD ON CVAD.sourceid=ou.organisationunitid
+ 
+  
+  LEFT OUTER JOIN (
+ SELECT sourceid, SUM(CAST(value AS DOUBLE PRECISION)) AS value
+ FROM datavalue
+ WHERE dataelementid=3063378
+ AND categoryoptioncomboid=16
+ AND periodid=(SELECT periodid FROM _periodstructure WHERE iso=CAST(${monthly} AS text))
+ GROUP BY sourceid) AS TBPREVN ON TBPREVN.sourceid=ou.organisationunitid
+
 WHERE ous.level=4 AND ous.idlevel2=110 AND ou.closeddate IS NULL ORDER BY district.name || ' / ' || ou.name ASC;
