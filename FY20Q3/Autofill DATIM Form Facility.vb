@@ -120,7 +120,7 @@ Else
     'Uncomment below if you need to select a period from previous year
     'Call IE.Document.parentWindow.execScript("previousPeriodsSelected()", "JavaScript")
     'Application.Wait Now + TimeValue("00:00:03")
-    IE.Document.GetElementByID("selectedPeriodId").Value = "2020Q1"
+    IE.Document.GetElementByID("selectedPeriodId").Value = "2020Q2"
     IE.Document.GetElementByID("selectedPeriodId").dispatchEvent evt
     Application.Wait Now + TimeValue("00:00:50")
     End If
