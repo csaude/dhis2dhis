@@ -88,7 +88,7 @@ i = i + 1000
 FormProgressBar.Hide
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("APQ10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("APQ10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AJF10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AJF10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
@@ -104,7 +104,7 @@ Else
     End With
 
     'Call DHIS2 javascript function to select Org Unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("APQ10") & "' )", "JavaScript")
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AJF10") & "' )", "JavaScript")
     startTime2 = Now
     Application.Wait Now + TimeValue("00:01:30")
     
@@ -136,9 +136,9 @@ Else
     'Application.Wait Now + TimeValue("00:00:03")
     'Quarterly
     'Semiannually
-    Call PrEP_NEW
-    Call PrEP_CURR
-    Call TB_PREV
+    'Call PrEP_NEW
+    'Call PrEP_CURR
+   ' Call TB_PREV
     'Annually
     'Call GEND_GBV
     'Call FPINT_SITE
@@ -171,7 +171,7 @@ Else
     Call PMTCT_EID_HEI_POS
     Call TB_STAT
     'Semiannually
-    Call CXCA_SCRN
+    'Call CXCA_SCRN
     'Annually
     'Call PMTCT_FO
 
@@ -190,8 +190,8 @@ Else
     Call PMTCT_ART
     Call TB_ART
     'Semiannualy
-    Call TX_TB
-    Call CXCA_TX
+    'Call TX_TB
+    'Call CXCA_TX
 
     'VIRAL SUPRESSION
     'Select TAB
@@ -210,8 +210,8 @@ Else
     'IE.Document.GetElementByID("ui-id-16").Click
     'Application.Wait Now + TimeValue("00:00:03")
     'Semiannualy
-    Call SC_ARVDISP
-    Call SC_CURR
+    'Call SC_ARVDISP
+    'Call SC_CURR
 
     'Annually
     'Call HRH
@@ -5251,1294 +5251,1294 @@ End If
 End Sub
 
 
-'
-' TTTTTTTTTTTTTTTTTTTXXXXX      XXXXXXX                  _RRRRRRRRRRRRRRRR     TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-' TTTTTTTTTTTTTTTTTTTXXXXXX    XXXXXXX                   _RRRRRRRRRRRRRRRRR    TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-' TTTTTTTTTTTTTTTTTT XXXXXXX   XXXXXXX                   _RRRRRRRRRRRRRRRRRR   TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-' TTTTTTTTTTTTTTTTTT XXXXXXX  XXXXXXX                    _RRRRRRRRRRRRRRRRRR   TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-'       TTTTTT        XXXXXXX XXXXXXX                    _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
-'       TTTTTT         XXXXXXXXXXXXX                     _RRRRR       RRRRRR         TTTTTT            TTTTTT
-'       TTTTTT         XXXXXXXXXXXX                      _RRRRR       RRRRRR         TTTTTT            TTTTTT
-'       TTTTTT          XXXXXXXXXXX                      _RRRRR       RRRRRR         TTTTTT            TTTTTT
-'       TTTTTT           XXXXXXXXX                       _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
-'       TTTTTT           XXXXXXXX                        _RRRRRRRRRRRRRRRRRR         TTTTTT            TTTTTT
-'       TTTTTT            XXXXXXX                        _RRRRRRRRRRRRRRRRR          TTTTTT            TTTTTT
-'       TTTTTT           XXXXXXXX                        _RRRRRRRRRRRRRRRR           TTTTTT            TTTTTT
-'       TTTTTT          XXXXXXXXXX                       _RRRRRRRRRRRRRR             TTTTTT            TTTTTT
-'       TTTTTT          XXXXXXXXXXX                      _RRRRR RRRRRRRRR            TTTTTT            TTTTTT
-'       TTTTTT         XXXXXXXXXXXX                      _RRRRR   RRRRRRRR           TTTTTT            TTTTTT
-'       TTTTTT         XXXXXXXXXXXXX                     _RRRRR    RRRRRRR           TTTTTT            TTTTTT
-'       TTTTTT        XXXXXXX XXXXXXX                    _RRRRR     RRRRRRR          TTTTTT            TTTTTT
-'       TTTTTT       XXXXXXX  XXXXXXX                    _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
-'       TTTTTT       XXXXXXX   XXXXXXX                   _RRRRR      RRRRRRR         TTTTTT            TTTTTT
-'       TTTTTT      TXXXXXX     XXXXXXX                  _RRRRR       RRRRRRR        TTTTTT            TTTTTT
-'       TTTTTT     TTXXXXX      XXXXXXX                  _RRRRR       RRRRRRRR       TTTTTT            TTTTTT
-'       TTTTTT     TTXXXXX       XXXXXXX                 _RRRRR        RRRRRRR       TTTTTT            TTTTTT
-'
-'
-
-Sub TX_RTT()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("WI10:XF10")) > 0 Then
-
-If ThisWorkbook.Sheets("sheet1").Range("WI10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").Value = ThisWorkbook.Sheets("sheet1").Range("WI10")
-IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WJ10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").Value = ThisWorkbook.Sheets("sheet1").Range("WJ10")
-IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WK10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").Value = ThisWorkbook.Sheets("sheet1").Range("WK10")
-IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WL10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").Value = ThisWorkbook.Sheets("sheet1").Range("WL10")
-IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WM10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").Value = ThisWorkbook.Sheets("sheet1").Range("WM10")
-IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WN10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").Value = ThisWorkbook.Sheets("sheet1").Range("WN10")
-IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WO10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").Value = ThisWorkbook.Sheets("sheet1").Range("WO10")
-IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WP10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").Value = ThisWorkbook.Sheets("sheet1").Range("WP10")
-IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WQ10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").Value = ThisWorkbook.Sheets("sheet1").Range("WQ10")
-IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WR10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").Value = ThisWorkbook.Sheets("sheet1").Range("WR10")
-IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WS10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").Value = ThisWorkbook.Sheets("sheet1").Range("WS10")
-IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WT10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").Value = ThisWorkbook.Sheets("sheet1").Range("WT10")
-IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WU10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").Value = ThisWorkbook.Sheets("sheet1").Range("WU10")
-IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WV10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").Value = ThisWorkbook.Sheets("sheet1").Range("WV10")
-IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WW10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").Value = ThisWorkbook.Sheets("sheet1").Range("WW10")
-IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WX10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").Value = ThisWorkbook.Sheets("sheet1").Range("WX10")
-IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WY10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").Value = ThisWorkbook.Sheets("sheet1").Range("WY10")
-IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("WZ10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").Value = ThisWorkbook.Sheets("sheet1").Range("WZ10")
-IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XA10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").Value = ThisWorkbook.Sheets("sheet1").Range("XA10")
-IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XB10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").Value = ThisWorkbook.Sheets("sheet1").Range("XB10")
-IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XC10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("XC10")
-IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XD10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").Value = ThisWorkbook.Sheets("sheet1").Range("XD10")
-IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XE10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").Value = ThisWorkbook.Sheets("sheet1").Range("XE10")
-IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XF10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").Focus
-IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").Value = ThisWorkbook.Sheets("sheet1").Range("XF10")
-IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-
-
-'Disaggregated by key population type
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("XG10:XK10")) > 0 Then
-If ThisWorkbook.Sheets("sheet1").Range("XG10") > zeroControl Then
-'PWID
-IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").Focus
-IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").Value = ThisWorkbook.Sheets("sheet1").Range("XG10")
-IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XH10") > zeroControl Then
-'MSM
-IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").Focus
-IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").Value = ThisWorkbook.Sheets("sheet1").Range("XH10")
-IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XI10") > zeroControl Then
-'TG
-IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").Focus
-IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").Value = ThisWorkbook.Sheets("sheet1").Range("XI10")
-IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XJ10") > zeroControl Then
-'FSW
-IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").Focus
-IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").Value = ThisWorkbook.Sheets("sheet1").Range("XJ10")
-IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XK10") > zeroControl Then
-'PRISON
-IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").Focus
-IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").Value = ThisWorkbook.Sheets("sheet1").Range("XK10")
-IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-
-End Sub
-
-
-' TTTTTTTTTTTTTTTTTTTXXXXX      XXXXXXX                  _MMMMMMM       MMMMMMMM   LLLLL
-' TTTTTTTTTTTTTTTTTTTXXXXXX    XXXXXXX                   _MMMMMMMM     MMMMMMMMM   LLLLL
-' TTTTTTTTTTTTTTTTTT XXXXXXX   XXXXXXX                   _MMMMMMMM     MMMMMMMMM   LLLLL
-' TTTTTTTTTTTTTTTTTT XXXXXXX  XXXXXXX                    _MMMMMMMM     MMMMMMMMM   LLLLL
-'       TTTTTT        XXXXXXX XXXXXXX                    _MMMMMMMMM    MMMMMMMMM   LLLLL
-'       TTTTTT         XXXXXXXXXXXXX                     _MMMMMMMMM   MMMMMMMMMM   LLLLL
-'       TTTTTT         XXXXXXXXXXXX                      _MMMMMMMMM   MMMMMMMMMM   LLLLL
-'       TTTTTT          XXXXXXXXXXX                      _MMMMMMMMM   MMMMMMMMMM   LLLLL
-'       TTTTTT           XXXXXXXXX                       _MMMMMMMMMM  MMMMMMMMMM   LLLLL
-'       TTTTTT           XXXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
-'       TTTTTT            XXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
-'       TTTTTT           XXXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
-'       TTTTTT          XXXXXXXXXX                       _MMMMM MMMMMMMMMMMMMMMM   LLLLL
-'       TTTTTT          XXXXXXXXXXX                      _MMMMM MMMMMMMMM MMMMMM   LLLLL
-'       TTTTTT         XXXXXXXXXXXX                      _MMMMM MMMMMMMMM MMMMMM   LLLLL
-'       TTTTTT         XXXXXXXXXXXXX                     _MMMMM MMMMMMMMM MMMMMM   LLLLL
-'       TTTTTT        XXXXXXX XXXXXXX                    _MMMMM MMMMMMMMM MMMMMM   LLLLL
-'       TTTTTT       XXXXXXX  XXXXXXX                    _MMMMM  MMMMMMM  MMMMMM   LLLLL
-'       TTTTTT       XXXXXXX   XXXXXXX                   _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
-'       TTTTTT      TXXXXXX     XXXXXXX                  _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
-'       TTTTTT     TTXXXXX      XXXXXXX                  _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
-'       TTTTTT     TTXXXXX       XXXXXXX                 _MMMMM   MMMMM   MMMMMM   LLLLLLLLLLLLLLLL
-'
-Sub TX_ML()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("XM10:YJ10")) > 0 Then
-'Died
-If ThisWorkbook.Sheets("sheet1").Range("XM10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").Value = ThisWorkbook.Sheets("sheet1").Range("XM10")
-IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XN10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").Value = ThisWorkbook.Sheets("sheet1").Range("XN10")
-IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XO10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").Value = ThisWorkbook.Sheets("sheet1").Range("XO10")
-IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XP10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("XP10")
-IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XQ10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").Value = ThisWorkbook.Sheets("sheet1").Range("XQ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XR10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").Value = ThisWorkbook.Sheets("sheet1").Range("XR10")
-IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XS10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").Value = ThisWorkbook.Sheets("sheet1").Range("XS10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XT10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").Value = ThisWorkbook.Sheets("sheet1").Range("XT10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XU10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").Value = ThisWorkbook.Sheets("sheet1").Range("XU10")
-IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XV10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").Value = ThisWorkbook.Sheets("sheet1").Range("XV10")
-IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XW10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").Value = ThisWorkbook.Sheets("sheet1").Range("XW10")
-IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XX10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").Value = ThisWorkbook.Sheets("sheet1").Range("XX10")
-IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XY10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").Value = ThisWorkbook.Sheets("sheet1").Range("XY10")
-IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("XZ10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("XZ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YA10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").Value = ThisWorkbook.Sheets("sheet1").Range("YA10")
-IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YB10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").Value = ThisWorkbook.Sheets("sheet1").Range("YB10")
-IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YC10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").Value = ThisWorkbook.Sheets("sheet1").Range("YC10")
-IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YD10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").Value = ThisWorkbook.Sheets("sheet1").Range("YD10")
-IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YE10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").Value = ThisWorkbook.Sheets("sheet1").Range("YE10")
-IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YF10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").Value = ThisWorkbook.Sheets("sheet1").Range("YF10")
-IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YG10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").Value = ThisWorkbook.Sheets("sheet1").Range("YG10")
-IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YH10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").Value = ThisWorkbook.Sheets("sheet1").Range("YH10")
-IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YI10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").Value = ThisWorkbook.Sheets("sheet1").Range("YI10")
-IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YJ10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").Value = ThisWorkbook.Sheets("sheet1").Range("YJ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-
-End If
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("YK10:ZH10")) > 0 Then
-'Lost to Follow-Up After being on Treatment for < 3 months
-If ThisWorkbook.Sheets("sheet1").Range("YK10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").Value = ThisWorkbook.Sheets("sheet1").Range("YK10")
-IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YL10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").Value = ThisWorkbook.Sheets("sheet1").Range("YL10")
-IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YM10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("YM10")
-IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YN10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").Value = ThisWorkbook.Sheets("sheet1").Range("YN10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YO10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").Value = ThisWorkbook.Sheets("sheet1").Range("YO10")
-IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YP10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").Value = ThisWorkbook.Sheets("sheet1").Range("YP10")
-IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YQ10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").Value = ThisWorkbook.Sheets("sheet1").Range("YQ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YR10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").Value = ThisWorkbook.Sheets("sheet1").Range("YR10")
-IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YS10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").Value = ThisWorkbook.Sheets("sheet1").Range("YS10")
-IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YT10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").Value = ThisWorkbook.Sheets("sheet1").Range("YT10")
-IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YU10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").Value = ThisWorkbook.Sheets("sheet1").Range("YU10")
-IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YV10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").Value = ThisWorkbook.Sheets("sheet1").Range("YV10")
-IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YW10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").Value = ThisWorkbook.Sheets("sheet1").Range("YW10")
-IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YX10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").Value = ThisWorkbook.Sheets("sheet1").Range("YX10")
-IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YY10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").Value = ThisWorkbook.Sheets("sheet1").Range("YY10")
-IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("YZ10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("YZ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZA10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZA10")
-IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZB10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZB10")
-IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZC10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZC10")
-IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZD10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZD10")
-IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZE10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZE10")
-IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZF10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZF10")
-IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZG10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZG10")
-IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZH10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZH10")
-IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-
-End If
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("ZI10:AAF10")) > 0 Then
-
-'Lost to Follow-Up After being on Treatment for > 3 months
-If ThisWorkbook.Sheets("sheet1").Range("ZI10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZI10")
-IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZJ10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZJ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZK10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZK10")
-IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZL10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZL10")
-IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZM10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZM10")
-IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZN10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZN10")
-IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZO10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZO10")
-IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZP10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZP10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZQ10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZQ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZR10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
-IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZS10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
-IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZT10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
-IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZU10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
-IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZV10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
-IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZW10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
-IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZX10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
-IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZY10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
-IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ZZ10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAA10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAA10")
-IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAB10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAB10")
-IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAC10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAC10")
-IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAD10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAD10")
-IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAE10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAE10")
-IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAF10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAF10")
-IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-
-End If
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AAG10:ABD10")) > 0 Then
-
-'Transferred Out
-If ThisWorkbook.Sheets("sheet1").Range("AAG10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAG10")
-IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAH10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAH10")
-IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAI10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAI10")
-IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAJ10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAJ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAK10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAK10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAL10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAL10")
-IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAM10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAM10")
-IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAN10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAN10")
-IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAO10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAO10")
-IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAP10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAP10")
-IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAQ10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAQ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAR10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAR10")
-IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAS10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAS10")
-IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAT10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAT10")
-IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAU10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAU10")
-IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAV10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAV10")
-IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAW10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAW10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAX10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAX10")
-IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAY10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAY10")
-IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AAZ10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAZ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABA10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABA10")
-IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABB10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABB10")
-IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABC10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABC10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABD10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABD10")
-IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-
-End If
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("ABE10:ACB10")) > 0 Then
-
-'Refused (Stopped) Treatment
-If ThisWorkbook.Sheets("sheet1").Range("ABE10") > zeroControl Then
-'<1,F
-IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABE10")
-IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABF10") > zeroControl Then
-'1-4,F
-IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABF10")
-IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABG10") > zeroControl Then
-'5-9,F
-IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABG10")
-IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABH10") > zeroControl Then
-'10-14,F
-IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABH10")
-IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABI10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABI10")
-IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABJ10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABJ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABK10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABK10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABL10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABL10")
-IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABM10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABM10")
-IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABN10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABN10")
-IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABO10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABO10")
-IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABP10") > zeroControl Then
-'50+,F
-IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABP10")
-IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABQ10") > zeroControl Then
-'<1,M
-IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABQ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABR10") > zeroControl Then
-'1-4,M
-IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABR10")
-IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABS10") > zeroControl Then
-'5-9,M
-IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABS10")
-IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABT10") > zeroControl Then
-'10-14,M
-IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABT10")
-IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABU10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABU10")
-IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABV10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABV10")
-IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABW10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABW10")
-IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABX10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABX10")
-IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABY10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABY10")
-IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ABZ10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABZ10")
-IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ACA10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACA10")
-IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ACB10") > zeroControl Then
-'50+,M
-IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").Focus
-IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACB10")
-IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-End Sub
-
+' '
+' ' TTTTTTTTTTTTTTTTTTTXXXXX      XXXXXXX                  _RRRRRRRRRRRRRRRR     TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+' ' TTTTTTTTTTTTTTTTTTTXXXXXX    XXXXXXX                   _RRRRRRRRRRRRRRRRR    TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+' ' TTTTTTTTTTTTTTTTTT XXXXXXX   XXXXXXX                   _RRRRRRRRRRRRRRRRRR   TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+' ' TTTTTTTTTTTTTTTTTT XXXXXXX  XXXXXXX                    _RRRRRRRRRRRRRRRRRR   TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+' '       TTTTTT        XXXXXXX XXXXXXX                    _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT         XXXXXXXXXXXXX                     _RRRRR       RRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT         XXXXXXXXXXXX                      _RRRRR       RRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT          XXXXXXXXXXX                      _RRRRR       RRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT           XXXXXXXXX                       _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT           XXXXXXXX                        _RRRRRRRRRRRRRRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT            XXXXXXX                        _RRRRRRRRRRRRRRRRR          TTTTTT            TTTTTT
+' '       TTTTTT           XXXXXXXX                        _RRRRRRRRRRRRRRRR           TTTTTT            TTTTTT
+' '       TTTTTT          XXXXXXXXXX                       _RRRRRRRRRRRRRR             TTTTTT            TTTTTT
+' '       TTTTTT          XXXXXXXXXXX                      _RRRRR RRRRRRRRR            TTTTTT            TTTTTT
+' '       TTTTTT         XXXXXXXXXXXX                      _RRRRR   RRRRRRRR           TTTTTT            TTTTTT
+' '       TTTTTT         XXXXXXXXXXXXX                     _RRRRR    RRRRRRR           TTTTTT            TTTTTT
+' '       TTTTTT        XXXXXXX XXXXXXX                    _RRRRR     RRRRRRR          TTTTTT            TTTTTT
+' '       TTTTTT       XXXXXXX  XXXXXXX                    _RRRRR     RRRRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT       XXXXXXX   XXXXXXX                   _RRRRR      RRRRRRR         TTTTTT            TTTTTT
+' '       TTTTTT      TXXXXXX     XXXXXXX                  _RRRRR       RRRRRRR        TTTTTT            TTTTTT
+' '       TTTTTT     TTXXXXX      XXXXXXX                  _RRRRR       RRRRRRRR       TTTTTT            TTTTTT
+' '       TTTTTT     TTXXXXX       XXXXXXX                 _RRRRR        RRRRRRR       TTTTTT            TTTTTT
+' '
+' '
+' 
+' Sub TX_RTT()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("WI10:XF10")) > 0 Then
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WI10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").Value = ThisWorkbook.Sheets("sheet1").Range("WI10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-OMVFa98P0Yg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WJ10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").Value = ThisWorkbook.Sheets("sheet1").Range("WJ10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-dRjezxQktoz-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WK10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").Value = ThisWorkbook.Sheets("sheet1").Range("WK10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-zLbjm4E1NsG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WL10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").Value = ThisWorkbook.Sheets("sheet1").Range("WL10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-AG0milXShQM-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WM10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").Value = ThisWorkbook.Sheets("sheet1").Range("WM10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-QqlHrg6f0Sm-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WN10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").Value = ThisWorkbook.Sheets("sheet1").Range("WN10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-LyXZybq6Sjf-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WO10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").Value = ThisWorkbook.Sheets("sheet1").Range("WO10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-zqARzn2wVj5-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WP10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").Value = ThisWorkbook.Sheets("sheet1").Range("WP10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-Vi8sd7mvZW4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WQ10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").Value = ThisWorkbook.Sheets("sheet1").Range("WQ10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-hRq4baaUamW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WR10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").Value = ThisWorkbook.Sheets("sheet1").Range("WR10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-PEXIFVXGP9S-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WS10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").Value = ThisWorkbook.Sheets("sheet1").Range("WS10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-J8fGj3Iefbc-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WT10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").Value = ThisWorkbook.Sheets("sheet1").Range("WT10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-lR2zeQ9VfB8-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WU10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").Value = ThisWorkbook.Sheets("sheet1").Range("WU10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-GnpJeq2XENE-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WV10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").Value = ThisWorkbook.Sheets("sheet1").Range("WV10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-jjUGfPF0ObP-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WW10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").Value = ThisWorkbook.Sheets("sheet1").Range("WW10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-p1HABZs9ydt-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WX10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").Value = ThisWorkbook.Sheets("sheet1").Range("WX10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-tEMe0224zlP-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WY10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").Value = ThisWorkbook.Sheets("sheet1").Range("WY10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-LpnJL4zZxRH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("WZ10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").Value = ThisWorkbook.Sheets("sheet1").Range("WZ10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-NCnIv37EwU1-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XA10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").Value = ThisWorkbook.Sheets("sheet1").Range("XA10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-y9LP85d8t4b-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XB10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").Value = ThisWorkbook.Sheets("sheet1").Range("XB10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-YDzeLL6xf5o-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XC10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("XC10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-XcW5HWccYYZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XD10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").Value = ThisWorkbook.Sheets("sheet1").Range("XD10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-zouTxRQ0kXP-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XE10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").Value = ThisWorkbook.Sheets("sheet1").Range("XE10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-zUjkTTlva36-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XF10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").Focus
+' IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").Value = ThisWorkbook.Sheets("sheet1").Range("XF10")
+' IE.Document.GetElementByID("LF5i7HKmy1v-QwUdNwRA8Uc-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' 
+' 
+' 'Disaggregated by key population type
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("XG10:XK10")) > 0 Then
+' If ThisWorkbook.Sheets("sheet1").Range("XG10") > zeroControl Then
+' 'PWID
+' IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").Focus
+' IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").Value = ThisWorkbook.Sheets("sheet1").Range("XG10")
+' IE.Document.GetElementByID("plyJBtIGPTL-FyhQbdBMM1p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XH10") > zeroControl Then
+' 'MSM
+' IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").Focus
+' IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").Value = ThisWorkbook.Sheets("sheet1").Range("XH10")
+' IE.Document.GetElementByID("plyJBtIGPTL-wbJ9Nh2jqUG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XI10") > zeroControl Then
+' 'TG
+' IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").Focus
+' IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").Value = ThisWorkbook.Sheets("sheet1").Range("XI10")
+' IE.Document.GetElementByID("plyJBtIGPTL-fCiy8R7Dv9x-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XJ10") > zeroControl Then
+' 'FSW
+' IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").Focus
+' IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").Value = ThisWorkbook.Sheets("sheet1").Range("XJ10")
+' IE.Document.GetElementByID("plyJBtIGPTL-dUCNvz8ByrS-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XK10") > zeroControl Then
+' 'PRISON
+' IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").Focus
+' IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").Value = ThisWorkbook.Sheets("sheet1").Range("XK10")
+' IE.Document.GetElementByID("plyJBtIGPTL-VCEoYHLyTxk-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' 
+' End Sub
+' 
+' 
+' ' TTTTTTTTTTTTTTTTTTTXXXXX      XXXXXXX                  _MMMMMMM       MMMMMMMM   LLLLL
+' ' TTTTTTTTTTTTTTTTTTTXXXXXX    XXXXXXX                   _MMMMMMMM     MMMMMMMMM   LLLLL
+' ' TTTTTTTTTTTTTTTTTT XXXXXXX   XXXXXXX                   _MMMMMMMM     MMMMMMMMM   LLLLL
+' ' TTTTTTTTTTTTTTTTTT XXXXXXX  XXXXXXX                    _MMMMMMMM     MMMMMMMMM   LLLLL
+' '       TTTTTT        XXXXXXX XXXXXXX                    _MMMMMMMMM    MMMMMMMMM   LLLLL
+' '       TTTTTT         XXXXXXXXXXXXX                     _MMMMMMMMM   MMMMMMMMMM   LLLLL
+' '       TTTTTT         XXXXXXXXXXXX                      _MMMMMMMMM   MMMMMMMMMM   LLLLL
+' '       TTTTTT          XXXXXXXXXXX                      _MMMMMMMMM   MMMMMMMMMM   LLLLL
+' '       TTTTTT           XXXXXXXXX                       _MMMMMMMMMM  MMMMMMMMMM   LLLLL
+' '       TTTTTT           XXXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
+' '       TTTTTT            XXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
+' '       TTTTTT           XXXXXXXX                        _MMMMMMMMMM MMMMMMMMMMM   LLLLL
+' '       TTTTTT          XXXXXXXXXX                       _MMMMM MMMMMMMMMMMMMMMM   LLLLL
+' '       TTTTTT          XXXXXXXXXXX                      _MMMMM MMMMMMMMM MMMMMM   LLLLL
+' '       TTTTTT         XXXXXXXXXXXX                      _MMMMM MMMMMMMMM MMMMMM   LLLLL
+' '       TTTTTT         XXXXXXXXXXXXX                     _MMMMM MMMMMMMMM MMMMMM   LLLLL
+' '       TTTTTT        XXXXXXX XXXXXXX                    _MMMMM MMMMMMMMM MMMMMM   LLLLL
+' '       TTTTTT       XXXXXXX  XXXXXXX                    _MMMMM  MMMMMMM  MMMMMM   LLLLL
+' '       TTTTTT       XXXXXXX   XXXXXXX                   _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
+' '       TTTTTT      TXXXXXX     XXXXXXX                  _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
+' '       TTTTTT     TTXXXXX      XXXXXXX                  _MMMMM  MMMMMMM  MMMMMM   LLLLLLLLLLLLLLLL
+' '       TTTTTT     TTXXXXX       XXXXXXX                 _MMMMM   MMMMM   MMMMMM   LLLLLLLLLLLLLLLL
+' '
+' Sub TX_ML()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("XM10:YJ10")) > 0 Then
+' 'Died
+' If ThisWorkbook.Sheets("sheet1").Range("XM10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").Value = ThisWorkbook.Sheets("sheet1").Range("XM10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-RatVvjTJ4fW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XN10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").Value = ThisWorkbook.Sheets("sheet1").Range("XN10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-EcD0yQAv6kq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XO10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").Value = ThisWorkbook.Sheets("sheet1").Range("XO10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-SAazhVXMq1k-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XP10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("XP10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-zLxYKvkV3jz-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XQ10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").Value = ThisWorkbook.Sheets("sheet1").Range("XQ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-k2Gy2ENq4NA-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XR10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").Value = ThisWorkbook.Sheets("sheet1").Range("XR10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-b5e17ZsCGVP-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XS10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").Value = ThisWorkbook.Sheets("sheet1").Range("XS10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ay9Exyx7pQf-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XT10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").Value = ThisWorkbook.Sheets("sheet1").Range("XT10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ezt2wNTEk1R-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XU10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").Value = ThisWorkbook.Sheets("sheet1").Range("XU10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-tOnf3aDjXXn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XV10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").Value = ThisWorkbook.Sheets("sheet1").Range("XV10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-AJhfJC3pGa0-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XW10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").Value = ThisWorkbook.Sheets("sheet1").Range("XW10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-tMZpupX5WIf-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XX10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").Value = ThisWorkbook.Sheets("sheet1").Range("XX10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-eGJpmcZYtGE-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XY10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").Value = ThisWorkbook.Sheets("sheet1").Range("XY10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-NSLkzvAdhRw-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("XZ10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("XZ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-OSriJJaXtNJ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YA10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").Value = ThisWorkbook.Sheets("sheet1").Range("YA10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-k59QPOfcP3u-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YB10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").Value = ThisWorkbook.Sheets("sheet1").Range("YB10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-GsxMXvEa5Ql-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YC10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").Value = ThisWorkbook.Sheets("sheet1").Range("YC10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-BAV3b6n7mPv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YD10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").Value = ThisWorkbook.Sheets("sheet1").Range("YD10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-c97TTwhTzUh-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YE10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").Value = ThisWorkbook.Sheets("sheet1").Range("YE10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-lF8rCs1t0cW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YF10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").Value = ThisWorkbook.Sheets("sheet1").Range("YF10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-N5wGAwGdE8T-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YG10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").Value = ThisWorkbook.Sheets("sheet1").Range("YG10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-pGf2ML3SigH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YH10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").Value = ThisWorkbook.Sheets("sheet1").Range("YH10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-EEjtHVBGr2E-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YI10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").Value = ThisWorkbook.Sheets("sheet1").Range("YI10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-syeVn2eVjNh-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YJ10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").Value = ThisWorkbook.Sheets("sheet1").Range("YJ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-eXPqcMstrMu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 
+' End If
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("YK10:ZH10")) > 0 Then
+' 'Lost to Follow-Up After being on Treatment for < 3 months
+' If ThisWorkbook.Sheets("sheet1").Range("YK10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").Value = ThisWorkbook.Sheets("sheet1").Range("YK10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-JM0yA1v6vva-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YL10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").Value = ThisWorkbook.Sheets("sheet1").Range("YL10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-yOrK9FLook5-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YM10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("YM10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-TIdAM0BbcIN-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YN10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").Value = ThisWorkbook.Sheets("sheet1").Range("YN10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Q3QCFpTuON9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YO10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").Value = ThisWorkbook.Sheets("sheet1").Range("YO10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-iAlkU4D36A2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YP10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").Value = ThisWorkbook.Sheets("sheet1").Range("YP10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-h1teKDQrYZv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YQ10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").Value = ThisWorkbook.Sheets("sheet1").Range("YQ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-lPOdOm8qB56-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YR10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").Value = ThisWorkbook.Sheets("sheet1").Range("YR10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-CAqegtopONU-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YS10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").Value = ThisWorkbook.Sheets("sheet1").Range("YS10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-qWmfHASider-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YT10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").Value = ThisWorkbook.Sheets("sheet1").Range("YT10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-qB90d21QM0S-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YU10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").Value = ThisWorkbook.Sheets("sheet1").Range("YU10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-osVUhnpfrBx-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YV10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").Value = ThisWorkbook.Sheets("sheet1").Range("YV10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-WSsWxXHSUQd-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YW10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").Value = ThisWorkbook.Sheets("sheet1").Range("YW10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-hHMSsHNE7Ov-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YX10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").Value = ThisWorkbook.Sheets("sheet1").Range("YX10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-rM5Ckdelr1c-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YY10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").Value = ThisWorkbook.Sheets("sheet1").Range("YY10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-OomwzzpQ09G-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("YZ10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("YZ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-mwkpiAUKHEQ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZA10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZA10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-GSxJdBeZbf2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZB10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZB10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-e8LD3b5NYvH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZC10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZC10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-WWiLJt24pLu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZD10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZD10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-YrvxIzmxvpT-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZE10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZE10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-K5GeJ5R4kHf-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZF10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZF10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-rm4WmQXiu2I-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZG10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZG10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-UNYwGxDucY1-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZH10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZH10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-LM1TskaJ8rL-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 
+' End If
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("ZI10:AAF10")) > 0 Then
+' 
+' 'Lost to Follow-Up After being on Treatment for > 3 months
+' If ThisWorkbook.Sheets("sheet1").Range("ZI10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZI10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-ARBsrjIHZN5-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZJ10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZJ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-rccM5R72tHF-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZK10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZK10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-QVlkySgBdgD-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZL10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZL10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-oq8GBQWCJ5W-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZM10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZM10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-pn73jSw4Htv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZN10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZN10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-y4nxSRIyacT-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZO10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZO10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-zXnVdVZfcfv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZP10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZP10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ythd1r9SUX2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZQ10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZQ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-fmXSkERwgN3-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZR10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZR10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-M7hQF3EdMeJ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZS10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZS10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-qmYI4jxdSNK-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZT10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZT10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-FKO1O2wKujr-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZU10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZU10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-AhLz2IxjfwZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZV10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZV10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-fz7cmbK3Mdo-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZW10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZW10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-oFMaPp3YOAy-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZX10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZX10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-UMj0R6Br6UQ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZY10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZY10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-bULpx4GAuXv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ZZ10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").Value = ThisWorkbook.Sheets("sheet1").Range("ZZ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-on9uH6H3Yk9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAA10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAA10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-jr0rVfWl1RP-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAB10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAB10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-BCQyZzO2bJe-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAC10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAC10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-REi2VHAgsHF-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAD10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAD10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-pAdya4dQkZn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAE10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAE10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-WsMQcJpjFr5-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAF10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAF10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-d0IZ0gXHmjX-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 
+' End If
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AAG10:ABD10")) > 0 Then
+' 
+' 'Transferred Out
+' If ThisWorkbook.Sheets("sheet1").Range("AAG10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAG10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-rpjAwXPibLm-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAH10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAH10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-AWYFd7hY5Ad-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAI10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAI10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-izkWiUwD9ik-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAJ10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAJ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-JnJDcjUa9T4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAK10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAK10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Yeyi4MKHk9n-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAL10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAL10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-WqurwSIqEU7-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAM10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAM10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-wWCzAzpuLyG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAN10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAN10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-DkpU4cPkFvi-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAO10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAO10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-LhWBhUPo2pr-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAP10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAP10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-OidXeIspzhm-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAQ10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAQ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-YL8YhKVIt0J-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAR10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAR10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-kTb5xmUtyGw-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAS10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAS10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-PAw0s1Cg9wA-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAT10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAT10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-awWrQSsARco-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAU10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAU10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-xWfbpqXemE7-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAV10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAV10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-l7xtGidktnc-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAW10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAW10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Y3uCNvUiOrA-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAX10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAX10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-lA8vh3lAWYR-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAY10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAY10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-y5kX7AZ7mBg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AAZ10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AAZ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-sTzPBKgXXFo-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABA10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABA10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-vcFcgYJeJwq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABB10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABB10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-OUjsD0fPgIG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABC10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABC10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ce5ZLv98jW0-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABD10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABD10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-gpsG1vryF1J-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 
+' End If
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("ABE10:ACB10")) > 0 Then
+' 
+' 'Refused (Stopped) Treatment
+' If ThisWorkbook.Sheets("sheet1").Range("ABE10") > zeroControl Then
+' '<1,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABE10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-mTdH1Oa7oHR-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABF10") > zeroControl Then
+' '1-4,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABF10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-sGO5qC91U7G-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABG10") > zeroControl Then
+' '5-9,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABG10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-sgOwlczVC7c-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABH10") > zeroControl Then
+' '10-14,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABH10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-EvkKEbvkP1H-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABI10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABI10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-LEhDG4hHJPM-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABJ10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABJ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-jX13BNPu12p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABK10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABK10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Zpq9tFpwE7F-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABL10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABL10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-gHIXz1hAmxR-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABM10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABM10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-wdemCNRlJaT-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABN10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABN10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-L7j3koEncg8-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABO10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABO10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-TyhbDH7bH68-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABP10") > zeroControl Then
+' '50+,F
+' IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABP10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-jOZUwHSe9wV-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABQ10") > zeroControl Then
+' '<1,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABQ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-tKyqG7JOAXL-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABR10") > zeroControl Then
+' '1-4,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABR10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-nltMOkAV1FS-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABS10") > zeroControl Then
+' '5-9,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABS10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-RLxtYdau8ft-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABT10") > zeroControl Then
+' '10-14,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABT10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-xObCzHhyQS2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABU10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABU10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-CgnONHK2F0B-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABV10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABV10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-tWpjMYC3Q0h-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABW10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABW10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-TZuiCh50vFh-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABX10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABX10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-dfrkk62Fhen-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABY10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABY10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-Ru9wXpGLd5p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ABZ10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").Value = ThisWorkbook.Sheets("sheet1").Range("ABZ10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-V8sRJK35quK-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ACA10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACA10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-fm0b6BnCytd-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ACB10") > zeroControl Then
+' '50+,M
+' IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").Focus
+' IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ACB10")
+' IE.Document.GetElementByID("A5A8LKqJw4w-JA1xiCEiU5p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' End Sub
+' 
 ' PPPPPPPPP  PPMMMM   MMMMMM TTTTTTTTTTT  CCCCCCC    TTTTTTTTTTT        AAAAA     RRRRRRRRRR   TTTTTTTTT
 ' PPPPPPPPPP PPMMMM   MMMMMM TTTTTTTTTTT CCCCCCCCC   TTTTTTTTTTT        AAAAA     RRRRRRRRRRR  TTTTTTTTT
 ' PPPPPPPPPPPPPMMMM   MMMMMM TTTTTTTTTTTCCCCCCCCCCC  TTTTTTTTTTT       AAAAAA     RRRRRRRRRRR  TTTTTTTTT
@@ -8089,174 +8089,174 @@ End Sub
 ' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN  NNNNN  NEEEEEEEEEE  WWWWW   WWWWW
 ' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN  NNNNN  NEEEEEEEEEE  WWWWW   WWWWW
 ' PPPP       PPrr    rEEEEEEEEEE EPPP              NNN   NNNN  NEEEEEEEEEE  WWWWW   WWWWW
-Sub PrEP_NEW()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-If ThisWorkbook.Sheets("sheet1").Range("AJE10") > 0 Then
-
-If ThisWorkbook.Sheets("sheet1").Range("AJF10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJF10")
-IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJG10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJG10")
-IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJH10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJH10")
-IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJI10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJI10")
-IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJJ10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJJ10")
-IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJK10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJK10")
-IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJL10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJL10")
-IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJM10") > zeroControl Then
-'50,F
-IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJM10")
-IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJN10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJN10")
-IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJO10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJO10")
-IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJP10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJP10")
-IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJQ10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJQ10")
-IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJR10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJR10")
-IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJS10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJS10")
-IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJT10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJT10")
-IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJU10") > zeroControl Then
-'50,M
-IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Focus
-IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJU10")
-IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJV10") > zeroControl Then
-'PWID
-IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").Focus
-IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJV10")
-IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJW10") > zeroControl Then
-'MSM
-IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").Focus
-IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJW10")
-IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJX10") > zeroControl Then
-'TG
-IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").Focus
-IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJX10")
-IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AJY10") > zeroControl Then
-'FSW
-IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").Focus
-IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJY10")
-IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-
-End Sub
+' Sub PrEP_NEW()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' If ThisWorkbook.Sheets("sheet1").Range("AJE10") > 0 Then
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJF10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJF10")
+' IE.Document.GetElementByID("KNO4emPfF91-BYmlmGMcCWx-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJG10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJG10")
+' IE.Document.GetElementByID("KNO4emPfF91-zE5NFpGXDy4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJH10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJH10")
+' IE.Document.GetElementByID("KNO4emPfF91-u88hOHhmLuF-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJI10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJI10")
+' IE.Document.GetElementByID("KNO4emPfF91-tcJ9vZbCWcO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJJ10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJJ10")
+' IE.Document.GetElementByID("KNO4emPfF91-WghEsgfAUAb-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJK10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJK10")
+' IE.Document.GetElementByID("KNO4emPfF91-Ij7k6DBjI3i-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJL10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJL10")
+' IE.Document.GetElementByID("KNO4emPfF91-dIfXCJxd5bY-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJM10") > zeroControl Then
+' '50,F
+' IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJM10")
+' IE.Document.GetElementByID("KNO4emPfF91-xqiQnxlVCYm-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJN10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJN10")
+' IE.Document.GetElementByID("KNO4emPfF91-kQ58FETBxFn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJO10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJO10")
+' IE.Document.GetElementByID("KNO4emPfF91-jJifRzf2Z8j-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJP10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJP10")
+' IE.Document.GetElementByID("KNO4emPfF91-necuVZOR1HB-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJQ10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJQ10")
+' IE.Document.GetElementByID("KNO4emPfF91-HnDmWypXRdG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJR10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJR10")
+' IE.Document.GetElementByID("KNO4emPfF91-Sq9vathzQd9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJS10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJS10")
+' IE.Document.GetElementByID("KNO4emPfF91-f6m1joVHJgj-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJT10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJT10")
+' IE.Document.GetElementByID("KNO4emPfF91-efXnrOzWCGW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJU10") > zeroControl Then
+' '50,M
+' IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Focus
+' IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJU10")
+' IE.Document.GetElementByID("KNO4emPfF91-fSgFPhUpbWq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJV10") > zeroControl Then
+' 'PWID
+' IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").Focus
+' IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJV10")
+' IE.Document.GetElementByID("JoERp5gZ6o1-mkXXjV42FM9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJW10") > zeroControl Then
+' 'MSM
+' IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").Focus
+' IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJW10")
+' IE.Document.GetElementByID("JoERp5gZ6o1-X5WOZxTBU2j-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJX10") > zeroControl Then
+' 'TG
+' IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").Focus
+' IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJX10")
+' IE.Document.GetElementByID("JoERp5gZ6o1-EoZ7f4rkx2g-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AJY10") > zeroControl Then
+' 'FSW
+' IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").Focus
+' IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AJY10")
+' IE.Document.GetElementByID("JoERp5gZ6o1-hvgp9xnuUrx-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' 
+' End Sub
 
 'PPPPPPPPP          rEEEEEEEEEE EPPPPPPPP          CCCCCCC    CUUU   UUUU  URRRRRRRRR   RRRRRRRRRR
 'PPPPPPPPPP         rEEEEEEEEEE EPPPPPPPPP        CCCCCCCCC   CUUU   UUUU  URRRRRRRRRR  RRRRRRRRRRR
@@ -8271,199 +8271,199 @@ End Sub
 'PPPP       PPrr    rEEEEEEEEEE EPPP              CCCCCCCCCC  CUUUUUUUUUU  URRR  RRRRR  RRRR  RRRRR
 'PPPP       PPrr    rEEEEEEEEEE EPPP              CCCCCCCCCC   UUUUUUUUU   URRR   RRRRR RRRR   RRRRR
 'PPPP       PPrr    rEEEEEEEEEE EPPP               CCCCCCC      UUUUUUU    URRR    RRRR RRRR    RRRR
-Sub PrEP_CURR()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-If ThisWorkbook.Sheets("sheet1").Range("AKA10")>0 Then
-
-If ThisWorkbook.Sheets("sheet1").Range("AKB10") > zeroControl Then
-'15-19,F
-IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKB10")
-IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKC10") > zeroControl Then
-'20-24,F
-IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKC10")
-IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKD10") > zeroControl Then
-'25-29,F
-IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKD10")
-IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKE10") > zeroControl Then
-'30-34,F
-IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKE10")
-IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKF10") > zeroControl Then
-'35-39,F
-IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKF10")
-IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKG10") > zeroControl Then
-'40-44,F
-IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKG10")
-IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKH10") > zeroControl Then
-'45-49,F
-IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKH10")
-IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKI10") > zeroControl Then
-'50,F
-IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKI10")
-IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKJ10") > zeroControl Then
-'15-19,M
-IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKJ10")
-IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKK10") > zeroControl Then
-'20-24,M
-IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKK10")
-IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKL10") > zeroControl Then
-'25-29,M
-IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKL10")
-IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKM10") > zeroControl Then
-'30-34,M
-IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKM10")
-IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKN10") > zeroControl Then
-'35-39,M
-IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKN10")
-IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKO10") > zeroControl Then
-'40-44,M
-IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKO10")
-IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKP10") > zeroControl Then
-'45-49,M
-IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKP10")
-IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKQ10") > zeroControl Then
-'50,M
-IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Focus
-IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKQ10")
-IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKR10") > zeroControl Then
-'Positive
-IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Focus
-IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKR10")
-IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKS10") > zeroControl Then
-'Negative
-IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Focus
-IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKS10")
-IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKT10") > zeroControl Then
-'Three month
-IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Focus
-IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKT10")
-IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKU10") > zeroControl Then
-'PWID
-IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").Focus
-IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKU10")
-IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKV10") > zeroControl Then
-'MSM
-IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").Focus
-IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKV10")
-IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKW10") > zeroControl Then
-'TG
-IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").Focus
-IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKW10")
-IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AKX10") > zeroControl Then
-'FSW
-IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Focus
-IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKX10")
-IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-
-End Sub
-
+' Sub PrEP_CURR()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' If ThisWorkbook.Sheets("sheet1").Range("AKA10")>0 Then
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKB10") > zeroControl Then
+' '15-19,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKB10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-BYmlmGMcCWx-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKC10") > zeroControl Then
+' '20-24,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKC10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-zE5NFpGXDy4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKD10") > zeroControl Then
+' '25-29,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKD10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-u88hOHhmLuF-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKE10") > zeroControl Then
+' '30-34,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKE10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-tcJ9vZbCWcO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKF10") > zeroControl Then
+' '35-39,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKF10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-WghEsgfAUAb-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKG10") > zeroControl Then
+' '40-44,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKG10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-Ij7k6DBjI3i-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKH10") > zeroControl Then
+' '45-49,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKH10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-dIfXCJxd5bY-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKI10") > zeroControl Then
+' '50,F
+' IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKI10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-xqiQnxlVCYm-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKJ10") > zeroControl Then
+' '15-19,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKJ10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-kQ58FETBxFn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKK10") > zeroControl Then
+' '20-24,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKK10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-jJifRzf2Z8j-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKL10") > zeroControl Then
+' '25-29,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKL10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-necuVZOR1HB-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKM10") > zeroControl Then
+' '30-34,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKM10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-HnDmWypXRdG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKN10") > zeroControl Then
+' '35-39,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKN10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-Sq9vathzQd9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKO10") > zeroControl Then
+' '40-44,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKO10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-f6m1joVHJgj-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKP10") > zeroControl Then
+' '45-49,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKP10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-efXnrOzWCGW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKQ10") > zeroControl Then
+' '50,M
+' IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Focus
+' IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKQ10")
+' IE.Document.GetElementByID("x5H3nrR8BNW-fSgFPhUpbWq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKR10") > zeroControl Then
+' 'Positive
+' IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Focus
+' IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKR10")
+' IE.Document.GetElementByID("YJ29Pdq78W9-KZLKkTI9JDW-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKS10") > zeroControl Then
+' 'Negative
+' IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Focus
+' IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKS10")
+' IE.Document.GetElementByID("YJ29Pdq78W9-wk0iX1oD0k8-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKT10") > zeroControl Then
+' 'Three month
+' IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Focus
+' IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKT10")
+' IE.Document.GetElementByID("YJ29Pdq78W9-IYCY7by7MB6-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKU10") > zeroControl Then
+' 'PWID
+' IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").Focus
+' IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKU10")
+' IE.Document.GetElementByID("UEwNWt3chBv-mkXXjV42FM9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKV10") > zeroControl Then
+' 'MSM
+' IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").Focus
+' IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKV10")
+' IE.Document.GetElementByID("UEwNWt3chBv-X5WOZxTBU2j-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKW10") > zeroControl Then
+' 'TG
+' IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").Focus
+' IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKW10")
+' IE.Document.GetElementByID("UEwNWt3chBv-EoZ7f4rkx2g-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AKX10") > zeroControl Then
+' 'FSW
+' IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Focus
+' IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").Value = ThisWorkbook.Sheets("sheet1").Range("AKX10")
+' IE.Document.GetElementByID("UEwNWt3chBv-hvgp9xnuUrx-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' 
+' End Sub
+' 
 'TTTTTTTTTTTBBBBBBBBBB        PPPPPPPPP   PRRRRRRRRR   EEEEEEEEEEEEEVV    VVVV
 'TTTTTTTTTTTBBBBBBBBBBB       PPPPPPPPPP  PRRRRRRRRRR  EEEEEEEEEEEEEVV    VVVV
 'TTTTTTTTTTTBBBBBBBBBBB       PPPPPPPPPPP PRRRRRRRRRR  EEEEEEEEEEEEEVV    VVVV
@@ -8477,922 +8477,922 @@ End Sub
 '   TTTT    BBBBBBBBBBBB      PPPP        PRRR  RRRRR  EEEEEEEEEEE   VVVVVV
 '   TTTT    BBBBBBBBBBB       PPPP        PRRR   RRRRR EEEEEEEEEEE   VVVVVV
 '   TTTT    BBBBBBBBBB        PPPP        PRRR    RRRR EEEEEEEEEEE   VVVVV
-Sub TB_PREV()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-If ThisWorkbook.Sheets("sheet1").Range("AKZ10") > 0 Then
-'Numerator
-If ThisWorkbook.Sheets("sheet1").Range("ALA10") > zeroControl Then
-'IPT, Newly, <15, F
-IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALA10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALB10") > zeroControl Then
-'IPT, Newly, 15+, F
-IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALB10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALC10") > zeroControl Then
-'IPT, Newly, <15, M
-IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALC10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALD10") > zeroControl Then
-'IPT, Newly, 15+, M
-IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALD10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALE10") > zeroControl Then
-'IPT, Already, <15, F
-IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALE10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALF10") > zeroControl Then
-'IPT, Already, 15+, F
-IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALF10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALG10") > zeroControl Then
-'IPT, Already, <15, M
-IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALG10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALH10") > zeroControl Then
-'IPT, Already, 15+, M
-IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").Focus
-IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALH10")
-IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-If ThisWorkbook.Sheets("sheet1").Range("ALQ10") > 0 Then
-'Denominator
-If ThisWorkbook.Sheets("sheet1").Range("ALR10") > zeroControl Then
-'IPT, Newly, <15, F
-IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALR10")
-IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALS10") > zeroControl Then
-'IPT, Newly, 15+, F
-IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALS10")
-IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALT10") > zeroControl Then
-'IPT, Newly, <15, M
-IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALT10")
-IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALU10") > zeroControl Then
-'IPT, Newly, 15+, M
-IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALU10")
-IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALV10") > zeroControl Then
-'IPT, Already, <15, F
-IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALV10")
-IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALW10") > zeroControl Then
-'IPT, Already, 15+, F
-IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALW10")
-IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALX10") > zeroControl Then
-'IPT, Already, <15, M
-IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALX10")
-IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ALY10") > zeroControl Then
-'IPT, Already, 15+, M
-IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").Focus
-IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALY10")
-IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-End Sub
-
-'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA           SSSSSSS      CCCCCCC    RRRRRRRRRR   NNNN   NNNN
-'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          SSSSSSSSS    CCCCCCCCC   RRRRRRRRRRR  NNNNN  NNNN
-'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          SSSSSSSSSS  CCCCCCCCCCC  RRRRRRRRRRR  NNNNN  NNNN
-'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA         SSSS  SSSS  CCCC   CCCCC RRRR   RRRRR NNNNNN NNNN
-' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA         SSSS       SCCC     CCC  RRRR   RRRRR NNNNNN NNNN
-' CCCC            XXXXXX   XCCC           AAAAAAAA         SSSSSSS    SCCC          RRRRRRRRRRR  NNNNNNNNNNN
-' CCCC            XXXXX    XCCC           AAAA AAAA         SSSSSSSSS SCCC          RRRRRRRRRRR  NNNNNNNNNNN
-' CCCC            XXXXXX   XCCC          AAAAAAAAAA           SSSSSSS SCCC          RRRRRRRR     NNNNNNNNNNN
-' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA             SSSSSSCCC     CCC  RRRR RRRR    NNNNNNNNNNN
-'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA       SSS    SSSS CCCC   CCCCC RRRR  RRRR   NNNN NNNNNN
-'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA       SSSSSSSSSSS CCCCCCCCCCC  RRRR  RRRRR  NNNN  NNNNN
-'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA      SSSSSSSSSS   CCCCCCCCCC  RRRR   RRRRR NNNN  NNNNN
-'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA       SSSSSSSS     CCCCCCC    RRRR    RRRR NNNN   NNNN
-Sub CXCA_SCRN()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-Application.Wait Now + TimeValue("00:00:03")
-If ThisWorkbook.Sheets("sheet1").Range("AMH10") > 0 Then
-'Negative
-If ThisWorkbook.Sheets("sheet1").Range("AMI10") > zeroControl Then
-'15-19
-IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMI10")
-IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMJ10") > zeroControl Then
-'20-24
-IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMJ10")
-IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMK10") > zeroControl Then
-'25-29
-IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMK10")
-IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AML10") > zeroControl Then
-'30-34
-IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AML10")
-IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMM10") > zeroControl Then
-'35-39
-IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMM10")
-IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMN10") > zeroControl Then
-'40-44
-IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMN10")
-IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMO10") > zeroControl Then
-'45-49
-IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMO10")
-IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMP10") > zeroControl Then
-'50+
-IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMP10")
-IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMQ10") > zeroControl Then
-'Positive
-'15-19
-IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMQ10")
-IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMR10") > zeroControl Then
-'20-24
-IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMR10")
-IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMS10") > zeroControl Then
-'25-29
-IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMS10")
-IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMT10") > zeroControl Then
-'30-34
-IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMT10")
-IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMU10") > zeroControl Then
-'35-39
-IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMU10")
-IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMV10") > zeroControl Then
-'40-44
-IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMV10")
-IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMW10") > zeroControl Then
-'45-49
-IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMW10")
-IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMX10") > zeroControl Then
-'50+
-IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMX10")
-IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMY10") > zeroControl Then
-'Suspected
-'15-19
-IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMY10")
-IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AMZ10") > zeroControl Then
-'20-24
-IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMZ10")
-IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANA10") > zeroControl Then
-'25-29
-IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANA10")
-IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANB10") > zeroControl Then
-'30-34
-IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANB10")
-IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANC10") > zeroControl Then
-'35-39
-IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANC10")
-IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AND10") > zeroControl Then
-'40-44
-IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AND10")
-IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANE10") > zeroControl Then
-'45-49
-IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANE10")
-IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANF10") > zeroControl Then
-'50+
-IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Focus
-IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANF10")
-IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-End Sub
-
-' TTTTTTTTTTTXXXX  XXXXX       TTTTTTTTTTBBBBBBBBBB
-' TTTTTTTTTTTXXXX  XXXX        TTTTTTTTTTBBBBBBBBBBB
-' TTTTTTTTTTTXXXXXXXXXX        TTTTTTTTTTBBBBBBBBBBB
-'    TTTT     XXXXXXXX           TTTT    BBBB   BBBB
-'    TTTT      XXXXXX            TTTT    BBBB   BBBB
-'    TTTT      XXXXXX            TTTT    BBBBBBBBBBB
-'    TTTT      XXXXX             TTTT    BBBBBBBBBB
-'    TTTT      XXXXXX            TTTT    BBBBBBBBBBB
-'    TTTT     XXXXXXXX           TTTT    BBBB    BBB
-'    TTTT     XXXXXXXX           TTTT    BBBB    BBB
-'    TTTT    XXXX XXXXX          TTTT    BBBBBBBBBBB
-'    TTTT   TXXXX  XXXXX         TTTT    BBBBBBBBBBB
-'    TTTT   TXXX    XXXX         TTTT    BBBBBBBBBB
-Sub TX_TB()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-If ThisWorkbook.Sheets("sheet1").Range("ANG10") > 0 Then
-'Numerator
-If ThisWorkbook.Sheets("sheet1").Range("ANH10") > zeroControl Then
-'New,F,<15
-IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANH10")
-IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANI10") > zeroControl Then
-'New,F,15+
-IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANI10")
-IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANJ10") > zeroControl Then
-'New,M,<15
-IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANJ10")
-IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANK10") > zeroControl Then
-'New,M, 15+
-IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANK10")
-IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANL10") > zeroControl Then
-'Already,F,<15
-IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANL10")
-IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANM10") > zeroControl Then
-'Already,F,15+
-IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANM10")
-IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANN10") > zeroControl Then
-'Already,M,<15
-IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANN10")
-IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANO10") > zeroControl Then
-'Already,M,<15
-IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Focus
-IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANO10")
-IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-If ThisWorkbook.Sheets("sheet1").Range("ANP10") > 0 Then
-'Denominator
-If ThisWorkbook.Sheets("sheet1").Range("ANQ10") > zeroControl Then
-'SP, Newly, <15, F
-IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANQ10")
-IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANR10") > zeroControl Then
-'SP, Newly, 15+, F
-IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANR10")
-IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANS10") > zeroControl Then
-'SP, Newly, <15, M
-IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANS10")
-IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANT10") > zeroControl Then
-'SP, Newly, 15+, M
-IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANT10")
-IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANU10") > zeroControl Then
-'SP, Already, <15, F
-IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANU10")
-IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANV10") > zeroControl Then
-'SP, Already, 15+, F
-IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANV10")
-IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANW10") > zeroControl Then
-'SP, Already, <15, M
-IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANW10")
-IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANX10") > zeroControl Then
-'SP, Already, 15+, M
-IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANX10")
-IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANY10") > zeroControl Then
-'NP, Newly, <15, F
-IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANY10")
-IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("ANZ10") > zeroControl Then
-'NP, Newly, 15+, F
-IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANZ10")
-IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOA10") > zeroControl Then
-'NP, Newly, <15, M
-IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOA10")
-IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOB10") > zeroControl Then
-'NP, Newly, 15+, M
-IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOB10")
-IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOC10") > zeroControl Then
-'NP, Already, <15, F
-IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOC10")
-IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOD10") > zeroControl Then
-'NP, Already, 15+, F
-IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOD10")
-IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOE10") > zeroControl Then
-'NP, Already, <15, M
-IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOE10")
-IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOF10") > zeroControl Then
-'NP, Already, 15+, M
-IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Focus
-IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOF10")
-IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOG10") > zeroControl Then
-'Specimen Sent
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Focus
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOG10")
-IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOH10") > zeroControl Then
-'Smear
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOH10")
-IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOI10") > zeroControl Then
-'GeneXpert
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOI10")
-IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOJ10") > zeroControl Then
-'Other
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Focus
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOJ10")
-IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOK10") > zeroControl Then
-'Result Returned
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Focus
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOK10")
-IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-End Sub
-
-'    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA          TTTTTTTTTTXXXXX  XXXXX
-'   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          TTTTTTTTTTXXXXX  XXXX
-'  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          TTTTTTTTTTXXXXXXXXXXX
-'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA            TTTT     XXXXXXXX
-' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA            TTTT      XXXXXX
-' CCCC            XXXXXX   XCCC           AAAAAAAA            TTTT      XXXXXX
-' CCCC            XXXXX    XCCC           AAAA AAAA           TTTT      XXXXX
-' CCCC            XXXXXX   XCCC          AAAAAAAAAA           TTTT      XXXXXX
-' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA          TTTT     XXXXXXXX
-'  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA          TTTT     XXXXXXXX
-'  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA          TTTT    XXXX XXXXX
-'   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA         TTTT   XXXXX  XXXXX
-'    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA         TTTT   XXXX    XXXX
-Sub CXCA_TX()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-
-If ThisWorkbook.Sheets("sheet1").Range("AOL10") > 0 Then
-'Cervical Cancer screen: Cryotherapy
-If ThisWorkbook.Sheets("sheet1").Range("AOM10") > zeroControl Then
-'15-19
-IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOM10")
-IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AON10") > zeroControl Then
-'20-24
-IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AON10")
-IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOO10") > zeroControl Then
-'25-29
-IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOO10")
-IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOP10") > zeroControl Then
-'30-34
-IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOP10")
-IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOQ10") > zeroControl Then
-'35-39
-IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOQ10")
-IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOR10") > zeroControl Then
-'40-44
-IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOR10")
-IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOS10") > zeroControl Then
-'45-49
-IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOS10")
-IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOT10") > zeroControl Then
-'50+
-IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Focus
-IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOT10")
-IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-End Sub
-
-'...SSSSSSS......CCCCCCC.................AAAAA.....RRRRRRRRRR.RRVVV....VVVVVDDDDDDDDD...DIII...SSSSSSS...SPPPPPPPPP...
-'..SSSSSSSSS....CCCCCCCCC................AAAAA.....RRRRRRRRRRR.RVVV....VVVVVDDDDDDDDDD..DIII..SSSSSSSSS..SPPPPPPPPPP..
-'..SSSSSSSSSS..CCCCCCCCCCC..............AAAAAA.....RRRRRRRRRRR.RVVV...VVVVVVDDDDDDDDDDD.DIII.ISSSSSSSSSS.SPPPPPPPPPP..
-'.SSSSS..SSSS..CCCC...CCCCC.............AAAAAAA....RRRR...RRRRRRVVVV..VVVV.VDDD....DDDD.DIII.ISSS...SSSS.SPPP....PPP..
-'.SSSSS.......SCCC.....CCC.............AAAAAAAA....RRRR...RRRRR.VVVV..VVVV.VDDD....DDDDDDIII.ISSSS.......SPPP....PPP..
-'..SSSSSSS....SCCC.....................AAAAAAAA....RRRRRRRRRRR..VVVV..VVVV.VDDD.....DDDDDIII..SSSSSSS....SPPPPPPPPPP..
-'...SSSSSSSSS.SCCC.....................AAAA.AAAA...RRRRRRRRRRR..VVVV.VVVV..VDDD.....DDDDDIII...SSSSSSSS..SPPPPPPPPPP..
-'.....SSSSSSS.SCCC....................AAAAAAAAAA...RRRRRRRR......VVVVVVVV..VDDD.....DDDDDIII.....SSSSSSS.SPPPPPPPPP...
-'........SSSSSSCCC.....CCC............AAAAAAAAAAA..RRRR.RRRR.....VVVVVVVV..VDDD....DDDDDDIII........SSSSSSPPP.........
-'.SSSS....SSSS.CCCC...CCCCC...........AAAAAAAAAAA..RRRR..RRRR....VVVVVVV...VDDD....DDDD.DIII.ISSS...SSSSSSPPP.........
-'.SSSSSSSSSSSS.CCCCCCCCCCC..........._AAA....AAAA..RRRR..RRRRR....VVVVVV...VDDDDDDDDDDD.DIII.ISSSSSSSSSS.SPPP.........
-'..SSSSSSSSSS...CCCCCCCCCC..........._AAA.....AAAA.RRRR...RRRRR...VVVVVV...VDDDDDDDDDD..DIII..SSSSSSSSSS.SPPP.........
-'...SSSSSSSS.....CCCCCCC............__AAA.....AAAA.RRRR....RRRR...VVVVV....VDDDDDDDDD...DIII...SSSSSSS...SPPP.........
-Sub SC_ARVDISP()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AOU10:APE10")) > 0 Then
-'Disaggregated by Drug Categories
-'TLD
-If ThisWorkbook.Sheets("sheet1").Range("AOU10") > zeroControl Then
-'<TLD 30-count bottles
-IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOU10")
-IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOV10") > zeroControl Then
-'TLD 90-count bottles
-IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOV10")
-IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOW10") > zeroControl Then
-'TLD 180-count bottles
-IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOW10")
-IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-'TLE
-If ThisWorkbook.Sheets("sheet1").Range("AOX10") > zeroControl Then
-'TLE/400 30-count bottles
-IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOX10")
-IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOY10") > zeroControl Then
-'TLE/400 90-count bottles
-IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOY10")
-IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("AOZ10") > zeroControl Then
-'TLE 600/TEE bottles
-IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOZ10")
-IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'LPV
-If ThisWorkbook.Sheets("sheet1").Range("APA10") > zeroControl Then
-'LPV/r 40/10 (Pediatrics) bottles
-IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").Value = ThisWorkbook.Sheets("sheet1").Range("APA10")
-IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'NVP
-If ThisWorkbook.Sheets("sheet1").Range("APB10") > zeroControl Then
-'NVP (Adult) bottles
-IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").Value = ThisWorkbook.Sheets("sheet1").Range("APB10")
-IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-If ThisWorkbook.Sheets("sheet1").Range("APC10") > zeroControl Then
-'NVP (Pediatric) bottles
-IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").Value = ThisWorkbook.Sheets("sheet1").Range("APC10")
-IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'Other
-If ThisWorkbook.Sheets("sheet1").Range("APD10") > zeroControl Then
-'Other (Adult) bottles
-IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").Value = ThisWorkbook.Sheets("sheet1").Range("APD10")
-IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APE10") > zeroControl Then
-'Other (Pediatric) bottles
-IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").Focus
-IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").Value = ThisWorkbook.Sheets("sheet1").Range("APE10")
-IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-End If
-
-End Sub
-
-'...SSSSSSS......CCCCCCC................CCCCCCC....UUUU...UUUU..RRRRRRRRRR...RRRRRRRRRR....
-'..SSSSSSSSS....CCCCCCCCC..............CCCCCCCCC...UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
-'..SSSSSSSSSS..CCCCCCCCCCC............CCCCCCCCCCC..UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
-'.SSSSS..SSSS..CCCC...CCCCC...........CCCC...CCCCC.UUUU...UUUU..RRRR...RRRRR.RRRR...RRRRR..
-'.SSSSS.......SCCC.....CCC..........._CCC.....CCC..UUUU...UUUU..RRRR...RRRRR.RRRR...RRRRR..
-'..SSSSSSS....SCCC..................._CCC..........UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
-'...SSSSSSSSS.SCCC..................._CCC..........UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
-'.....SSSSSSS.SCCC..................._CCC..........UUUU...UUUU..RRRRRRRR.....RRRRRRRR......
-'........SSSSSSCCC.....CCC..........._CCC.....CCC..UUUU...UUUU..RRRR.RRRR....RRRR.RRRR.....
-'.SSSS....SSSS.CCCC...CCCCC...........CCCC...CCCCC.UUUU...UUUU..RRRR..RRRR...RRRR..RRRR....
-'.SSSSSSSSSSSS.CCCCCCCCCCC............CCCCCCCCCCC..UUUUUUUUUUU..RRRR..RRRRR..RRRR..RRRRR...
-'..SSSSSSSSSS...CCCCCCCCCC.............CCCCCCCCCC...UUUUUUUUU...RRRR...RRRRR.RRRR...RRRRR..
-'...SSSSSSSS.....CCCCCCC................CCCCCCC......UUUUUUU....RRRR....RRRR.RRRR....RRRR..
-Sub SC_CURR()
-Set evt = IE.Document.createEvent("HTMLEvents")
-evt.initEvent "change", True, False
-
-If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("APF10:APP10")) > 0 Then
-'Disaggregated by Drug Categories
-'TLD
-If ThisWorkbook.Sheets("sheet1").Range("APF10") > zeroControl Then
-'<TLD 30-count bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").Value = ThisWorkbook.Sheets("sheet1").Range("APF10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APG10") > zeroControl Then
-'TLD 90-count bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("APG10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APH10") > zeroControl Then
-'TLD 180-count bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("APH10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-'TLE
-If ThisWorkbook.Sheets("sheet1").Range("API10") > zeroControl Then
-'TLE/400 30-count bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").Value = ThisWorkbook.Sheets("sheet1").Range("API10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APJ10") > zeroControl Then
-'TLE/400 90-count bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").Value = ThisWorkbook.Sheets("sheet1").Range("APJ10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APK10") > zeroControl Then
-'TLE 600/TEE bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("APK10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'LPV
-If ThisWorkbook.Sheets("sheet1").Range("APL10") > zeroControl Then
-'LPV/r 40/10 (Pediatrics) bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").Value = ThisWorkbook.Sheets("sheet1").Range("APL10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'NVP
-If ThisWorkbook.Sheets("sheet1").Range("APM10") > zeroControl Then
-'NVP (Adult) bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").Value = ThisWorkbook.Sheets("sheet1").Range("APM10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-If ThisWorkbook.Sheets("sheet1").Range("APN10") > zeroControl Then
-'NVP (Pediatric) bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").Value = ThisWorkbook.Sheets("sheet1").Range("APN10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-'Other
-If ThisWorkbook.Sheets("sheet1").Range("APO10") > zeroControl Then
-'Other (Adult) bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").Value = ThisWorkbook.Sheets("sheet1").Range("APO10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-
-If ThisWorkbook.Sheets("sheet1").Range("APP10") > zeroControl Then
-'Other (Pediatric) bottles
-IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").Focus
-IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").Value = ThisWorkbook.Sheets("sheet1").Range("APP10")
-IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").dispatchEvent evt
-Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
-End If
-End If
-
-End Sub
-
+' Sub TB_PREV()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' If ThisWorkbook.Sheets("sheet1").Range("AKZ10") > 0 Then
+' 'Numerator
+' If ThisWorkbook.Sheets("sheet1").Range("ALA10") > zeroControl Then
+' 'IPT, Newly, <15, F
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALA10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ptrqjblDpVl-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALB10") > zeroControl Then
+' 'IPT, Newly, 15+, F
+' IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALB10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-hcF36Hpaxmu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALC10") > zeroControl Then
+' 'IPT, Newly, <15, M
+' IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALC10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-EP6ShhD5ntH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALD10") > zeroControl Then
+' 'IPT, Newly, 15+, M
+' IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALD10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-b2lYKJk1pWg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALE10") > zeroControl Then
+' 'IPT, Already, <15, F
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALE10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-ujjzYH3AbhZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALF10") > zeroControl Then
+' 'IPT, Already, 15+, F
+' IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALF10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-IKLIV8BEfT2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALG10") > zeroControl Then
+' 'IPT, Already, <15, M
+' IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALG10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-Cqb6VN74EwO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALH10") > zeroControl Then
+' 'IPT, Already, 15+, M
+' IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").Focus
+' IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALH10")
+' IE.Document.GetElementByID("WdsmrPZ1KFo-TWPXb0rvc3p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' If ThisWorkbook.Sheets("sheet1").Range("ALQ10") > 0 Then
+' 'Denominator
+' If ThisWorkbook.Sheets("sheet1").Range("ALR10") > zeroControl Then
+' 'IPT, Newly, <15, F
+' IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALR10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-ptrqjblDpVl-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALS10") > zeroControl Then
+' 'IPT, Newly, 15+, F
+' IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALS10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-hcF36Hpaxmu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALT10") > zeroControl Then
+' 'IPT, Newly, <15, M
+' IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALT10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-EP6ShhD5ntH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALU10") > zeroControl Then
+' 'IPT, Newly, 15+, M
+' IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALU10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-b2lYKJk1pWg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALV10") > zeroControl Then
+' 'IPT, Already, <15, F
+' IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALV10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-ujjzYH3AbhZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALW10") > zeroControl Then
+' 'IPT, Already, 15+, F
+' IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALW10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-IKLIV8BEfT2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALX10") > zeroControl Then
+' 'IPT, Already, <15, M
+' IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALX10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-Cqb6VN74EwO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ALY10") > zeroControl Then
+' 'IPT, Already, 15+, M
+' IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").Focus
+' IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ALY10")
+' IE.Document.GetElementByID("wx9D2px9nQ7-TWPXb0rvc3p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' End Sub
+' 
+' '    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA           SSSSSSS      CCCCCCC    RRRRRRRRRR   NNNN   NNNN
+' '   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          SSSSSSSSS    CCCCCCCCC   RRRRRRRRRRR  NNNNN  NNNN
+' '  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          SSSSSSSSSS  CCCCCCCCCCC  RRRRRRRRRRR  NNNNN  NNNN
+' '  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA         SSSS  SSSS  CCCC   CCCCC RRRR   RRRRR NNNNNN NNNN
+' ' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA         SSSS       SCCC     CCC  RRRR   RRRRR NNNNNN NNNN
+' ' CCCC            XXXXXX   XCCC           AAAAAAAA         SSSSSSS    SCCC          RRRRRRRRRRR  NNNNNNNNNNN
+' ' CCCC            XXXXX    XCCC           AAAA AAAA         SSSSSSSSS SCCC          RRRRRRRRRRR  NNNNNNNNNNN
+' ' CCCC            XXXXXX   XCCC          AAAAAAAAAA           SSSSSSS SCCC          RRRRRRRR     NNNNNNNNNNN
+' ' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA             SSSSSSCCC     CCC  RRRR RRRR    NNNNNNNNNNN
+' '  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA       SSS    SSSS CCCC   CCCCC RRRR  RRRR   NNNN NNNNNN
+' '  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA       SSSSSSSSSSS CCCCCCCCCCC  RRRR  RRRRR  NNNN  NNNNN
+' '   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA      SSSSSSSSSS   CCCCCCCCCC  RRRR   RRRRR NNNN  NNNNN
+' '    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA       SSSSSSSS     CCCCCCC    RRRR    RRRR NNNN   NNNN
+' Sub CXCA_SCRN()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' Application.Wait Now + TimeValue("00:00:03")
+' If ThisWorkbook.Sheets("sheet1").Range("AMH10") > 0 Then
+' 'Negative
+' If ThisWorkbook.Sheets("sheet1").Range("AMI10") > zeroControl Then
+' '15-19
+' IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMI10")
+' IE.Document.GetElementByID("XboLlTkc4Av-dh4TQ68p2SC-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMJ10") > zeroControl Then
+' '20-24
+' IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMJ10")
+' IE.Document.GetElementByID("XboLlTkc4Av-pdCeAB4EYYM-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMK10") > zeroControl Then
+' '25-29
+' IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMK10")
+' IE.Document.GetElementByID("XboLlTkc4Av-qgGxi9db8sQ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AML10") > zeroControl Then
+' '30-34
+' IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AML10")
+' IE.Document.GetElementByID("XboLlTkc4Av-ZLqwxAM0rDn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMM10") > zeroControl Then
+' '35-39
+' IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMM10")
+' IE.Document.GetElementByID("XboLlTkc4Av-k6PpW7YsDek-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMN10") > zeroControl Then
+' '40-44
+' IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMN10")
+' IE.Document.GetElementByID("XboLlTkc4Av-Rs8GH9wo2Iq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMO10") > zeroControl Then
+' '45-49
+' IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMO10")
+' IE.Document.GetElementByID("XboLlTkc4Av-dyxvzwmNPGZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMP10") > zeroControl Then
+' '50+
+' IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMP10")
+' IE.Document.GetElementByID("XboLlTkc4Av-dr2VUvtgDGn-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMQ10") > zeroControl Then
+' 'Positive
+' '15-19
+' IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMQ10")
+' IE.Document.GetElementByID("XboLlTkc4Av-fJ4uotAMsvK-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMR10") > zeroControl Then
+' '20-24
+' IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMR10")
+' IE.Document.GetElementByID("XboLlTkc4Av-HMzo64LcweA-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMS10") > zeroControl Then
+' '25-29
+' IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMS10")
+' IE.Document.GetElementByID("XboLlTkc4Av-vW2cAkyRE1o-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMT10") > zeroControl Then
+' '30-34
+' IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMT10")
+' IE.Document.GetElementByID("XboLlTkc4Av-O7xahbUykIN-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMU10") > zeroControl Then
+' '35-39
+' IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMU10")
+' IE.Document.GetElementByID("XboLlTkc4Av-t30vaBv4cPu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMV10") > zeroControl Then
+' '40-44
+' IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMV10")
+' IE.Document.GetElementByID("XboLlTkc4Av-lGLhiwNxWOk-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMW10") > zeroControl Then
+' '45-49
+' IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMW10")
+' IE.Document.GetElementByID("XboLlTkc4Av-TSVq2SiVSqr-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMX10") > zeroControl Then
+' '50+
+' IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMX10")
+' IE.Document.GetElementByID("XboLlTkc4Av-SXr2dJIXau2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMY10") > zeroControl Then
+' 'Suspected
+' '15-19
+' IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMY10")
+' IE.Document.GetElementByID("XboLlTkc4Av-nI9rG3vPWQz-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AMZ10") > zeroControl Then
+' '20-24
+' IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").Value = ThisWorkbook.Sheets("sheet1").Range("AMZ10")
+' IE.Document.GetElementByID("XboLlTkc4Av-bUHsLsQL80m-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANA10") > zeroControl Then
+' '25-29
+' IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANA10")
+' IE.Document.GetElementByID("XboLlTkc4Av-sngMFN7RcpA-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANB10") > zeroControl Then
+' '30-34
+' IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANB10")
+' IE.Document.GetElementByID("XboLlTkc4Av-nFHijHYOiFf-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANC10") > zeroControl Then
+' '35-39
+' IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANC10")
+' IE.Document.GetElementByID("XboLlTkc4Av-E37hIruafwo-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AND10") > zeroControl Then
+' '40-44
+' IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").Value = ThisWorkbook.Sheets("sheet1").Range("AND10")
+' IE.Document.GetElementByID("XboLlTkc4Av-bbH8Y4ejXSr-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANE10") > zeroControl Then
+' '45-49
+' IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANE10")
+' IE.Document.GetElementByID("XboLlTkc4Av-B5fJ4gs57Jz-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANF10") > zeroControl Then
+' '50+
+' IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Focus
+' IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANF10")
+' IE.Document.GetElementByID("XboLlTkc4Av-GGSHmwiOMQX-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' End Sub
+' 
+' ' TTTTTTTTTTTXXXX  XXXXX       TTTTTTTTTTBBBBBBBBBB
+' ' TTTTTTTTTTTXXXX  XXXX        TTTTTTTTTTBBBBBBBBBBB
+' ' TTTTTTTTTTTXXXXXXXXXX        TTTTTTTTTTBBBBBBBBBBB
+' '    TTTT     XXXXXXXX           TTTT    BBBB   BBBB
+' '    TTTT      XXXXXX            TTTT    BBBB   BBBB
+' '    TTTT      XXXXXX            TTTT    BBBBBBBBBBB
+' '    TTTT      XXXXX             TTTT    BBBBBBBBBB
+' '    TTTT      XXXXXX            TTTT    BBBBBBBBBBB
+' '    TTTT     XXXXXXXX           TTTT    BBBB    BBB
+' '    TTTT     XXXXXXXX           TTTT    BBBB    BBB
+' '    TTTT    XXXX XXXXX          TTTT    BBBBBBBBBBB
+' '    TTTT   TXXXX  XXXXX         TTTT    BBBBBBBBBBB
+' '    TTTT   TXXX    XXXX         TTTT    BBBBBBBBBB
+' Sub TX_TB()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' If ThisWorkbook.Sheets("sheet1").Range("ANG10") > 0 Then
+' 'Numerator
+' If ThisWorkbook.Sheets("sheet1").Range("ANH10") > zeroControl Then
+' 'New,F,<15
+' IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANH10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-ptrqjblDpVl-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANI10") > zeroControl Then
+' 'New,F,15+
+' IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANI10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-hcF36Hpaxmu-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANJ10") > zeroControl Then
+' 'New,M,<15
+' IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANJ10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-EP6ShhD5ntH-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANK10") > zeroControl Then
+' 'New,M, 15+
+' IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANK10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-b2lYKJk1pWg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANL10") > zeroControl Then
+' 'Already,F,<15
+' IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANL10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-ujjzYH3AbhZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANM10") > zeroControl Then
+' 'Already,F,15+
+' IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANM10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-IKLIV8BEfT2-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANN10") > zeroControl Then
+' 'Already,M,<15
+' IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANN10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-Cqb6VN74EwO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANO10") > zeroControl Then
+' 'Already,M,<15
+' IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Focus
+' IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANO10")
+' IE.Document.GetElementByID("DHhB2W8z4k6-TWPXb0rvc3p-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' If ThisWorkbook.Sheets("sheet1").Range("ANP10") > 0 Then
+' 'Denominator
+' If ThisWorkbook.Sheets("sheet1").Range("ANQ10") > zeroControl Then
+' 'SP, Newly, <15, F
+' IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANQ10")
+' IE.Document.GetElementByID("YVqdD78gGE1-qEv2Oi1bHsp-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANR10") > zeroControl Then
+' 'SP, Newly, 15+, F
+' IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANR10")
+' IE.Document.GetElementByID("YVqdD78gGE1-BpjQgbuhZoo-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANS10") > zeroControl Then
+' 'SP, Newly, <15, M
+' IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANS10")
+' IE.Document.GetElementByID("YVqdD78gGE1-zpOXupkpl7i-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANT10") > zeroControl Then
+' 'SP, Newly, 15+, M
+' IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANT10")
+' IE.Document.GetElementByID("YVqdD78gGE1-Y9GhVNf8jUd-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANU10") > zeroControl Then
+' 'SP, Already, <15, F
+' IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANU10")
+' IE.Document.GetElementByID("YVqdD78gGE1-qBj9XLbUigZ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANV10") > zeroControl Then
+' 'SP, Already, 15+, F
+' IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANV10")
+' IE.Document.GetElementByID("YVqdD78gGE1-vsVKGzHxDua-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANW10") > zeroControl Then
+' 'SP, Already, <15, M
+' IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANW10")
+' IE.Document.GetElementByID("YVqdD78gGE1-VyeN2c8Zdi4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANX10") > zeroControl Then
+' 'SP, Already, 15+, M
+' IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANX10")
+' IE.Document.GetElementByID("YVqdD78gGE1-SZ3D287on4h-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANY10") > zeroControl Then
+' 'NP, Newly, <15, F
+' IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANY10")
+' IE.Document.GetElementByID("YVqdD78gGE1-KcI8l7j9oeX-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("ANZ10") > zeroControl Then
+' 'NP, Newly, 15+, F
+' IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").Value = ThisWorkbook.Sheets("sheet1").Range("ANZ10")
+' IE.Document.GetElementByID("YVqdD78gGE1-kCzjNAGH5GY-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOA10") > zeroControl Then
+' 'NP, Newly, <15, M
+' IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOA10")
+' IE.Document.GetElementByID("YVqdD78gGE1-JURc3Uxzcr9-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOB10") > zeroControl Then
+' 'NP, Newly, 15+, M
+' IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOB10")
+' IE.Document.GetElementByID("YVqdD78gGE1-rktDV3ZuQjl-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOC10") > zeroControl Then
+' 'NP, Already, <15, F
+' IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOC10")
+' IE.Document.GetElementByID("YVqdD78gGE1-yxdKq1ZC8fS-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOD10") > zeroControl Then
+' 'NP, Already, 15+, F
+' IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOD10")
+' IE.Document.GetElementByID("YVqdD78gGE1-DFLZuSpRYKv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOE10") > zeroControl Then
+' 'NP, Already, <15, M
+' IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOE10")
+' IE.Document.GetElementByID("YVqdD78gGE1-NrvW7I8iYbo-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOF10") > zeroControl Then
+' 'NP, Already, 15+, M
+' IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Focus
+' IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOF10")
+' IE.Document.GetElementByID("YVqdD78gGE1-u53iyNLwf4u-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOG10") > zeroControl Then
+' 'Specimen Sent
+' IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Focus
+' IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOG10")
+' IE.Document.GetElementByID("PoKIzQ3T4lw-LVcCRCAVjwj-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOH10") > zeroControl Then
+' 'Smear
+' IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Focus
+' IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOH10")
+' IE.Document.GetElementByID("USg8dlTs8WO-JNmiNNuzOP4-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOI10") > zeroControl Then
+' 'GeneXpert
+' IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Focus
+' IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOI10")
+' IE.Document.GetElementByID("USg8dlTs8WO-QHwgGBc0snC-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOJ10") > zeroControl Then
+' 'Other
+' IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Focus
+' IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOJ10")
+' IE.Document.GetElementByID("USg8dlTs8WO-zfBoZZIHjmY-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOK10") > zeroControl Then
+' 'Result Returned
+' IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Focus
+' IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOK10")
+' IE.Document.GetElementByID("njaIfoj0S6a-LVcCRCAVjwj-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' End Sub
+' 
+' '    CCCCCCC   XXXXX  XXXXX   CCCCCCC       AAAAA          TTTTTTTTTTXXXXX  XXXXX
+' '   CCCCCCCCC   XXXX  XXXX   CCCCCCCCC      AAAAA          TTTTTTTTTTXXXXX  XXXX
+' '  CCCCCCCCCCC  XXXXXXXXXX  CCCCCCCCCCC    AAAAAA          TTTTTTTTTTXXXXXXXXXXX
+' '  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC   AAAAAAA            TTTT     XXXXXXXX
+' ' CCCC     CCC    XXXXXX   XCCC     CCC   AAAAAAAA            TTTT      XXXXXX
+' ' CCCC            XXXXXX   XCCC           AAAAAAAA            TTTT      XXXXXX
+' ' CCCC            XXXXX    XCCC           AAAA AAAA           TTTT      XXXXX
+' ' CCCC            XXXXXX   XCCC          AAAAAAAAAA           TTTT      XXXXXX
+' ' CCCC     CCC   XXXXXXXX  XCCC     CCC  AAAAAAAAAAA          TTTT     XXXXXXXX
+' '  CCCC   CCCCC  XXXXXXXX   CCCC   CCCCC AAAAAAAAAAA          TTTT     XXXXXXXX
+' '  CCCCCCCCCCC  XXXX XXXXX  CCCCCCCCCCC CAAA    AAAA          TTTT    XXXX XXXXX
+' '   CCCCCCCCCC XXXXX  XXXXX  CCCCCCCCCC CAAA     AAAA         TTTT   XXXXX  XXXXX
+' '    CCCCCCC   XXXX    XXXX   CCCCCCC  CCAAA     AAAA         TTTT   XXXX    XXXX
+' Sub CXCA_TX()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOL10") > 0 Then
+' 'Cervical Cancer screen: Cryotherapy
+' If ThisWorkbook.Sheets("sheet1").Range("AOM10") > zeroControl Then
+' '15-19
+' IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOM10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-Njt3hvrCNIO-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AON10") > zeroControl Then
+' '20-24
+' IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").Value = ThisWorkbook.Sheets("sheet1").Range("AON10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-ycC6TYD1fK8-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOO10") > zeroControl Then
+' '25-29
+' IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOO10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-esEoT2zyIAD-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOP10") > zeroControl Then
+' '30-34
+' IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOP10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-RMeYVgQI1xD-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOQ10") > zeroControl Then
+' '35-39
+' IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOQ10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-yUZniFjLR4K-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOR10") > zeroControl Then
+' '40-44
+' IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOR10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-ca7gG3WIozw-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOS10") > zeroControl Then
+' '45-49
+' IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOS10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-wk3ttV4GTnT-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOT10") > zeroControl Then
+' '50+
+' IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Focus
+' IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOT10")
+' IE.Document.GetElementByID("D8gXql7mhrZ-iV3JZe1JRsk-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' End Sub
+' 
+' '...SSSSSSS......CCCCCCC.................AAAAA.....RRRRRRRRRR.RRVVV....VVVVVDDDDDDDDD...DIII...SSSSSSS...SPPPPPPPPP...
+' '..SSSSSSSSS....CCCCCCCCC................AAAAA.....RRRRRRRRRRR.RVVV....VVVVVDDDDDDDDDD..DIII..SSSSSSSSS..SPPPPPPPPPP..
+' '..SSSSSSSSSS..CCCCCCCCCCC..............AAAAAA.....RRRRRRRRRRR.RVVV...VVVVVVDDDDDDDDDDD.DIII.ISSSSSSSSSS.SPPPPPPPPPP..
+' '.SSSSS..SSSS..CCCC...CCCCC.............AAAAAAA....RRRR...RRRRRRVVVV..VVVV.VDDD....DDDD.DIII.ISSS...SSSS.SPPP....PPP..
+' '.SSSSS.......SCCC.....CCC.............AAAAAAAA....RRRR...RRRRR.VVVV..VVVV.VDDD....DDDDDDIII.ISSSS.......SPPP....PPP..
+' '..SSSSSSS....SCCC.....................AAAAAAAA....RRRRRRRRRRR..VVVV..VVVV.VDDD.....DDDDDIII..SSSSSSS....SPPPPPPPPPP..
+' '...SSSSSSSSS.SCCC.....................AAAA.AAAA...RRRRRRRRRRR..VVVV.VVVV..VDDD.....DDDDDIII...SSSSSSSS..SPPPPPPPPPP..
+' '.....SSSSSSS.SCCC....................AAAAAAAAAA...RRRRRRRR......VVVVVVVV..VDDD.....DDDDDIII.....SSSSSSS.SPPPPPPPPP...
+' '........SSSSSSCCC.....CCC............AAAAAAAAAAA..RRRR.RRRR.....VVVVVVVV..VDDD....DDDDDDIII........SSSSSSPPP.........
+' '.SSSS....SSSS.CCCC...CCCCC...........AAAAAAAAAAA..RRRR..RRRR....VVVVVVV...VDDD....DDDD.DIII.ISSS...SSSSSSPPP.........
+' '.SSSSSSSSSSSS.CCCCCCCCCCC..........._AAA....AAAA..RRRR..RRRRR....VVVVVV...VDDDDDDDDDDD.DIII.ISSSSSSSSSS.SPPP.........
+' '..SSSSSSSSSS...CCCCCCCCCC..........._AAA.....AAAA.RRRR...RRRRR...VVVVVV...VDDDDDDDDDD..DIII..SSSSSSSSSS.SPPP.........
+' '...SSSSSSSS.....CCCCCCC............__AAA.....AAAA.RRRR....RRRR...VVVVV....VDDDDDDDDD...DIII...SSSSSSS...SPPP.........
+' Sub SC_ARVDISP()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("AOU10:APE10")) > 0 Then
+' 'Disaggregated by Drug Categories
+' 'TLD
+' If ThisWorkbook.Sheets("sheet1").Range("AOU10") > zeroControl Then
+' '<TLD 30-count bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOU10")
+' IE.Document.GetElementByID("jjXWGplLXqF-wv9IM2LXhZq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOV10") > zeroControl Then
+' 'TLD 90-count bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOV10")
+' IE.Document.GetElementByID("jjXWGplLXqF-Np9t64WjwQq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOW10") > zeroControl Then
+' 'TLD 180-count bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOW10")
+' IE.Document.GetElementByID("jjXWGplLXqF-POloRCW1rLQ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 'TLE
+' If ThisWorkbook.Sheets("sheet1").Range("AOX10") > zeroControl Then
+' 'TLE/400 30-count bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOX10")
+' IE.Document.GetElementByID("jjXWGplLXqF-xgONkk9LITU-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOY10") > zeroControl Then
+' 'TLE/400 90-count bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOY10")
+' IE.Document.GetElementByID("jjXWGplLXqF-Oyqxrns3hOg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("AOZ10") > zeroControl Then
+' 'TLE 600/TEE bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("AOZ10")
+' IE.Document.GetElementByID("jjXWGplLXqF-jVWToihlWeJ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'LPV
+' If ThisWorkbook.Sheets("sheet1").Range("APA10") > zeroControl Then
+' 'LPV/r 40/10 (Pediatrics) bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").Value = ThisWorkbook.Sheets("sheet1").Range("APA10")
+' IE.Document.GetElementByID("jjXWGplLXqF-hjoblJZ3DqL-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'NVP
+' If ThisWorkbook.Sheets("sheet1").Range("APB10") > zeroControl Then
+' 'NVP (Adult) bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").Value = ThisWorkbook.Sheets("sheet1").Range("APB10")
+' IE.Document.GetElementByID("jjXWGplLXqF-KX17Dwa2jdv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' If ThisWorkbook.Sheets("sheet1").Range("APC10") > zeroControl Then
+' 'NVP (Pediatric) bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").Value = ThisWorkbook.Sheets("sheet1").Range("APC10")
+' IE.Document.GetElementByID("jjXWGplLXqF-OT1S8c9Pvid-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'Other
+' If ThisWorkbook.Sheets("sheet1").Range("APD10") > zeroControl Then
+' 'Other (Adult) bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").Value = ThisWorkbook.Sheets("sheet1").Range("APD10")
+' IE.Document.GetElementByID("jjXWGplLXqF-GuEsMM0L3Jc-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APE10") > zeroControl Then
+' 'Other (Pediatric) bottles
+' IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").Focus
+' IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").Value = ThisWorkbook.Sheets("sheet1").Range("APE10")
+' IE.Document.GetElementByID("jjXWGplLXqF-nKmFjcfaruG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' End If
+' 
+' End Sub
+' 
+' '...SSSSSSS......CCCCCCC................CCCCCCC....UUUU...UUUU..RRRRRRRRRR...RRRRRRRRRR....
+' '..SSSSSSSSS....CCCCCCCCC..............CCCCCCCCC...UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
+' '..SSSSSSSSSS..CCCCCCCCCCC............CCCCCCCCCCC..UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
+' '.SSSSS..SSSS..CCCC...CCCCC...........CCCC...CCCCC.UUUU...UUUU..RRRR...RRRRR.RRRR...RRRRR..
+' '.SSSSS.......SCCC.....CCC..........._CCC.....CCC..UUUU...UUUU..RRRR...RRRRR.RRRR...RRRRR..
+' '..SSSSSSS....SCCC..................._CCC..........UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
+' '...SSSSSSSSS.SCCC..................._CCC..........UUUU...UUUU..RRRRRRRRRRR..RRRRRRRRRRR...
+' '.....SSSSSSS.SCCC..................._CCC..........UUUU...UUUU..RRRRRRRR.....RRRRRRRR......
+' '........SSSSSSCCC.....CCC..........._CCC.....CCC..UUUU...UUUU..RRRR.RRRR....RRRR.RRRR.....
+' '.SSSS....SSSS.CCCC...CCCCC...........CCCC...CCCCC.UUUU...UUUU..RRRR..RRRR...RRRR..RRRR....
+' '.SSSSSSSSSSSS.CCCCCCCCCCC............CCCCCCCCCCC..UUUUUUUUUUU..RRRR..RRRRR..RRRR..RRRRR...
+' '..SSSSSSSSSS...CCCCCCCCCC.............CCCCCCCCCC...UUUUUUUUU...RRRR...RRRRR.RRRR...RRRRR..
+' '...SSSSSSSS.....CCCCCCC................CCCCCCC......UUUUUUU....RRRR....RRRR.RRRR....RRRR..
+' Sub SC_CURR()
+' Set evt = IE.Document.createEvent("HTMLEvents")
+' evt.initEvent "change", True, False
+' 
+' If WorksheetFunction.Sum(ThisWorkbook.Sheets("sheet1").Range("APF10:APP10")) > 0 Then
+' 'Disaggregated by Drug Categories
+' 'TLD
+' If ThisWorkbook.Sheets("sheet1").Range("APF10") > zeroControl Then
+' '<TLD 30-count bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").Value = ThisWorkbook.Sheets("sheet1").Range("APF10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-wv9IM2LXhZq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APG10") > zeroControl Then
+' 'TLD 90-count bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").Value = ThisWorkbook.Sheets("sheet1").Range("APG10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Np9t64WjwQq-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APH10") > zeroControl Then
+' 'TLD 180-count bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").Value = ThisWorkbook.Sheets("sheet1").Range("APH10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-POloRCW1rLQ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' 'TLE
+' If ThisWorkbook.Sheets("sheet1").Range("API10") > zeroControl Then
+' 'TLE/400 30-count bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").Value = ThisWorkbook.Sheets("sheet1").Range("API10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-xgONkk9LITU-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APJ10") > zeroControl Then
+' 'TLE/400 90-count bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").Value = ThisWorkbook.Sheets("sheet1").Range("APJ10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-Oyqxrns3hOg-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APK10") > zeroControl Then
+' 'TLE 600/TEE bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").Value = ThisWorkbook.Sheets("sheet1").Range("APK10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-jVWToihlWeJ-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'LPV
+' If ThisWorkbook.Sheets("sheet1").Range("APL10") > zeroControl Then
+' 'LPV/r 40/10 (Pediatrics) bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").Value = ThisWorkbook.Sheets("sheet1").Range("APL10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-hjoblJZ3DqL-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'NVP
+' If ThisWorkbook.Sheets("sheet1").Range("APM10") > zeroControl Then
+' 'NVP (Adult) bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").Value = ThisWorkbook.Sheets("sheet1").Range("APM10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-KX17Dwa2jdv-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' If ThisWorkbook.Sheets("sheet1").Range("APN10") > zeroControl Then
+' 'NVP (Pediatric) bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").Value = ThisWorkbook.Sheets("sheet1").Range("APN10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-OT1S8c9Pvid-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 'Other
+' If ThisWorkbook.Sheets("sheet1").Range("APO10") > zeroControl Then
+' 'Other (Adult) bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").Value = ThisWorkbook.Sheets("sheet1").Range("APO10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-GuEsMM0L3Jc-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' 
+' If ThisWorkbook.Sheets("sheet1").Range("APP10") > zeroControl Then
+' 'Other (Pediatric) bottles
+' IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").Focus
+' IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").Value = ThisWorkbook.Sheets("sheet1").Range("APP10")
+' IE.Document.GetElementByID("QNXpJE4Nwgo-nKmFjcfaruG-val").dispatchEvent evt
+' Application.Wait Now + TimeValue("00:00:0" & Int((6 - 3 + 1) * Rnd + 3))
+' End If
+' End If
+' 
+' End Sub
+' 
 Sub SendEmailNotification()
 
     Dim NewMail As Object
