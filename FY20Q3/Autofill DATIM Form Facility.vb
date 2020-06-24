@@ -88,7 +88,7 @@ i = i + 1000
 FormProgressBar.Hide
 Else
 
-If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("APQ10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("APQ10")) Then
+If WorksheetFunction.IsNA(ThisWorkbook.Sheets("sheet1").Range("AJF10")) Or IsEmpty(ThisWorkbook.Sheets("sheet1").Range("AJF10")) Then
 'Delete row 10 if there is no identification of DATIM Org Unit
 ThisWorkbook.Sheets("sheet1").Rows(10).EntireRow.Delete
 
@@ -104,7 +104,7 @@ Else
     End With
 
     'Call DHIS2 javascript function to select Org Unit on tree
-    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("APQ10") & "' )", "JavaScript")
+    Call IE.Document.parentWindow.execScript("javascript:void selection.select( '" & ThisWorkbook.Sheets("sheet1").Range("AJF10") & "' )", "JavaScript")
     startTime2 = Now
     Application.Wait Now + TimeValue("00:01:30")
     
