@@ -13004,7 +13004,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2684415
+ WHERE dataelementid IN (2684415,2684326)
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE sixmonthlyapril=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=3076194) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS SCARVDISP_NVP_Adult ON SCARVDISP_NVP_Adult.sourceid=ou.organisationunitid
@@ -13012,7 +13012,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2684439
+ WHERE dataelementid IN (2684439,2684435)
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE sixmonthlyapril=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=3076194) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS SCARVDISP_NVP_Ped ON SCARVDISP_NVP_Ped.sourceid=ou.organisationunitid
@@ -13020,7 +13020,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2684423
+ WHERE dataelementid IN (2684423,2684336,2684342,2684343,2684329,2684346,2684404,2684406)
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE sixmonthlyapril=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=3076194) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS SCARVDISP_Other_Adult ON SCARVDISP_Other_Adult.sourceid=ou.organisationunitid
@@ -13028,7 +13028,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2684440
+ WHERE dataelementid IN (2684440,2684424,2684426,2684427,2684428,2684429,2684433,2684437)
  AND categoryoptioncomboid=16
  AND periodid IN (SELECT distinct(ps.periodid) FROM _periodstructure ps, period p WHERE sixmonthlyapril=(SELECT sixmonthlyapril FROM _periodstructure WHERE periodid=3076194) AND ps.periodid=p.periodid AND p.periodtypeid=3)
  GROUP BY sourceid) AS SCARVDISP_Other_Ped ON SCARVDISP_Other_Ped.sourceid=ou.organisationunitid
@@ -13093,7 +13093,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2685603
+ WHERE dataelementid IN (2685603,2684451)
  AND categoryoptioncomboid=16
  AND periodid=3076194
  GROUP BY sourceid) AS SCCURR_NVP_Adult ON SCCURR_NVP_Adult.sourceid=ou.organisationunitid
@@ -13101,7 +13101,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2685622
+ WHERE dataelementid IN (2685622,2684453)
  AND categoryoptioncomboid=16
  AND periodid=3076194
  GROUP BY sourceid) AS SCCURR_NVP_Ped ON SCCURR_NVP_Ped.sourceid=ou.organisationunitid
@@ -13109,7 +13109,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2685618
+ WHERE dataelementid IN (2685618,2685574,2685573,2685594,2685584,2685578,2685575,2685616)
  AND categoryoptioncomboid=16
  AND periodid=3076194
  GROUP BY sourceid) AS SCCURR_Other_Adult ON SCCURR_Other_Adult.sourceid=ou.organisationunitid
@@ -13117,7 +13117,7 @@ LEFT OUTER JOIN (
  LEFT OUTER JOIN (
  SELECT sourceid,SUM(CAST(value AS DOUBLE PRECISION)) AS value
  FROM datavalue
- WHERE dataelementid=2685619
+ WHERE dataelementid IN (2685619,2685586,2685598,2685577,2685572,2685571,2685585,2685617)
  AND categoryoptioncomboid=16
  AND periodid=3076194
  GROUP BY sourceid) AS SCCURR_Other_Ped ON SCCURR_Other_Ped.sourceid=ou.organisationunitid
