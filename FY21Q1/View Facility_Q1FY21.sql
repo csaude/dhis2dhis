@@ -309,8 +309,10 @@ COALESCE(VCT_50_m_pos.value,0)+
 COALESCE(VCT_50_m_neg.value,0)+
 /*Index Testing*/
 COALESCE(cpn_index_contact_pos.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_pos.value,0)+COALESCE(VCT_index_9_18_f_pos.value,0)+COALESCE(VCT_index_19_4_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_9_18_m_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_pos.value,0)+COALESCE(VCT_index_9_18_m_pos.value,0)+COALESCE(VCT_index_19_4_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_pos.value,0)+COALESCE(VCT_index_5_9_f_pos.value,0)+
@@ -334,8 +336,10 @@ COALESCE(HTS_TST_Other_index_30_49_m_pos.value,0)+COALESCE(VCT_index_30_49_m_pos
 COALESCE(HTS_TST_Other_index_50_f_pos.value,0)+COALESCE(VCT_index_50_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_50_m_pos.value,0)+COALESCE(VCT_index_50_m_pos.value,0)+
 COALESCE(cpn_index_contact_neg.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_neg.value,0)+COALESCE(VCT_index_0_8_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_0_8_m_neg.value,0)+COALESCE(VCT_index_0_8_m_neg.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_neg.value,0)+COALESCE(VCT_index_9_18_f_neg.value,0)+COALESCE(VCT_index_19_4_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_9_18_m_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_neg.value,0)+COALESCE(VCT_index_9_18_m_neg.value,0)+COALESCE(VCT_index_19_4_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_neg.value,0)+COALESCE(VCT_index_5_9_f_neg.value,0)+
@@ -509,8 +513,10 @@ COALESCE(VCT_45_49_m_pos.value,0)+
 COALESCE(VCT_50_f_pos.value,0)+
 COALESCE(VCT_50_m_pos.value,0)+
 COALESCE(cpn_index_contact_pos.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_pos.value,0)+COALESCE(VCT_index_9_18_f_pos.value,0)+COALESCE(VCT_index_19_4_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_9_18_m_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_pos.value,0)+COALESCE(VCT_index_9_18_m_pos.value,0)+COALESCE(VCT_index_19_4_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_pos.value,0)+COALESCE(VCT_index_5_9_f_pos.value,0)+
@@ -553,8 +559,10 @@ COALESCE(HTS_TST_Closed_neg.value,0) AS HTS_TST_Closed_neg,
 /*HTS_TST Index Testing*/
 (
 COALESCE(cpn_index_contact_pos.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_pos.value,0)+COALESCE(VCT_index_9_18_f_pos.value,0)+COALESCE(VCT_index_19_4_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_9_18_m_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_pos.value,0)+COALESCE(VCT_index_9_18_m_pos.value,0)+COALESCE(VCT_index_19_4_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_pos.value,0)+COALESCE(VCT_index_5_9_f_pos.value,0)+
@@ -580,8 +588,10 @@ COALESCE(HTS_TST_Other_index_50_m_pos.value,0)+COALESCE(VCT_index_50_m_pos.value
 ) AS Index_pos,
 (
 COALESCE(cpn_index_contact_neg.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_neg.value,0)+COALESCE(VCT_index_0_8_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_0_8_m_neg.value,0)+COALESCE(VCT_index_0_8_m_neg.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_neg.value,0)+COALESCE(VCT_index_9_18_f_neg.value,0)+COALESCE(VCT_index_19_4_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_9_18_m_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_neg.value,0)+COALESCE(VCT_index_9_18_m_neg.value,0)+COALESCE(VCT_index_19_4_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_neg.value,0)+COALESCE(VCT_index_5_9_f_neg.value,0)+
@@ -1009,20 +1019,31 @@ COALESCE(HTS_I_acepted_50_m.value,0) AS HTS_I_acepted_50_m,
 /*Elicited*/
 '' AS placeholder77,
 (COALESCE(cpn_index_contact_pos.value,0)+COALESCE(cpn_index_contact_neg.value,0)) AS CPN_index_contact_m,
-(COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)+
+
+(
+/*REMOVING CHILD <1y
+COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_pos.value,0)+COALESCE(VCT_index_9_18_f_pos.value,0)+COALESCE(VCT_index_19_4_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_pos.value,0)+COALESCE(VCT_index_5_9_f_pos.value,0)+
 COALESCE(HTS_TST_Other_index_10_14_f_pos.value,0)+COALESCE(VCT_index_10_14_f_pos.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_f_neg.value,0)+COALESCE(VCT_index_0_8_f_neg.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_f_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_neg.value,0)+COALESCE(VCT_index_9_18_f_neg.value,0)+COALESCE(VCT_index_19_4_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_f_neg.value,0)+COALESCE(VCT_index_5_9_f_neg.value,0)+
 COALESCE(HTS_TST_Other_index_10_14_f_neg.value,0)+COALESCE(VCT_index_10_14_f_neg.value,0)
 ) AS Index_contact_men15_f,
-(COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)+
+(
+/*REMOVING CHILD <1y
+COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_m_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_pos.value,0)+COALESCE(VCT_index_9_18_m_pos.value,0)+COALESCE(VCT_index_19_4_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_m_pos.value,0)+COALESCE(VCT_index_5_9_m_pos.value,0)+
 COALESCE(HTS_TST_Other_index_10_14_m_pos.value,0)+COALESCE(VCT_index_10_14_m_pos.value,0)+
+/*REMOVING CHILD <1y
 COALESCE(HTS_TST_Other_index_0_8_m_neg.value,0)+COALESCE(VCT_index_0_8_m_neg.value,0)+
+*/
 COALESCE(HTS_TST_Other_index_9_18_m_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_neg.value,0)+COALESCE(VCT_index_9_18_m_neg.value,0)+COALESCE(VCT_index_19_4_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_5_9_m_neg.value,0)+COALESCE(VCT_index_5_9_m_neg.value,0)+
 COALESCE(HTS_TST_Other_index_10_14_m_neg.value,0)+COALESCE(VCT_index_10_14_m_neg.value,0)
@@ -1063,8 +1084,12 @@ COALESCE(HTS_TST_Other_index_50_m_neg.value,0)+COALESCE(VCT_index_50_m_neg.value
 ) AS Index_contact_mai15_m,
 /*Contacts*/
 COALESCE(cpn_index_contact_pos.value,0) AS CPN_index_contact_m_pos_unk,
+/*REMOVING CHILD <1y
 (COALESCE(HTS_TST_Other_index_0_8_f_pos.value,0)+COALESCE(VCT_index_0_8_f_pos.value,0)) AS HTS_TST_Index_men1_f_pos,
 (COALESCE(HTS_TST_Other_index_0_8_m_pos.value,0)+COALESCE(VCT_index_0_8_m_pos.value,0)) AS HTS_TST_Index_men1_m_pos,
+*/
+0 AS HTS_TST_Index_men1_f_pos,
+0 AS HTS_TST_Index_men1_m_pos,
 (COALESCE(HTS_TST_Other_index_9_18_f_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_pos.value,0)+COALESCE(VCT_index_9_18_f_pos.value,0)+COALESCE(VCT_index_19_4_f_pos.value,0)) AS HTS_TST_Index_1_4_f_pos,
 (COALESCE(HTS_TST_Other_index_9_18_m_pos.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_pos.value,0)+COALESCE(VCT_index_9_18_m_pos.value,0)+COALESCE(VCT_index_19_4_m_pos.value,0)) AS HTS_TST_Index_1_4_m_pos,
 (COALESCE(HTS_TST_Other_index_5_9_f_pos.value,0)+COALESCE(VCT_index_5_9_f_pos.value,0)) AS HTS_TST_Index_5_9_f_pos,
@@ -1088,8 +1113,13 @@ COALESCE(cpn_index_contact_pos.value,0) AS CPN_index_contact_m_pos_unk,
 (COALESCE(HTS_TST_Other_index_50_f_pos.value,0)+COALESCE(VCT_index_50_f_pos.value,0)) AS HTS_TST_Index_50_f_pos,
 (COALESCE(HTS_TST_Other_index_50_m_pos.value,0)+COALESCE(VCT_index_50_m_pos.value,0)) AS HTS_TST_Index_50_m_pos,
 COALESCE(cpn_index_contact_neg.value,0) AS CPN_index_contact_m_neg_unk,
+/*REMOVING CHILD <1y
 (COALESCE(HTS_TST_Other_index_0_8_f_neg.value,0)+COALESCE(VCT_index_0_8_f_neg.value,0)) AS HTS_TST_Index_men1_f_neg,
 (COALESCE(HTS_TST_Other_index_0_8_m_neg.value,0)+COALESCE(VCT_index_0_8_m_neg.value,0)) AS HTS_TST_Index_men1_m_neg,
+*/
+0 AS HTS_TST_Index_men1_f_neg,
+0 AS HTS_TST_Index_men1_m_neg,
+
 (COALESCE(HTS_TST_Other_index_9_18_f_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_f_neg.value,0)+COALESCE(VCT_index_9_18_f_neg.value,0)+COALESCE(VCT_index_19_4_f_neg.value,0)) AS HTS_TST_Index_1_4_f_neg,
 (COALESCE(HTS_TST_Other_index_9_18_m_neg.value,0)+COALESCE(HTS_TST_Other_index_19_4_m_neg.value,0)+COALESCE(VCT_index_9_18_m_neg.value,0)+COALESCE(VCT_index_19_4_m_neg.value,0)) AS HTS_TST_Index_1_4_m_neg,
 (COALESCE(HTS_TST_Other_index_5_9_f_neg.value,0)+COALESCE(VCT_index_5_9_f_neg.value,0)) AS HTS_TST_Index_5_9_f_neg,
